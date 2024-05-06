@@ -1,14 +1,15 @@
-import { DefaultLayout } from "@/components/layouts/DefaultLayout";
-import { AlertProvider } from "@/components/providers/AlertProvider";
-import { AuthProvider } from "@/components/providers/AuthProvider";
-import { appURL } from "@/config/url";
-import { LoginPage } from "@/pages/Login";
 import {
   Route,
   RouterProvider,
   createBrowserRouter,
   createRoutesFromElements,
 } from "react-router-dom";
+
+import { DefaultLayout } from "@/components/layouts/DefaultLayout";
+import { AlertProvider } from "@/components/providers/AlertProvider";
+import { AuthProvider } from "@/components/providers/AuthProvider";
+import { appURL } from "@/config/url";
+import { LoginPage } from "@/pages/Login";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
