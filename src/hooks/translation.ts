@@ -2,7 +2,6 @@ import { useTranslation as useTran } from "react-i18next";
 
 import { isString } from "@/utils/typeGuard";
 
-
 export const useTranslation = () => {
   const { t, i18n } = useTran();
 

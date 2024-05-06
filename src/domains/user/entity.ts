@@ -5,4 +5,3 @@ export type User = {
 export const newUser = (): User => ({
   id: "",
 });
-
