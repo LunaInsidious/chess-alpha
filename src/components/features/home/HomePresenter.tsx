@@ -91,7 +91,7 @@ export function HomePresenter({
       {modalMode === "prevData" && (
         <ModalForPrevData
           handleContinuePrevData={handleContinuePrevData}
-          handleCloseModal={handleClickCPUBattle}
+          handleCloseModal={handleCloseModal}
         />
       )}
     </div>
