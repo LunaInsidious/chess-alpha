@@ -20,8 +20,8 @@ module.exports = {
       },
       colors: {
         primary: {
-          DEFAULT: "#7c3aed",
-          dark: "#5b2e9f",
+          DEFAULT: "#8b4513",
+          dark: "#5a2d0c",
         },
       },
       animation: {

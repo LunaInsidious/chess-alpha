@@ -21,7 +21,7 @@ describe("useAuth", () => {
   test("AuthProviderの初期値としてログイン成功情報が格納されている", async () => {
     // モックの実装
     mockUseFindMe.mockImplementation(() =>
-      Promise.resolve({ id: "successId" }),
+      Promise.resolve({ id: "successId", name: "mockName" }),
     );
     mockUseGetTokenInCache.mockImplementation(() => ({
       accessToken: "mockToken",
@@ -46,6 +46,7 @@ describe("useAuth", () => {
       },
       user: {
         id: "successId",
+        name: "mockName",
       },
       isLoggedIn: true,
     };
@@ -80,6 +81,7 @@ describe("useAuth", () => {
       },
       user: {
         id: "",
+        name: "",
       },
       isLoggedIn: false,
     };

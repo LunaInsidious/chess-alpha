@@ -2,16 +2,14 @@ import {
   AlertButtonProps,
   Severity,
 } from "@/components/providers/AlertProvider";
-import { Button } from "@/components/ui/Button";
 import { IconWrapper } from "@/components/ui/IconWrapper";
+import { Button } from "@/components/ui/button/Button";
 import { Paragraph } from "@/components/ui/text/Paragraph";
 
 type PropType = {
   isAlertOpen: boolean;
-  message?: string;
-  title: string;
+  message: string;
   button?: AlertButtonProps;
-  isSizeLarge: boolean;
   severity: Severity;
   handleClickClose: () => void;
   className?: string;
@@ -20,9 +18,7 @@ type PropType = {
 export function Alert({
   isAlertOpen,
   message,
-  title,
   button,
-  isSizeLarge,
   severity,
   handleClickClose,
   className,
@@ -35,13 +31,6 @@ export function Alert({
     warning: "border-yellow-400 bg-yellow-50 text-yellow-700",
   };
 
-  const titleColors = {
-    error: "text-red-600",
-    success: "text-green-600",
-    information: "text-gray-800",
-    informationBlue: "text-blue-700",
-    warning: "text-orange-600",
-  };
   const textColors = {
     error: "text-red-700",
     success: "text-green-700",
@@ -69,10 +58,7 @@ export function Alert({
     warning: <IconWrapper iconName="AiOutlineWarning" iconSize={24} />,
   };
 
-  const alertSize = isSizeLarge ? "w-132" : "w-22";
-
   const boxColor: string = boxColors[severity];
-  const titleColor: string = titleColors[severity];
   const textColor: string = textColors[severity];
   const buttonBorderColor: string = buttonBorderColors[severity];
   const icon = icons[severity];
@@ -80,7 +66,7 @@ export function Alert({
     <div>
       {isAlertOpen && (
         <div
-          className={`z-50 left-12 animate-fade-in transition-all duration-75 ease-in ${alertSize} ${className}`}
+          className={`z-50 left-12 animate-fade-in transition-all duration-75 ease-in w-[50vw] ${className}`}
         >
           <div
             // 文字幅とicon幅がずれるのでptだけ4にしている
@@ -91,15 +77,10 @@ export function Alert({
               {/* アイコン */}
               <div className="mt-1">{icon}</div>
               <div className="ml-4 align-top flex flex-col justify-start">
-                {/* タイトル */}
-                <span
-                  className={`${titleColor} align-text-top text-sm font-medium`}
-                >
-                  {title}
-                </span>
-
                 {/* 内部のメッセージ */}
-                <Paragraph className={`${textColor} mt-2`}>{message}</Paragraph>
+                <Paragraph className={`${textColor} my-auto`}>
+                  {message}
+                </Paragraph>
 
                 {button != null && (
                   <div className="flex gap-4 mt-4 items-center">

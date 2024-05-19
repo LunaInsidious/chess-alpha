@@ -1,6 +1,7 @@
 import { z } from "zod";
 
-import { LoginReq, Token } from "@/domains/auth/token";
+import { Token } from "@/domains/auth/entity";
+import { LoginReq } from "@/usecases/dto/auth";
 
 export type APIReqLoginReq = {
   loginId: string;

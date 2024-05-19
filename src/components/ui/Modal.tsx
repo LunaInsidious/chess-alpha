@@ -1,6 +1,9 @@
 import { ReactNode, useEffect, useRef } from "react";
 
+import { Divider } from "@/components/ui/Divider";
 import { IconWrapper } from "@/components/ui/IconWrapper";
+import { Heading2 } from "@/components/ui/text/Heading2";
+import { Heading4 } from "@/components/ui/text/Heading4";
 
 export type ModalProps = {
   /**
@@ -19,7 +22,7 @@ export type ModalProps = {
   /**
    * モーダルを閉じるときの処理です。
    */
-  handleCloseModal: () => void;
+  handleCloseModal?: () => void;
 };
 
 export function Modal({
@@ -43,7 +46,7 @@ export function Modal({
   const modalRef = useRef<HTMLDivElement>(null);
   const handleKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
     // エスケープキー押下でモーダルを閉じる
-    if (e.key === "Escape") {
+    if (e.key === "Escape" && handleCloseModal != null) {
       handleCloseModal();
     }
   };
@@ -60,7 +63,7 @@ export function Modal({
       tabIndex={-1}
       onKeyDown={handleKeyDown}
       onClick={handleCloseModal} // 背景をクリックすると閉じる
-      className={`${className} fixed top-0 left-0 z-50 flex h-screen w-full cursor-default items-center justify-center bg-black bg-opacity-40`}
+      className={`${className} fixed top-0 left-0 z-50 flex h-screen px-10 w-full cursor-default items-center justify-center bg-black bg-opacity-40`}
     >
       <div
         ref={modalRef}
@@ -68,20 +71,24 @@ export function Modal({
         tabIndex={-1}
         onKeyDown={handleKeyDown}
         onClick={(e) => e.stopPropagation()}
-        className="max-w-lg cursor-default rounded-md bg-white p-10 shadow-md"
+        className="max-w-2xl w-full cursor-default rounded-md bg-white px-10 py-6 shadow-md"
       >
         <div className="flex items-center justify-between">
-          <h2>{header}</h2>
-          <button
-            className="hover:bg-black hover:bg-opacity-10 p-0.5 rounded"
-            aria-label="モーダルを閉じる"
-            type="button"
-            onClick={handleCloseModal}
-          >
-            <IconWrapper iconSize={6} iconName="IoClose" />
-          </button>
+          <Heading2 className="hidden md:block">{header}</Heading2>
+          <Heading4 className="md:hidden">{header}</Heading4>
+          {handleCloseModal != null && (
+            <button
+              className="hover:bg-black hover:bg-opacity-10 p-0.5 rounded"
+              aria-label="モーダルを閉じる"
+              type="button"
+              onClick={handleCloseModal}
+            >
+              <IconWrapper iconSize={6} iconName="IoClose" />
+            </button>
+          )}
         </div>
-        <div className="py-5">{children}</div>
+        <Divider className="mt-2" dir="horizontal" />
+        <div className="my-5 max-h-[80vh] overflow-y-auto">{children}</div>
       </div>
     </div>
   );

@@ -1,11 +1,10 @@
-/** 依存性の注入を行う */
-
 import { useAuthDriverForAxios } from "@/adapters/api/auth";
 import { useAuthAPI } from "@/adapters/api/auth/api";
-import { useUserAPI } from "@/adapters/api/user/api";
-import { LoginReq, Token } from "@/domains/auth/token";
-import { login } from "@/usecases/auth";
-import { findMe } from "@/usecases/user";
+import { useInMemoryUserAPI } from "@/adapters/api/user/mock";
+import { Token } from "@/domains/auth/entity";
+import { LoginReq } from "@/usecases/dto/auth";
+import { login } from "@/usecases/interactors/auth";
+import { findMe } from "@/usecases/interactors/user";
 
 export const useGetTokenInCache = (): (() => Token) => () => ({
   tokenType: "Bearer",
@@ -15,7 +14,7 @@ export const useGetTokenInCache = (): (() => Token) => () => ({
 // User
 export const useFindMe = () => {
   const deps = {
-    api: useUserAPI(),
+    api: useInMemoryUserAPI(false),
   };
   return () => findMe(deps);
 };

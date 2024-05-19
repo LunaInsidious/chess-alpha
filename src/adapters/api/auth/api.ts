@@ -6,7 +6,8 @@ import {
   AuthInfoFromAPIRes,
 } from "@/adapters/api/auth/schema";
 import { wrapWithErrorHandler } from "@/adapters/api/error";
-import { LoginReq, Token } from "@/domains/auth/token";
+import { Token } from "@/domains/auth/entity";
+import { LoginReq } from "@/usecases/dto/auth";
 import { AuthAPI } from "@/usecases/ports/auth";
 
 export const url = "auth";

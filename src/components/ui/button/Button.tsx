@@ -2,9 +2,7 @@ import { ReactNode, useState } from "react";
 
 import { SixDotsScaleMiddle } from "@/components/ui/SixdotsScaleMiddle";
 
-type Variant = "primary" | "secondary" | "delete";
-
-type Size = "sm" | "md";
+type Variant = "primary" | "secondary" | "black" | "delete";
 
 export type ButtonProps = {
   /**
@@ -36,10 +34,6 @@ export type ButtonProps = {
    * deleteは破壊的なアクションを示すために用いられます。
    */
   variant: Variant;
-  /**
-   * 2種類のボタンサイズから選択します。枠と文字サイズが変化します。
-   */
-  size?: Size;
 };
 
 export function Button({
@@ -49,7 +43,6 @@ export function Button({
   disabled = false,
   onClick,
   variant,
-  size = "md",
 }: ButtonProps): JSX.Element {
   const Variants: { [key in Variant]: { basic: string; hover: string } } = {
     primary: {
@@ -60,15 +53,14 @@ export function Button({
       basic: "text-gray-600 bg-white border-gray-300 border",
       hover: "hover:bg-gray-100",
     },
+    black: {
+      basic: "text-white bg-black",
+      hover: "hover:bg-gray-900",
+    },
     delete: {
       basic: "text-white bg-red-600",
       hover: "hover:bg-red-700",
     },
-  };
-
-  const Sizes: { [key in Size]: string } = {
-    md: "text-sm px-3 py-2 h-9",
-    sm: "text-xs px-2 py-0.5 h-5",
   };
 
   const [isLoading, setIsLoading] = useState(false);
@@ -86,10 +78,9 @@ export function Button({
   return (
     <button
       className={`
-      flex items-center justify-center rounded shadow outline-none
+      flex items-center justify-center rounded shadow outline-none px-3 py-2
       ${block ? "block w-full" : ""}
       ${Variants[variant].basic}
-      ${Sizes[size]}
       ${className}
       ${
         disabled || isLoading

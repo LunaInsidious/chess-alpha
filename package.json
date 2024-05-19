@@ -20,6 +20,7 @@
     "@types/js-cookie": "^3.0.6",
     "@vitejs/plugin-react": "4.2.1",
     "axios": "^1.6.7",
+    "dexie": "^4.0.4",
     "i18next": "^23.9.0",
     "i18next-parser": "^8.13.0",
     "i18next-resources-for-ts": "^1.5.0",
@@ -58,6 +59,6 @@
     "prettier-plugin-tailwindcss": "^0.5.11",
     "tailwindcss": "^3.4.1",
     "ts-jest": "^29.1.2",
-    "typescript": "5.2"
+    "typescript": "5.4.5"
   }
 }

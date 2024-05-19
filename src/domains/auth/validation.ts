@@ -1,8 +1,8 @@
 import { t as translation } from "i18next";
 
-import { LoginReq } from "@/domains/auth/token";
 import { ErrorObject, error, noError } from "@/domains/types/errorObject";
 import { Validations } from "@/domains/types/validationObject";
+import { LoginReq } from "@/usecases/dto/auth";
 
 const validateLoginId = (t: typeof translation, l: LoginReq): ErrorObject => {
   if (l.loginId === "") {

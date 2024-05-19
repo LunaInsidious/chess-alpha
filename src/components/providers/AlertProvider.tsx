@@ -15,16 +15,14 @@ export type AlertButtonProps = {
 
 export type AlertParamType = {
   severity: Severity;
-  title: string;
-  message?: string;
+  message: string;
   button?: AlertButtonProps;
   isLarge?: boolean;
   timeout?: number;
 };
 
 type AlertShowProps = {
-  title: string;
-  message?: string;
+  message: string;
   timeout?: number;
   button?: AlertButtonProps;
 };
@@ -32,9 +30,8 @@ type AlertShowProps = {
 type AlertStates = {
   state: {
     isAlertOpen: boolean;
-    message?: string;
+    message: string;
     severity: Severity;
-    title: string;
     button?: AlertButtonProps;
     isSizeLarge: boolean;
   };
@@ -46,21 +43,17 @@ type AlertStates = {
 
 function useAlertContextValues(): AlertStates {
   const [isAlertOpen, setAlertOpen] = useState<boolean>(false);
-  const [messageContext, setMessageContext] = useState<string | undefined>(
-    undefined,
-  );
+  const [messageContext, setMessageContext] = useState<string>("");
   const [severityContext, setSeverityContext] = useState<Severity>("success");
-  const [titleContext, setTitleContext] = useState<string>("");
   const [isSizeLarge, setIsSizeLarge] = useState<boolean>(false);
   const [buttonContext, setButtonContext] = useState<
     AlertButtonProps | undefined
   >(undefined);
 
   const showAlert = (param: AlertParamType): void => {
-    const { title, message, isLarge, button } = param;
+    const { message, isLarge, button } = param;
 
     const severityInput = param.severity;
-    setTitleContext(title);
     setMessageContext(message);
     setSeverityContext(severityInput);
     setIsSizeLarge(isLarge ?? false);
@@ -73,14 +66,8 @@ function useAlertContextValues(): AlertStates {
       }, param.timeout);
   };
 
-  const showError = ({
-    title,
-    message = "",
-    timeout,
-    button,
-  }: AlertShowProps) => {
+  const showError = ({ message = "", timeout, button }: AlertShowProps) => {
     showAlert({
-      title,
       severity: "error",
       message,
       timeout,
@@ -88,14 +75,8 @@ function useAlertContextValues(): AlertStates {
     });
   };
 
-  const showSuccess = ({
-    title,
-    message = "",
-    timeout,
-    button,
-  }: AlertShowProps) => {
+  const showSuccess = ({ message = "", timeout, button }: AlertShowProps) => {
     showAlert({
-      title,
       severity: "success",
       message,
       timeout,
@@ -112,7 +93,6 @@ function useAlertContextValues(): AlertStates {
       isAlertOpen,
       message: messageContext,
       severity: severityContext,
-      title: titleContext,
       button: buttonContext,
       isSizeLarge,
     },

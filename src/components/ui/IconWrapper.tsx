@@ -1,6 +1,6 @@
 import { IconType } from "react-icons";
 import { AiOutlineCheckCircle, AiOutlineWarning } from "react-icons/ai";
-import { IoIosInformationCircleOutline } from "react-icons/io";
+import { IoIosInformationCircleOutline, IoIosArrowDown } from "react-icons/io";
 import { IoClose } from "react-icons/io5";
 import { MdOutlineCancel } from "react-icons/md";
 
@@ -9,7 +9,8 @@ export type IconName =
   | "MdOutlineCancel"
   | "AiOutlineCheckCircle"
   | "IoIosInformationCircleOutline"
-  | "AiOutlineWarning";
+  | "AiOutlineWarning"
+  | "IoIosArrowDown";
 
 type Props = {
   /**
@@ -39,6 +40,7 @@ const ICON_MAP: Record<IconName, IconType> = {
   MdOutlineCancel,
   AiOutlineCheckCircle,
   IoIosInformationCircleOutline,
+  IoIosArrowDown,
   AiOutlineWarning,
 };
 
