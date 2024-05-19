@@ -1,9 +1,9 @@
 export type LoginReq = {
-    loginId: string;
-    password: string;
+  loginId: string;
+  password: string;
 };
 
 export const newLoginReq = (): LoginReq => ({
-    loginId: "",
-    password: "",
+  loginId: "",
+  password: "",
 });

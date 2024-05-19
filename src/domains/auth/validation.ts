@@ -25,15 +25,15 @@ const validatePassword = (t: typeof translation, l: LoginReq): ErrorObject => {
 export const generateValidationsLoginReq = (
   t: typeof translation,
 ): Validations<LoginReq> => [
-    {
-      key: "loginId",
-      validate: (obj) => validateLoginId(t, obj),
-    },
-    {
-      key: "password",
-      validate: (obj) => validatePassword(t, obj),
-    },
-  ];
+  {
+    key: "loginId",
+    validate: (obj) => validateLoginId(t, obj),
+  },
+  {
+    key: "password",
+    validate: (obj) => validatePassword(t, obj),
+  },
+];
 
 export const validateAuthInfo = (obj: unknown): boolean => {
   if (typeof obj !== "object" || obj == null) {
