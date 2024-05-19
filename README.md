@@ -18,4 +18,9 @@ https://github.com/LunaInsidious/chess-alpha/pull/2#issue-2304520125
 
 ## 環境構築
 
-このリポジトリをクローンし、ローカル環境で`npm run dev`のみ行えばプレイ可能です。
+このリポジトリをクローンし、ローカル環境で
+
+- `npm i`
+- `npm run dev`
+
+のみ行えばプレイ可能です。
