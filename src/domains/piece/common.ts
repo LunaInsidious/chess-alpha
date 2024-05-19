@@ -333,8 +333,7 @@ const checkIsThreefoldRepetition = async (
 ): Promise<boolean> => {
   try {
     const count = await countFunc(board);
-    // updateする前にチェックするため、count >= 2でよい
-    return count >= 2;
+    return count >= 3;
   } catch (e) {
     console.error(e);
     return false;
