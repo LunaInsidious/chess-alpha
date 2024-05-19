@@ -16,7 +16,7 @@ describe("useAlert", () => {
     test("アラートはseverityはsuccessの状態で開いていない", () => {
       const { state } = result.current;
       expect(state.isAlertOpen).toBe(false);
-      expect(state.title).toEqual("");
+      expect(state.message).toEqual("");
       expect(state.severity).toEqual("success");
     });
   });
@@ -24,21 +24,21 @@ describe("useAlert", () => {
     test("showSuccessを実行したらsuccessアラートが表示される", () => {
       const { showSuccess } = result.current;
 
-      act(() => showSuccess({ title: "成功" }));
+      act(() => showSuccess({ message: "成功" }));
 
       const { state } = result.current;
       expect(state.isAlertOpen).toBe(true);
-      expect(state.title).toEqual("成功");
+      expect(state.message).toEqual("成功");
       expect(state.severity).toEqual("success");
     });
     test("showErrorを実行したらerrorアラートが表示される", () => {
       const { showError } = result.current;
 
-      act(() => showError({ title: "失敗" }));
+      act(() => showError({ message: "失敗" }));
 
       const { state } = result.current;
       expect(state.isAlertOpen).toBe(true);
-      expect(state.title).toEqual("失敗");
+      expect(state.message).toEqual("失敗");
       expect(state.severity).toEqual("error");
     });
     describe("timeout5000を設定してshowSuccessを実行すると", () => {
@@ -58,13 +58,13 @@ describe("useAlert", () => {
         const { showSuccess } = result.current;
 
         act(() => {
-          showSuccess({ title: "成功でも消える", timeout: 5000 });
+          showSuccess({ message: "成功でも消える", timeout: 5000 });
           jest.advanceTimersByTime(time);
         });
 
         const { state } = result.current;
         expect(state.isAlertOpen).toBe(isExist);
-        expect(state.title).toEqual("成功でも消える");
+        expect(state.message).toEqual("成功でも消える");
         expect(state.severity).toEqual("success");
       });
     });
@@ -74,37 +74,37 @@ describe("useAlert", () => {
       const { showSuccess, closeAlert } = result.current;
 
       act(() => {
-        showSuccess({ title: "成功" });
+        showSuccess({ message: "成功" });
         closeAlert();
       });
 
       const { state } = result.current;
       expect(state.isAlertOpen).toBe(false);
-      expect(state.title).toEqual("成功");
+      expect(state.message).toEqual("成功");
       expect(state.severity).toEqual("success");
     });
     test("errorアラートに対してcloseAlertを実行するとisAlertOpenのみがoffになる", () => {
       const { showError, closeAlert } = result.current;
 
       act(() => {
-        showError({ title: "失敗" });
+        showError({ message: "失敗" });
         closeAlert();
       });
 
       const { state } = result.current;
       expect(state.isAlertOpen).toBe(false);
-      expect(state.title).toEqual("失敗");
+      expect(state.message).toEqual("失敗");
       expect(state.severity).toEqual("error");
     });
     test("開かれていないアラートを閉じようとしても何も変化しない", () => {
       const { showError, closeAlert } = result.current;
       act(() => {
-        showError({ title: "失敗" });
+        showError({ message: "失敗" });
         closeAlert();
       });
 
       expect(result.current.state.isAlertOpen).toBe(false);
-      expect(result.current.state.title).toEqual("失敗");
+      expect(result.current.state.message).toEqual("失敗");
       expect(result.current.state.severity).toEqual("error");
 
       act(() => {
@@ -112,7 +112,7 @@ describe("useAlert", () => {
       });
 
       expect(result.current.state.isAlertOpen).toBe(false);
-      expect(result.current.state.title).toEqual("失敗");
+      expect(result.current.state.message).toEqual("失敗");
       expect(result.current.state.severity).toEqual("error");
     });
   });
@@ -121,41 +121,40 @@ describe("useAlert", () => {
       const { showSuccess, showError, closeAlert } = result.current;
 
       act(() => {
-        showSuccess({ title: "成功" });
+        showSuccess({ message: "成功" });
         closeAlert();
-        showError({ title: "失敗" });
+        showError({ message: "失敗" });
       });
 
       const { state } = result.current;
       expect(state.isAlertOpen).toBe(true);
-      expect(state.title).toEqual("失敗");
+      expect(state.message).toEqual("失敗");
       expect(state.severity).toEqual("error");
     });
     test("errorアラートを閉じてsuccessアラートを表示させると、successアラートが表示される", () => {
       const { showSuccess, showError, closeAlert } = result.current;
 
       act(() => {
-        showError({ title: "失敗" });
+        showError({ message: "失敗" });
         closeAlert();
-        showSuccess({ title: "成功" });
+        showSuccess({ message: "成功" });
       });
 
       const { state } = result.current;
       expect(state.isAlertOpen).toBe(true);
-      expect(state.title).toEqual("成功");
+      expect(state.message).toEqual("成功");
       expect(state.severity).toEqual("success");
     });
     test("アラートを閉じずに切り替えると、最後に実行したものがアラートとして表示される。", () => {
       const { showSuccess, showError } = result.current;
 
       act(() => {
-        showSuccess({ title: "成功", message: "成功message" });
-        showError({ title: "直接失敗", message: "失敗メッセージ" });
+        showSuccess({ message: "成功message" });
+        showError({ message: "失敗メッセージ" });
       });
 
       const { state } = result.current;
       expect(state.isAlertOpen).toBe(true);
-      expect(state.title).toEqual("直接失敗");
       expect(state.message).toEqual("失敗メッセージ");
       expect(state.severity).toEqual("error");
     });

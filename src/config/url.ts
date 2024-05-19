@@ -1,3 +1,5 @@
 export const appURL = {
-  login: "/",
+  error: "*", // 404
+  home: "/",
+  game: "/game",
 };

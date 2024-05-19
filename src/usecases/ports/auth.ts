@@ -1,4 +1,5 @@
-import { LoginReq, Token } from "@/domains/auth/token";
+import { Token } from "@/domains/auth/entity";
+import { LoginReq } from "@/usecases/dto/auth";
 
 export interface AuthAPI {
   login(req: LoginReq): Promise<Token>;

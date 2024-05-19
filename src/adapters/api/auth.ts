@@ -1,7 +1,7 @@
 import axios from "axios";
 import Cookies from "js-cookie";
 
-import { Token, newAuthInfo } from "@/domains/auth/token";
+import { Token, newToken } from "@/domains/auth/entity";
 import { validateAuthInfo } from "@/domains/auth/validation";
 import { Auth } from "@/usecases/ports/auth";
 
@@ -29,22 +29,22 @@ export function useAuthDriverForAxios(): Auth {
       const cookie = decodeURIComponent(<string>Cookies.get(cookiesKey));
       if (cookie == null) {
         this.resetAuthInfo();
-        return newAuthInfo();
+        return newToken();
       }
       try {
         const auth = JSON.parse(cookie);
         if (!validateAuthInfo(auth)) {
           this.resetAuthInfo();
-          return newAuthInfo();
+          return newToken();
         }
         return auth;
       } catch (e) {
         this.resetAuthInfo();
-        return newAuthInfo();
+        return newToken();
       }
     },
     resetAuthInfo(): void {
-      setTokenToHeader(newAuthInfo());
+      setTokenToHeader(newToken());
       Cookies.remove(cookiesKey);
     },
   };
