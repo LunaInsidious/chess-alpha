@@ -59,7 +59,7 @@ export function HomePresenter({
     <div className="flex relative justify-center">
       <img
         className="absolute -z-10 h-screen aspect-auto"
-        src="/home.png"
+        src="public/home.png"
         alt="chess"
       />
       <div className="mt-10">
