@@ -1,4 +1,5 @@
-import homeImage from "public/home.png";
+// eslint-disable-next-line import/no-absolute-path
+import homeImage from "/home.png";
 
 import { ModalForCpuBattle } from "@/components/features/home/modal/CpuBattle";
 import { ModalForPrevData } from "@/components/features/home/modal/PrevData";
