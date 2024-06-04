@@ -1,3 +1,5 @@
+import homeImage from "public/home.png";
+
 import { ModalForCpuBattle } from "@/components/features/home/modal/CpuBattle";
 import { ModalForPrevData } from "@/components/features/home/modal/PrevData";
 import { Button } from "@/components/ui/button/Button";
@@ -59,7 +61,7 @@ export function HomePresenter({
     <div className="flex relative justify-center">
       <img
         className="absolute -z-10 h-screen aspect-auto"
-        src="public/home.png"
+        src={homeImage}
         alt="chess"
       />
       <div className="mt-10">
