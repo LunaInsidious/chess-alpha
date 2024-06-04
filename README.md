@@ -13,9 +13,15 @@ CPU(合法手の中からランダムに選択するだけ。特にAIを用い�
 
 i18nは現在あまり対応できていませんが、将来的に多言語対応するつもりで残しています。
 
-実際の動画は下記PRの説明に載せています
-https://github.com/LunaInsidious/chess-alpha/pull/2#issue-2304520125
+## 実際の動画
+
+https://github.com/LunaInsidious/chess-alpha/assets/127801507/733d2eec-b9dc-4132-b74f-f047c5d0bdbd
 
 ## 環境構築
 
-このリポジトリをクローンし、ローカル環境で`npm run dev`のみ行えばプレイ可能です。
+このリポジトリをクローンし、ローカル環境で
+
+- `npm i`
+- `npm run dev`
+
+のみ行えばプレイ可能です。
