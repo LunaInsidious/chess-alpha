@@ -1,6 +1,6 @@
 // 400エラー
 
-export const badRequestError = "BadRequestError"
+export const badRequestError = "BadRequestError";
 export class BadRequestError extends Error {
   constructor(message: string) {
     super(message);
