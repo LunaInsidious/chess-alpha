@@ -1,12 +1,10 @@
 import { Card } from "@/components/ui/Card";
 import { Button } from "@/components/ui/button/Button";
 import { Mass } from "@/components/ui/chess/Mass";
-import {
-  PromotionModal,
-  ResultModal,
-  RetireModal,
-  RuleBook,
-} from "@/components/ui/chess/Modal";
+import { PromotionModal } from "@/components/ui/chess/modal/Promotion";
+import { ResultModal } from "@/components/ui/chess/modal/Result";
+import { RetireModal } from "@/components/ui/chess/modal/Retire";
+import { RuleBook } from "@/components/ui/chess/modal/RuleBook";
 import { useChessBoard } from "@/components/ui/chess/useChessBoard";
 
 type ChessBoardProps = {

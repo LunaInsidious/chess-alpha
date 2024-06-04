@@ -1,9 +1,7 @@
-import {
-  ModalForCpuBattle,
-  ModalForPrevData,
-} from "@/components/features/home/ui/modal";
+import { ModalForCpuBattle } from "@/components/features/home/modal/CpuBattle";
+import { ModalForPrevData } from "@/components/features/home/modal/PrevData";
 import { Button } from "@/components/ui/button/Button";
-import { RuleBook } from "@/components/ui/chess/Modal";
+import { RuleBook } from "@/components/ui/chess/modal/RuleBook";
 
 type Props = {
   handleClickCPUBattle: () => void;

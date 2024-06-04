@@ -1,8 +1,8 @@
 import { generateRandomNumber, mockWait } from "@/adapters/util/mockutil";
 import { User } from "@/domains/user/entity";
-import { InternalServerError } from "@/usecases/errors/InternalServerError";
-import { NotFoundError } from "@/usecases/errors/NotFoundError";
-import { RequestTimeoutError } from "@/usecases/errors/RequestTimeoutError";
+import { InternalServerError } from "@/usecases/errors/internalServerError";
+import { NotFoundError } from "@/usecases/errors/notFoundError";
+import { RequestTimeoutError } from "@/usecases/errors/requestTimeoutError";
 import { UserAPI } from "@/usecases/ports/user";
 
 export const useInMemoryUserAPI = (hasError: boolean): UserAPI => ({

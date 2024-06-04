@@ -104,8 +104,7 @@ const getPawnMovablePositions = (
   // 一回も動いていない場合、前方2マスに駒がなければ2マス進めることができる
   if (piece.isNotMoved) {
     // 1マス進める分も確認しておく
-    // eslint-disable-next-line no-plusplus
-    for (let i = 1; i <= 2; i++) {
+    for (let i = 1; i <= 2; i += 1) {
       const nextVerticalMove = calcMove(from.y, i, isPlayer);
       if (!isPieceExist(boardStatus, { x: from.x, y: nextVerticalMove })) {
         movablePositions.push({

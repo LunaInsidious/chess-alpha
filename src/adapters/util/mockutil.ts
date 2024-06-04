@@ -8,8 +8,7 @@ export function generateRandomString(maxLength: number) {
   let result = "";
   const characters = "あいうえおかきくけこさしすせそたちつてと";
   const charactersLength = characters.length;
-  // eslint-disable-next-line no-plusplus
-  for (let i = 0; i < length; i++) {
+  for (let i = 0; i < length; i += 1) {
     result += characters.charAt(Math.floor(Math.random() * charactersLength));
   }
   return result;

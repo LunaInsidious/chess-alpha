@@ -1,8 +1,10 @@
 // 429エラー
+
+export const tooManyRequestsError = "TooManyRequestsError";
 export class TooManyRequestsError extends Error {
   constructor(message: string) {
     super(message);
-    this.name = "ManyRequestsError";
+    this.name = tooManyRequestsError;
     Object.setPrototypeOf(this, TooManyRequestsError.prototype);
   }
 }

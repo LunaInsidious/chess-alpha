@@ -59,8 +59,7 @@ export const isChecked = (
   isPlayer: boolean,
 ): boolean => {
   // 前一マスにキングがいるか、前方向に駒を挟まずクイーン、ルークがいるかを確認
-  // eslint-disable-next-line no-plusplus
-  for (let y = kingPosition.y + 1; y < 8; y++) {
+  for (let y = kingPosition.y + 1; y < 8; y += 1) {
     const targetMass = board[y][kingPosition.x];
     if (targetMass != null) {
       if (targetMass.color === myColor) break;
@@ -71,8 +70,7 @@ export const isChecked = (
   }
 
   // 右上斜め１マスにポーン(プレイヤーの場合)、キングがいるか、右上斜めに駒を挟まずビショップ、クイーンがいるかを確認
-  // eslint-disable-next-line no-plusplus
-  for (let i = 1; kingPosition.x + i < 8 && kingPosition.y + i < 8; i++) {
+  for (let i = 1; kingPosition.x + i < 8 && kingPosition.y + i < 8; i += 1) {
     const targetMass = board[kingPosition.y + i][kingPosition.x + i];
     if (targetMass != null) {
       if (targetMass.color === myColor) break;
@@ -86,8 +84,7 @@ export const isChecked = (
   }
 
   // 左上斜め１マスにポーン(プレイヤーの場合)、キングがいるか、左上斜めに駒を挟まずビショップ、クイーンがいるかを確認
-  // eslint-disable-next-line no-plusplus
-  for (let i = 1; kingPosition.x - i >= 0 && kingPosition.y + i < 8; i++) {
+  for (let i = 1; kingPosition.x - i >= 0 && kingPosition.y + i < 8; i += 1) {
     const targetMass = board[kingPosition.y + i][kingPosition.x - i];
     if (targetMass != null) {
       if (targetMass.color === myColor) break;
@@ -101,8 +98,7 @@ export const isChecked = (
   }
 
   // 右１マスにキングがいるか、右に駒を挟まずルーク、クイーンがいるかを確認
-  // eslint-disable-next-line no-plusplus
-  for (let x = kingPosition.x + 1; x < 8; x++) {
+  for (let x = kingPosition.x + 1; x < 8; x += 1) {
     const targetMass = board[kingPosition.y][x];
     if (targetMass != null) {
       if (targetMass.color === myColor) break;
@@ -113,8 +109,7 @@ export const isChecked = (
   }
 
   // 左１マスにキングがいるか、左に駒を挟まずルーク、クイーンがいるかを確認
-  // eslint-disable-next-line no-plusplus
-  for (let x = kingPosition.x - 1; x >= 0; x--) {
+  for (let x = kingPosition.x - 1; x >= 0; x -= 1) {
     const targetMass = board[kingPosition.y][x];
     if (targetMass != null) {
       if (targetMass.color === myColor) break;
@@ -125,8 +120,7 @@ export const isChecked = (
   }
 
   // 右下斜め一マスにポーン(プレイヤーでない場合)、キングがいるか、右下斜めに駒を挟まずビショップ、クイーンがいるかを確認
-  // eslint-disable-next-line no-plusplus
-  for (let i = 1; kingPosition.x + i < 8 && kingPosition.y - i >= 0; i++) {
+  for (let i = 1; kingPosition.x + i < 8 && kingPosition.y - i >= 0; i += 1) {
     const targetMass = board[kingPosition.y - i][kingPosition.x + i];
     if (targetMass != null) {
       if (targetMass.color === myColor) break;
@@ -140,8 +134,7 @@ export const isChecked = (
   }
 
   // 左下斜め一マスにポーン(プレイヤーでない場合)、キングがいるか、左下斜めに駒を挟まずビショップ、クイーンがいるかを確認
-  // eslint-disable-next-line no-plusplus
-  for (let i = 1; kingPosition.x - i >= 0 && kingPosition.y - i >= 0; i++) {
+  for (let i = 1; kingPosition.x - i >= 0 && kingPosition.y - i >= 0; i += 1) {
     const targetMass = board[kingPosition.y - i][kingPosition.x - i];
     if (targetMass != null) {
       if (targetMass.color === myColor) break;
@@ -155,8 +148,7 @@ export const isChecked = (
   }
 
   // 下一マスにキングがいるか、下に駒を挟まずクイーン、ルークがいるかを確認
-  // eslint-disable-next-line no-plusplus
-  for (let y = kingPosition.y - 1; y >= 0; y--) {
+  for (let y = kingPosition.y - 1; y >= 0; y -= 1) {
     const targetMass = board[y][kingPosition.x];
     if (targetMass != null) {
       if (targetMass.color === myColor) break;
@@ -177,8 +169,7 @@ export const isChecked = (
     { x: -2, y: 1 },
     { x: -1, y: 2 },
   ];
-  // eslint-disable-next-line no-plusplus
-  for (let i = 0; i < knightMoves.length; i++) {
+  for (let i = 0; i < knightMoves.length; i += 1) {
     const move = knightMoves[i];
     if (
       kingPosition.x + move.x >= 0 &&
@@ -445,8 +436,7 @@ export const getMovablePositions = (
   // 縦方向
   if (direction === "vertical") {
     // (プレイヤーから見て)上方向
-    // eslint-disable-next-line no-plusplus
-    for (let y = from.y + 1; y < 8; y++) {
+    for (let y = from.y + 1; y < 8; y += 1) {
       // 何もない場合、その位置に進める
       const targetMass = boardStatus.board[y][from.x];
       if (targetMass == null) {
@@ -461,8 +451,7 @@ export const getMovablePositions = (
       }
     }
     // 下方向
-    // eslint-disable-next-line no-plusplus
-    for (let y = from.y - 1; y >= 0; y--) {
+    for (let y = from.y - 1; y >= 0; y -= 1) {
       // 何もない場合、その位置に進める
       const targetMass = boardStatus.board[y][from.x];
       if (targetMass == null) {
@@ -482,8 +471,7 @@ export const getMovablePositions = (
   // 横方向
   if (direction === "horizontal") {
     // (プレイヤーから見て)右方向
-    // eslint-disable-next-line no-plusplus
-    for (let x = from.x + 1; x < 8; x++) {
+    for (let x = from.x + 1; x < 8; x += 1) {
       const targetMass = boardStatus.board[from.y][x];
       if (targetMass == null) {
         movablePositions.push({ x, y: from.y });
@@ -495,8 +483,7 @@ export const getMovablePositions = (
       }
     }
     // (プレイヤーから見て)左方向
-    // eslint-disable-next-line no-plusplus
-    for (let x = from.x - 1; x >= 0; x--) {
+    for (let x = from.x - 1; x >= 0; x -= 1) {
       const targetMass = boardStatus.board[from.y][x];
       if (targetMass == null) {
         movablePositions.push({ x, y: from.y });
@@ -513,8 +500,7 @@ export const getMovablePositions = (
   // 斜め方向
   if (direction === "diagonal") {
     // 右上方向
-    // eslint-disable-next-line no-plusplus
-    for (let i = 1; from.x + i < 8 && from.y + i < 8; i++) {
+    for (let i = 1; from.x + i < 8 && from.y + i < 8; i += 1) {
       const targetMass = boardStatus.board[from.y + i][from.x + i];
       if (targetMass == null) {
         movablePositions.push({ x: from.x + i, y: from.y + i });
@@ -526,8 +512,7 @@ export const getMovablePositions = (
       }
     }
     // 左上方向
-    // eslint-disable-next-line no-plusplus
-    for (let i = 1; from.x - i >= 0 && from.y + i < 8; i++) {
+    for (let i = 1; from.x - i >= 0 && from.y + i < 8; i += 1) {
       const targetMass = boardStatus.board[from.y + i][from.x - i];
       if (targetMass == null) {
         movablePositions.push({ x: from.x - i, y: from.y + i });
@@ -539,8 +524,7 @@ export const getMovablePositions = (
       }
     }
     // 右下方向
-    // eslint-disable-next-line no-plusplus
-    for (let i = 1; from.x + i < 8 && from.y - i >= 0; i++) {
+    for (let i = 1; from.x + i < 8 && from.y - i >= 0; i += 1) {
       const targetMass = boardStatus.board[from.y - i][from.x + i];
       if (targetMass == null) {
         movablePositions.push({ x: from.x + i, y: from.y - i });
@@ -552,8 +536,7 @@ export const getMovablePositions = (
       }
     }
     // 左下方向
-    // eslint-disable-next-line no-plusplus
-    for (let i = 1; from.x - i >= 0 && from.y - i >= 0; i++) {
+    for (let i = 1; from.x - i >= 0 && from.y - i >= 0; i += 1) {
       const targetMass = boardStatus.board[from.y - i][from.x - i];
       if (targetMass == null) {
         movablePositions.push({ x: from.x - i, y: from.y - i });

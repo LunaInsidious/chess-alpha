@@ -1,17 +1,18 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { BadRequestError } from "@/usecases/errors/BadRequestError";
-import { ConflictError } from "@/usecases/errors/ConflictError";
-import { ForbiddenError } from "@/usecases/errors/Forbidden";
-import { InternalServerError } from "@/usecases/errors/InternalServerError";
-import { NotFoundError } from "@/usecases/errors/NotFoundError";
-import { RequestTimeoutError } from "@/usecases/errors/RequestTimeoutError";
-import { TooManyRequestsError } from "@/usecases/errors/TooManyRequestsError";
-import { UnauthorizedError } from "@/usecases/errors/UnauthorizedError";
+import { BadRequestError, badRequestError } from "@/usecases/errors/badRequestError";
+import { ConflictError, conflictError } from "@/usecases/errors/conflictError";
+import { ForbiddenError, forbiddenError } from "@/usecases/errors/forbidden";
+import { InternalServerError, internalServerError } from "@/usecases/errors/internalServerError";
+import { NotFoundError, notFoundError } from "@/usecases/errors/notFoundError";
+import { RequestTimeoutError, requestTimeoutError } from "@/usecases/errors/requestTimeoutError";
+import { TooManyRequestsError, tooManyRequestsError } from "@/usecases/errors/tooManyRequestsError";
+import { UnauthorizedError, unauthorizedError } from "@/usecases/errors/unauthorizedError";
+
 
 // 400
 export const isBadRequestError = (e: any): e is BadRequestError => {
   if (e != null) {
-    return e.name === "BadRequestError";
+    return e.name === badRequestError
   }
   return false;
 };
@@ -19,7 +20,7 @@ export const isBadRequestError = (e: any): e is BadRequestError => {
 // 401
 export const isUnauthorizedError = (e: any): e is UnauthorizedError => {
   if (e != null) {
-    return e.name === "UnauthorizedError";
+    return e.name === unauthorizedError
   }
   return false;
 };
@@ -27,7 +28,7 @@ export const isUnauthorizedError = (e: any): e is UnauthorizedError => {
 // 403
 export const isForbiddenError = (e: any): e is ForbiddenError => {
   if (e != null) {
-    return e.name === "ForbiddenError";
+    return e.name === forbiddenError
   }
   return false;
 };
@@ -35,7 +36,7 @@ export const isForbiddenError = (e: any): e is ForbiddenError => {
 // 404
 export const isNotFoundError = (e: any): e is NotFoundError => {
   if (e != null) {
-    return e.name === "NotFoundError";
+    return e.name === notFoundError
   }
   return false;
 };
@@ -43,7 +44,7 @@ export const isNotFoundError = (e: any): e is NotFoundError => {
 // 408
 export const isRequestTimeout = (e: any): e is RequestTimeoutError => {
   if (e != null) {
-    return e.name === "TimeoutError";
+    return e.name === requestTimeoutError
   }
   return false;
 };
@@ -51,14 +52,14 @@ export const isRequestTimeout = (e: any): e is RequestTimeoutError => {
 // 409
 export const isConflict = (e: any): e is ConflictError => {
   if (e != null) {
-    return e.name === "ConflictError";
+    return e.name === conflictError
   }
   return false;
 };
 
 export const isTooManyRequest = (e: any): e is TooManyRequestsError => {
   if (e != null) {
-    return e.name === "ManyRequestsError";
+    return e.name === tooManyRequestsError
   }
   return false;
 };
@@ -66,7 +67,7 @@ export const isTooManyRequest = (e: any): e is TooManyRequestsError => {
 // 500
 export const isInternalServerError = (e: any): e is InternalServerError => {
   if (e != null) {
-    return e.name === "InternalError";
+    return e.name === internalServerError
   }
   return false;
 };

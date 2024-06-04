@@ -1,11 +1,11 @@
 // エラー処理用の高階関数
 import axios from "axios";
 
-import { BadRequestError } from "@/usecases/errors/BadRequestError";
-import { ConflictError } from "@/usecases/errors/ConflictError";
-import { InternalServerError } from "@/usecases/errors/InternalServerError";
-import { NotFoundError } from "@/usecases/errors/NotFoundError";
-import { UnauthorizedError } from "@/usecases/errors/UnauthorizedError";
+import { BadRequestError } from "@/usecases/errors/badRequestError";
+import { ConflictError } from "@/usecases/errors/conflictError";
+import { InternalServerError } from "@/usecases/errors/internalServerError";
+import { NotFoundError } from "@/usecases/errors/notFoundError";
+import { UnauthorizedError } from "@/usecases/errors/unauthorizedError";
 
 /**
  * @param fn apiを叩く関数
