@@ -1,7 +1,7 @@
 export const appURL = {
   error: "*", // 404
-  home: "/",
-  playerSetup: "/players-setup",
-  playerRole: "/players-role",
-  game: "/game",
+  home: "/chess-alpha",
+  playerSetup: "/chess-alpha/players-setup",
+  playerRole: "/chess-alpha/players-role",
+  game: "/chess-alpha/game",
 };
