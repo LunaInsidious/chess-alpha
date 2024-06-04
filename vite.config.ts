@@ -7,7 +7,7 @@ export default defineConfig({
     host: true,
     port: 3000,
   },
-  base: process.env.GITHUB_PAGES ? 'chess-alpha' : './',
+  base: process.env.GITHUB_PAGES ? 'chess-alpha/' : './',
   resolve: {
     alias: [{ find: "@", replacement: "/src" }],
   },
