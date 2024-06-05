@@ -1,23 +1,17 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-
-import { useGameDataAPI } from "@/adapters/api/game/api";
 import { SetupPresenter } from "@/components/features/setup/SetupPresenter";
 import { appURL } from "@/config/url";
 import { useAlert } from "@/hooks/alert";
 
 export function SetupContainer() {
-  const [playerColor, setPlayerColor] = useState<"black" | "white" | undefined>(
-    undefined,
-  );
+  const [players, setPlayers] = useState<string[]>(["", "", ""]);
 
   const navigate = useNavigate();
-
   const { showError } = useAlert();
 
   const handleClickPlayerColor = (color: "black" | "white" | "random") => {
     if (color === "random") {
-      // white, blackのどちらかをランダムに選択
       const randomColor = Math.random() < 0.5 ? "black" : "white";
       navigate(`${appURL.game}?player=${randomColor}`);
     } else {
@@ -30,11 +24,38 @@ export function SetupContainer() {
   };
 
   const handleStart = () => {
-    navigate(`${appURL.playerRole}`);
-  }
+    if (players.length < 3 || players.length > 6) {
+      showError("プレイヤーの数は3人から6人の間でなければなりません。");
+      return;
+    }
+    navigate(`${appURL.playerRole}`, { state: { players } });
+  };
+
+  const handleAddPlayer = () => {
+    if (players.length < 6) {
+      setPlayers([...players, ""]);
+    }
+  };
+
+  const handleRemovePlayer = (index: number) => {
+    if (players.length > 1) {
+      const newPlayers = players.filter((_, i) => i !== index);
+      setPlayers(newPlayers);
+    }
+  };
+
+  const handlePlayerChange = (index: number, name: string) => {
+    const newPlayers = [...players];
+    newPlayers[index] = name;
+    setPlayers(newPlayers);
+  };
 
   return (
     <SetupPresenter
+      players={players}
+      handleAddPlayer={handleAddPlayer}
+      handleRemovePlayer={handleRemovePlayer}
+      handlePlayerChange={handlePlayerChange}
       handleBackHome={handleBackHome}
       handleStart={handleStart}
     />
