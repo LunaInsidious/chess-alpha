@@ -2,10 +2,12 @@ import { Button } from "@/components/ui/button/Button";
 
 type Props = {
   handleClickCPUBattle: () => void;
+  handleBackHome: () => void;
 };
 
 export function SetupPresenter({
   handleClickCPUBattle,
+  handleBackHome,
 }: Props): JSX.Element {
   const playerButtons: {
     text: string;
@@ -30,8 +32,8 @@ export function SetupPresenter({
   }[] = [
     {
       text: "ホームに戻る",
-      onClick: () => {},
-      variant: "primary",
+      onClick: handleBackHome,
+      variant: "secondary",
     },
     {
       text: "スタート",
@@ -56,6 +58,18 @@ export function SetupPresenter({
             {playerButtons.map((button) => (
               <Button
                 className="w-36 h-10 md:w-36 md:h-16 md:text-xl lg:text-2xl"
+                key={button.text}
+                onClick={button.onClick}
+                variant={button.variant}
+              >
+                {button.text}
+              </Button>
+            ))}
+          </div>
+          <div className="mt-12 gap-6 md:mt-24 lg:mt-32 md:gap-10 flex flex-col items-center">
+            {pageButtons.map((button) => (
+              <Button
+                className="w-48 h-10 md:w-96 md:h-16 md:text-2xl lg:text-3xl"
                 key={button.text}
                 onClick={button.onClick}
                 variant={button.variant}
