@@ -25,14 +25,13 @@ export function HomeContainer() {
 
   const handleClickCPUBattle = async () => {
     try {
-      // const latest = await gameDataAPI.findLatest();
-      // if (latest == null) {
-      //   setModalMode("cpu");
-      // } else {
-      //   setModalMode("prevData");
-      //   setPlayerColor(latest.playerColor);
-      // }
-      navigate(`${appURL.playerSetup}`);
+      const latest = await gameDataAPI.findLatest();
+      if (latest == null) {
+        setModalMode("cpu");
+      } else {
+        setModalMode("prevData");
+        setPlayerColor(latest.playerColor);
+      }
     } catch (e) {
       console.error(e);
       showError({
@@ -67,10 +66,8 @@ export function HomeContainer() {
     if (color === "random") {
       // white, blackのどちらかをランダムに選択
       const randomColor = Math.random() < 0.5 ? "black" : "white";
-      navigate(`${appURL.game}?player=${randomColor}`);
-    } else {
-      navigate(`${appURL.game}?player=${color}`);
     }
+    navigate(`${appURL.playerSetup}`);
   };
 
   const handleContinuePrevData = async (isContinue: boolean) => {
