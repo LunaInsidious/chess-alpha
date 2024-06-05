@@ -1,13 +1,13 @@
 import { Button } from "@/components/ui/button/Button";
 
 type Props = {
-  handleClickCPUBattle: () => void;
   handleBackHome: () => void;
+  handleStart: () => void;
 };
 
 export function SetupPresenter({
-  handleClickCPUBattle,
   handleBackHome,
+  handleStart,
 }: Props): JSX.Element {
   const playerButtons: {
     text: string;
@@ -37,7 +37,7 @@ export function SetupPresenter({
     },
     {
       text: "スタート",
-      onClick: () => {},
+      onClick: handleStart,
       variant: "primary",
     },
   ];
@@ -53,18 +53,22 @@ export function SetupPresenter({
           プレイヤーを入力
         </h1>
         <div className="mt-12 gap-6 md:mt-24 lg:mt-32 md:gap-10 flex flex-col items-center">
-          <input />
-          <div className="flex gap-6">
-            {playerButtons.map((button) => (
-              <Button
-                className="w-36 h-10 md:w-36 md:h-16 md:text-xl lg:text-2xl"
-                key={button.text}
-                onClick={button.onClick}
-                variant={button.variant}
-              >
-                {button.text}
-              </Button>
-            ))}
+          <div>
+            <div className="flex flex-column">
+              <input />
+            </div>
+            <div className="flex gap-6">
+              {playerButtons.map((button) => (
+                <Button
+                  className="w-36 h-10 md:w-36 md:h-16 md:text-xl lg:text-2xl"
+                  key={button.text}
+                  onClick={button.onClick}
+                  variant={button.variant}
+                >
+                  {button.text}
+                </Button>
+              ))}
+            </div>
           </div>
           <div className="mt-12 gap-6 md:mt-24 lg:mt-32 md:gap-10 flex flex-col items-center">
             {pageButtons.map((button) => (
