@@ -2,11 +2,11 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { useGameDataAPI } from "@/adapters/api/game/api";
-import { HomePresenter } from "@/components/features/home/HomePresenter";
+import { SetupPresenter } from "@/components/features/setup/SetupPresenter";
 import { appURL } from "@/config/url";
 import { useAlert } from "@/hooks/alert";
 
-export function HomeContainer() {
+export function SetupContainer() {
   const [isRuleBookOpen, setIsRuleBookOpen] = useState(false);
 
   const [modalMode, setModalMode] = useState<
@@ -25,14 +25,13 @@ export function HomeContainer() {
 
   const handleClickCPUBattle = async () => {
     try {
-      // const latest = await gameDataAPI.findLatest();
-      // if (latest == null) {
-      //   setModalMode("cpu");
-      // } else {
-      //   setModalMode("prevData");
-      //   setPlayerColor(latest.playerColor);
-      // }
-      navigate(`${appURL.playerSetup}`);
+      const latest = await gameDataAPI.findLatest();
+      if (latest == null) {
+        setModalMode("cpu");
+      } else {
+        setModalMode("prevData");
+        setPlayerColor(latest.playerColor);
+      }
     } catch (e) {
       console.error(e);
       showError({
@@ -89,18 +88,14 @@ export function HomeContainer() {
     }
   };
 
+  const handleBackHome = () => {
+    navigate(`${appURL.home}`);
+  };
+
   return (
-    <HomePresenter
+    <SetupPresenter
       handleClickCPUBattle={handleClickCPUBattle}
-      handleClickOnlineBattle={handleClickOnlineBattle}
-      handleClickRule={handleClickRule}
-      handleClickHistory={handleClickHistory}
-      handleCloseRuleBook={handleCloseRuleBook}
-      handleCloseModal={handleCloseModal}
-      handleClickPlayerColor={handleClickPlayerColor}
-      handleContinuePrevData={handleContinuePrevData}
-      isRuleBookOpen={isRuleBookOpen}
-      modalMode={modalMode}
+      handleBackHome={handleBackHome}
     />
   );
 }
