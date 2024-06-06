@@ -1,4 +1,3 @@
-import { placeholder } from '../../../../node_modules/@babel/types/lib/builders/generated';
 import { Button } from "@/components/ui/button/Button";
 
 type Props = {

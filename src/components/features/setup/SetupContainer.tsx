@@ -2,13 +2,11 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { SetupPresenter } from "@/components/features/setup/SetupPresenter";
 import { appURL } from "@/config/url";
-import { useAlert } from "@/hooks/alert";
 
 export function SetupContainer() {
   const [players, setPlayers] = useState<string[]>(["", "", ""]);
 
   const navigate = useNavigate();
-  const { showError } = useAlert();
 
   const handleClickPlayerColor = (color: "black" | "white" | "random") => {
     if (color === "random") {
