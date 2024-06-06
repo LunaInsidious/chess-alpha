@@ -7,7 +7,7 @@ export function GamePresenter({
 }) {
   return (
     <div className="flex justify-center items-center">
-      <ChessBoard className="mt-10" playerColor={playerColor} />
+      <ChessBoard className="mt-10 gap-0" playerColor={playerColor} />
     </div>
   );
 }
