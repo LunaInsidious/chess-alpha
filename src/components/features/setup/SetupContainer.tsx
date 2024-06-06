@@ -1,10 +1,13 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { SetupPresenter } from "@/components/features/setup/SetupPresenter";
 import { appURL } from "@/config/url";
 import { useAlert } from "@/hooks/alert";
 
 export function SetupContainer() {
+  const [searchParams] = useSearchParams();
+  const color = searchParams.get("color");
+
   const [players, setPlayers] = useState<string[]>(["", "", ""]);
 
   const MIN_USER = 3;
@@ -12,15 +15,6 @@ export function SetupContainer() {
 
   const navigate = useNavigate();
   const { showError } = useAlert();
-
-  const handleClickPlayerColor = (color: "black" | "white" | "random") => {
-    if (color === "random") {
-      const randomColor = Math.random() < 0.5 ? "black" : "white";
-      navigate(`${appURL.game}?player=${randomColor}`);
-    } else {
-      navigate(`${appURL.game}?player=${color}`);
-    }
-  };
 
   const handleBackHome = () => {
     navigate(appURL.home);
@@ -30,6 +24,13 @@ export function SetupContainer() {
     const uniqueElements = new Set(array);
     return uniqueElements.size !== array.length;
   }
+
+  const playersQuery = (): string => {
+    const query = players.reduce((acc: string, player: string) => {
+      return acc + `${player}, `
+    }, '')
+    return query;
+  } 
 
   const handleStart = () => {
     if (hasDuplicates) {
@@ -44,7 +45,7 @@ export function SetupContainer() {
       });
       return;
     }
-    navigate(`${appURL.playerRole}`, { state: { players } });
+    navigate(`${appURL.playerRole}?color=${color}&players=${playersQuery}`);
   };
 
   const handleAddPlayer = () => {

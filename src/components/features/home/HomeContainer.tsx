@@ -64,15 +64,16 @@ export function HomeContainer() {
 
   const handleClickPlayerColor = (color: "black" | "white" | "random") => {
     if (color === "random") {
-      // white, blackのどちらかをランダムに選択
       const randomColor = Math.random() < 0.5 ? "black" : "white";
+      navigate(`${appURL.playerSetup}?color=${randomColor}`);
+    } else {
+      navigate(`${appURL.playerSetup}?color=${color}`);
     }
-    navigate(`${appURL.playerSetup}`);
   };
 
   const handleContinuePrevData = async (isContinue: boolean) => {
     if (isContinue) {
-      navigate(`${appURL.game}?player=${playerColor}`);
+      navigate(`${appURL.game}?color=${playerColor}`);
     } else {
       try {
         await gameDataAPI.delete();
