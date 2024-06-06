@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
+
 import { SetupPresenter } from "@/components/features/setup/SetupPresenter";
 import { appURL } from "@/config/url";
 import { useAlert } from "@/hooks/alert";
@@ -23,23 +24,23 @@ export function SetupContainer() {
   const hasDuplicates = (array: string[]) => {
     const uniqueElements = new Set(array);
     return uniqueElements.size !== array.length;
-  }
+  };
 
   const playersQuery = (): string => {
-    const query = players.reduce((acc: string, player: string) => {
-      return acc + `${player}, `
-    }, '')
+    const query = players.reduce((acc: string, player: string) => acc.concat(`${player}, `), "");
     return query;
-  } 
+  };
+
+  const enableToStart = (): boolean => players.length > MIN_USER && players.length < MAX_USER;
 
   const handleStart = () => {
-    if (hasDuplicates) {
+    if (hasDuplicates(players)) {
       showError({
         message: "プレイター名が重複しています。",
       });
       return;
     }
-    if (enableToStart) {
+    if (!enableToStart()) {
       showError({
         message: "プレイヤーの数を3人から6人にしてください。",
       });
@@ -54,19 +55,15 @@ export function SetupContainer() {
     }
   };
 
-  const enableToStart = (): boolean => {
-    return players.length < MIN_USER || players.length > MAX_USER;
-  }
-
   const showingAddBtn = (index: number): boolean => {
     const isLastIndex = index === players.length - 1;
     return isLastIndex && players.length < MAX_USER;
-  }
+  };
 
   const showingRemoveBtn = (): boolean => {
     if (players.length <= MIN_USER) return false;
     return true;
-  }
+  };
 
   const handleRemovePlayer = (index: number) => {
     if (players.length > 1) {
