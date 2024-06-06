@@ -26,7 +26,7 @@ export function SetupPresenter({
   const pageButtons: {
     text: string;
     onClick: () => void | Promise<void>;
-    variant: "primary" | "secondary";
+    variant: "primary" | "secondary" | "black";
   }[] = [
     {
       text: "ホームに戻る",
