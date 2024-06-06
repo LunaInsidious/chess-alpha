@@ -53,9 +53,14 @@ export function SetupContainer() {
     }
   };
 
-  const showingAddBtn = (index: number) => {
+  const showingAddBtn = (index: number): boolean => {
     const isLastIndex = index === players.length - 1;
     return isLastIndex && players.length < MAX_USER;
+  }
+
+  const showingRemoveBtn = (): boolean => {
+    if (players.length <= MIN_USER) return false;
+    return true;
   }
 
   const handleRemovePlayer = (index: number) => {
@@ -80,6 +85,7 @@ export function SetupContainer() {
       handleBackHome={handleBackHome}
       handleStart={handleStart}
       showingAddBtn={showingAddBtn}
+      showingRemoveBtn={showingRemoveBtn}
     />
   );
 }

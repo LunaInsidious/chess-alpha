@@ -8,6 +8,7 @@ type Props = {
   handleBackHome: () => void;
   handleStart: () => void;
   showingAddBtn: (index: number) => boolean;
+  showingRemoveBtn: () => boolean;
 };
 
 export function SetupPresenter({
@@ -18,6 +19,7 @@ export function SetupPresenter({
   handleBackHome,
   handleStart,
   showingAddBtn,
+  showingRemoveBtn,
 }: Props): JSX.Element {
   const pageButtons: {
     text: string;
@@ -59,13 +61,14 @@ export function SetupPresenter({
                     value={player}
                     onChange={(e) => handlePlayerChange(index, e.target.value)}
                   />
+                  {showingRemoveBtn() && (                  
                   <Button
                     className="w-16 h-8 md:w-24 md:h-12 md:text-l lg:text-xl"
                     onClick={() => handleRemovePlayer(index)}
                     variant="delete"
                   >
                     削除
-                  </Button>
+                  </Button>)}
                 </div>
               </div>
               <div className="flex justify-end w-full">
