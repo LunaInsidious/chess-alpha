@@ -27,6 +27,7 @@ export function SetupPresenter({
     text: string;
     onClick: () => void | Promise<void>;
     variant: "primary" | "secondary" | "black";
+    disabled: boolean;
   }[] = [
     {
       text: "ホームに戻る",
