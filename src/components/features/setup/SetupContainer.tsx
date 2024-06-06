@@ -38,7 +38,7 @@ export function SetupContainer() {
       });
       return;
     }
-    if (players.length < MIN_USER || players.length > MAX_USER) {
+    if (enableToStart) {
       showError({
         message: "プレイヤーの数を3人から6人にしてください。",
       });
@@ -52,6 +52,10 @@ export function SetupContainer() {
       setPlayers([...players, ""]);
     }
   };
+
+  const enableToStart = (): boolean => {
+    return players.length < MIN_USER || players.length > MAX_USER;
+  }
 
   const showingAddBtn = (index: number): boolean => {
     const isLastIndex = index === players.length - 1;
@@ -86,6 +90,7 @@ export function SetupContainer() {
       handleStart={handleStart}
       showingAddBtn={showingAddBtn}
       showingRemoveBtn={showingRemoveBtn}
+      enableToStart={enableToStart}
     />
   );
 }

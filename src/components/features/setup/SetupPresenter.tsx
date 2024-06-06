@@ -9,6 +9,7 @@ type Props = {
   handleStart: () => void;
   showingAddBtn: (index: number) => boolean;
   showingRemoveBtn: () => boolean;
+  enableToStart: () => boolean;
 };
 
 export function SetupPresenter({
@@ -20,6 +21,7 @@ export function SetupPresenter({
   handleStart,
   showingAddBtn,
   showingRemoveBtn,
+  enableToStart,
 }: Props): JSX.Element {
   const pageButtons: {
     text: string;
@@ -34,7 +36,8 @@ export function SetupPresenter({
     {
       text: "スタート",
       onClick: handleStart,
-      variant: "primary",
+      variant: enableToStart ? "primary" : "black",
+      disabled: !enableToStart,
     },
   ];
 
