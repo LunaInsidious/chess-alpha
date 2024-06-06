@@ -47,7 +47,7 @@ export function SetupPresenter({
         </h1>
         <div className="mt-12 gap-2 md:mt-24 lg:mt-32 md:gap-2 flex flex-col items-center">
           {players.map((player, index) => (
-            <div key={index} className="flex flex-col items-center gap-4">
+            <div key={player} className="flex flex-col items-center gap-4">
               <div className="flex gap-4 items-center">
                 <span className="md:text-l lg:text-xl">{`プレイヤー${index + 1}`}</span>
                 <input

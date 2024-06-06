@@ -23,10 +23,21 @@ export function SetupContainer() {
     navigate(appURL.home);
   };
 
+  const hasDuplicates = (array: string[]) => {
+    const uniqueElements = new Set(array);
+    return uniqueElements.size !== array.length;
+  }
+
   const handleStart = () => {
+    if (hasDuplicates) {
+      showError({
+        message: "プレイター名が重複しています。",
+      });
+      return;
+    }
     if (players.length < 3 || players.length > 6) {
       showError({
-        message: "プレイヤーの数は3人から6人の間でなければなりません。",
+        message: "プレイヤーの数を3人から6人にしてください。",
       });
       return;
     }
