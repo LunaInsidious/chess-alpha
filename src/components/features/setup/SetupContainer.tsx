@@ -26,7 +26,7 @@ export function SetupContainer() {
   const handleStart = () => {
     if (players.length < 3 || players.length > 6) {
       showError({
-        message: "プレイヤーの数は3人から6人の間でなければなりません。"
+        message: "プレイヤーの数は3人から6人の間でなければなりません。",
       });
       return;
     }
