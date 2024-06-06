@@ -47,27 +47,29 @@ export function SetupPresenter({
         </h1>
         <div className="mt-12 gap-2 md:mt-24 lg:mt-32 md:gap-2 flex flex-col items-center">
           {players.map((player, index) => (
-            <div key={player} className="flex flex-col items-center gap-4">
-              <div className="flex gap-4 items-center">
+            <div key={player} className="flex flex-col items-center lg:gap-4 md:gap-2">
+              <div className="lg:flex gap-4 md:flex md:flex-col">
                 <span className="md:text-l lg:text-xl">{`プレイヤー${index + 1}`}</span>
-                <input
-                  className="border p-2"
-                  placeholder="プレイヤー名を入力"
-                  value={player}
-                  onChange={(e) => handlePlayerChange(index, e.target.value)}
-                />
-                <Button
-                  className="w-16 h-8 md:w-24 md:h-12 md:text-l lg:text-xl"
-                  onClick={() => handleRemovePlayer(index)}
-                  variant="delete"
-                >
-                  削除
-                </Button>
+                <div className="flex gap-2 items-center">
+                  <input
+                    className="border p-2 h-8 md:h-12"
+                    placeholder="プレイヤー名を入力"
+                    value={player}
+                    onChange={(e) => handlePlayerChange(index, e.target.value)}
+                  />
+                  <Button
+                    className="w-16 h-8 md:w-24 md:h-12 md:text-l lg:text-xl"
+                    onClick={() => handleRemovePlayer(index)}
+                    variant="delete"
+                  >
+                    削除
+                  </Button>
+                </div>
               </div>
               <div className="flex justify-end w-full">
                 {index === players.length - 1 && players.length < 6 && (
                   <Button
-                    className="w-20 h-10 md:w-24 md:h-12 md:text-l lg:text-xl"
+                    className="w-20 h-10 md:w-24 md:h-12 md:text-l lg:text-xl mt-4"
                     onClick={handleAddPlayer}
                     variant="primary"
                   >
