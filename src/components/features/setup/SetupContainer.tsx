@@ -7,6 +7,9 @@ import { useAlert } from "@/hooks/alert";
 export function SetupContainer() {
   const [players, setPlayers] = useState<string[]>(["", "", ""]);
 
+  const MIN_USER = 3;
+  const MAX_USER = 6;
+
   const navigate = useNavigate();
   const { showError } = useAlert();
 
@@ -35,7 +38,7 @@ export function SetupContainer() {
       });
       return;
     }
-    if (players.length < 3 || players.length > 6) {
+    if (players.length < MIN_USER || players.length > MAX_USER) {
       showError({
         message: "プレイヤーの数を3人から6人にしてください。",
       });
@@ -45,10 +48,15 @@ export function SetupContainer() {
   };
 
   const handleAddPlayer = () => {
-    if (players.length < 6) {
+    if (players.length < MAX_USER) {
       setPlayers([...players, ""]);
     }
   };
+
+  const showingAddBtn = (index: number) => {
+    const isLastIndex = index === players.length - 1;
+    return isLastIndex && players.length < MAX_USER;
+  }
 
   const handleRemovePlayer = (index: number) => {
     if (players.length > 1) {
@@ -71,6 +79,7 @@ export function SetupContainer() {
       handlePlayerChange={handlePlayerChange}
       handleBackHome={handleBackHome}
       handleStart={handleStart}
+      showingAddBtn={showingAddBtn}
     />
   );
 }

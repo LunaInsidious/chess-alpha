@@ -7,6 +7,7 @@ type Props = {
   handlePlayerChange: (index: number, name: string) => void;
   handleBackHome: () => void;
   handleStart: () => void;
+  showingAddBtn: (index: number) => boolean;
 };
 
 export function SetupPresenter({
@@ -16,6 +17,7 @@ export function SetupPresenter({
   handlePlayerChange,
   handleBackHome,
   handleStart,
+  showingAddBtn,
 }: Props): JSX.Element {
   const pageButtons: {
     text: string;
@@ -67,7 +69,7 @@ export function SetupPresenter({
                 </div>
               </div>
               <div className="flex justify-end w-full">
-                {index === players.length - 1 && players.length < 6 && (
+                {showingAddBtn(index) && (
                   <Button
                     className="w-20 h-10 md:w-24 md:h-12 md:text-l lg:text-xl mt-4"
                     onClick={handleAddPlayer}
