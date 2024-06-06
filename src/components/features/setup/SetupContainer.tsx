@@ -27,11 +27,15 @@ export function SetupContainer() {
   };
 
   const playersQuery = (): string => {
-    const query = players.reduce((acc: string, player: string) => acc.concat(`${player}, `), "");
+    const query = players.reduce(
+      (acc: string, player: string) => acc.concat(`${player}, `),
+      "",
+    );
     return query;
   };
 
-  const enableToStart = (): boolean => players.length > MIN_USER && players.length < MAX_USER;
+  const enableToStart = (): boolean =>
+    players.length > MIN_USER && players.length < MAX_USER;
 
   const handleStart = () => {
     if (hasDuplicates(players)) {
