@@ -20,7 +20,7 @@ export function SetupContainer() {
   };
 
   const handleBackHome = () => {
-    navigate(`${appURL.home}`);
+    navigate(appURL.home);
   };
 
   const handleStart = () => {
