@@ -43,7 +43,7 @@ export function PlayerRoleContainer() {
     return JSON.parse(savedRoles ?? "null") ?? [];
   });
 
-  const [currentPlayerIndex, setCurrentPlayerIndex] = useState<number>(0);
+  const [currentRoleIndex, setCurrentPlayerIndex] = useState<number>(0);
 
   useEffect(() => {
     if (players.length === 0) {
@@ -58,26 +58,37 @@ export function PlayerRoleContainer() {
     }
   }, [players]);
 
-  useEffect(() => {
-    if (roles.length > 0) {
-      localStorage.setItem("roles", JSON.stringify(roles));
-    }
-  }, [roles]);
-
   const handleNextPlayer = () => {
-    if (currentPlayerIndex < players.length - 1) {
-      setCurrentPlayerIndex(currentPlayerIndex + 1);
+    if (currentRoleIndex < players.length - 1) {
+      setCurrentPlayerIndex(currentRoleIndex + 1);
     } else {
       // 全員の役職を見せ終わったら、次の画面へ遷移
       navigate(`${appURL.game}?color=${color}&players=${playersQuery}`);
     }
   };
 
+  const [showRole, setShowRole] = useState(false);
+
+  const handleShowRole = () => {
+    if (!showRole) {
+      setShowRole(true);
+    } else {
+      setShowRole(false);
+    }
+  };
+
+  const handleShowRoleAndNextPlayer = () => {
+    handleShowRole();
+    handleNextPlayer();
+  };
+
   return (
     <PlayerRolePresenter
-      player={players[currentPlayerIndex]}
-      role={roles[currentPlayerIndex]}
-      handleNextPlayer={handleNextPlayer}
+      player={players[currentRoleIndex]}
+      role={roles[currentRoleIndex]}
+      showRole={showRole}
+      handleShowRole={handleShowRole}
+      handleShowRoleAndNextPlayer={handleShowRoleAndNextPlayer}
     />
   );
 }
