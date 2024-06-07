@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button/Button";
+import { generateUniqueIdentifier } from '@/utils/randomId';
 
 type Props = {
   players: string[];
@@ -30,7 +31,7 @@ export function SetupPresenter({
     disabled?: boolean;
   }[] = [
     {
-      text: "ホームに戻る",
+      text: "戻る",
       onClick: handleBackHome,
       variant: "secondary",
     },
@@ -53,24 +54,24 @@ export function SetupPresenter({
         <h1 className="font-serif text-center text-h3 md:text-h1">
           プレイヤーを入力
         </h1>
-        <div className="mt-12 gap-2 md:mt-24 lg:mt-32 md:gap-2 flex flex-col items-center">
+        <div className="mt-12 gap-2 md:mt-24 lg:mt-12 md:gap-2 flex flex-col items-center">
           {players.map((player, index) => (
             <div
-              key={player}
-              className="flex flex-col items-center lg:gap-4 md:gap-2"
+              key={generateUniqueIdentifier()}
+              className="flex flex-col items-center lg:gap-2 md:gap-2"
             >
-              <div className="lg:flex gap-4 md:flex md:flex-col">
+              <div className="lg:flex gap-2 md:flex md:flex-col">
                 <span className="md:text-l lg:text-xl">{`プレイヤー${index + 1}`}</span>
                 <div className="flex gap-2 items-center">
                   <input
-                    className="border p-2 h-8 md:h-12"
+                    className="border p-2 h-8 md:h-10"
                     placeholder="プレイヤー名を入力"
                     value={player}
                     onChange={(e) => handlePlayerChange(index, e.target.value)}
                   />
                   {showingRemoveBtn() && (
                     <Button
-                      className="w-16 h-8 md:w-24 md:h-12 md:text-l lg:text-xl"
+                      className="w-20 h-8 md:w-20 md:h-12 md:text-l lg:text-xl"
                       onClick={() => handleRemovePlayer(index)}
                       variant="delete"
                     >
@@ -79,10 +80,10 @@ export function SetupPresenter({
                   )}
                 </div>
               </div>
-              <div className="flex justify-end w-full">
+              <div className="flex justify-center w-full">
                 {showingAddBtn(index) && (
                   <Button
-                    className="w-20 h-10 md:w-24 md:h-12 md:text-l lg:text-xl mt-4"
+                    className="w-48 h-10 md:w-48 md:h-12 md:text-l lg:text-l mt-4"
                     onClick={handleAddPlayer}
                     variant="primary"
                   >
@@ -92,10 +93,10 @@ export function SetupPresenter({
               </div>
             </div>
           ))}
-          <div className="mt-12 gap-6 md:mt-24 lg:mt-32 md:gap-10 flex flex-col items-center">
+          <div className="mt-4 gap-2 md:mt-4 lg:mt-4 md:gap-2 flex items-center">
             {pageButtons.map((button) => (
               <Button
-                className="w-48 h-10 md:w-96 md:h-16 md:text-2xl lg:text-3xl"
+                className="w-24 h-10 md:w-24 lg:w-24 md:h-12 md:text-l lg:text-l"
                 key={button.text}
                 onClick={button.onClick}
                 variant={button.variant}
