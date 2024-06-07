@@ -4,7 +4,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { PlayerRolePresenter } from "@/components/features/playerRole/PlayerRolePresenter";
 import { appURL } from "@/config/url";
 import { useAlert } from "@/hooks/alert";
-import { generateRandomInteger } from "@/utils/typeGuard";
+import { generateRandomInteger, isArray, isString } from "@/utils/typeGuard";
 
 export function PlayerRoleContainer() {
   const navigate = useNavigate();
@@ -30,7 +30,7 @@ export function PlayerRoleContainer() {
 
   const color = queryParams.get("color");
 
-  const players =
+  const playerList =
     playersQuery !== null
       ? playersQuery
           .split(",")
@@ -38,57 +38,64 @@ export function PlayerRoleContainer() {
           .map((player) => decodeURIComponent(player))
       : [];
 
-  const [roles, setRoles] = useState<string[]>(() => {
-    const savedRoles = localStorage.getItem("roles");
-    return JSON.parse(savedRoles ?? "null") ?? [];
-  });
+  const [roles, setRoles] = useState<string[]>(() =>
+    (() => {
+      const savedRoles = localStorage.getItem("roles");
+      const parsedItems = JSON.parse(savedRoles ?? "null");
 
-  const [currentRoleIndex, setCurrentPlayerIndex] = useState<number>(0);
+      if (isArray(parsedItems, isString)) {
+        return parsedItems;
+      }
+
+      return [];
+    })(),
+  );
+
+  const [currentIndex, setCurrentPlayerIndex] = useState<number>(0);
+
+  const handleRoleAssignment = (players: string[]) => {
+    const assignedRoles = assignRoles(players);
+    setRoles(assignedRoles);
+    localStorage.setItem("roles", JSON.stringify(assignedRoles)); // localStorageに保存
+  };
 
   useEffect(() => {
-    if (players.length === 0) {
+    if (playerList.length === 0) {
       showError({
         message: "プレイヤーが指定されていません。",
       });
       navigate(appURL.playerSetup);
     } else if (roles.length === 0) {
-      const assignedRoles = assignRoles(players);
-      setRoles(assignedRoles);
-      localStorage.setItem("roles", JSON.stringify(assignedRoles)); // localStorageに保存
+      handleRoleAssignment(playerList);
     }
-  }, [players]);
+  }, [playerList]);
 
-  const handleNextPlayer = () => {
-    if (currentRoleIndex < players.length - 1) {
-      setCurrentPlayerIndex(currentRoleIndex + 1);
-    } else {
-      // 全員の役職を見せ終わったら、次の画面へ遷移
-      navigate(`${appURL.game}?color=${color}&players=${playersQuery}`);
-    }
-  };
-
-  const [showRole, setShowRole] = useState(false);
+  const [isShowingRole, setShowRole] = useState(false);
 
   const handleShowRole = () => {
-    if (!showRole) {
-      setShowRole(true);
-    } else {
+    setShowRole(true);
+  };
+
+  const handleNextPlayer = () => {
+    if (currentIndex < playerList.length - 1) {
       setShowRole(false);
+      setCurrentPlayerIndex(currentIndex + 1);
     }
   };
 
-  const handleShowRoleAndNextPlayer = () => {
-    handleShowRole();
-    handleNextPlayer();
+  const handleStartGame = () => {
+    navigate(`${appURL.game}?color=${color}&players=${playersQuery}`);
   };
 
   return (
     <PlayerRolePresenter
-      player={players[currentRoleIndex]}
-      role={roles[currentRoleIndex]}
-      showRole={showRole}
+      currentPlayer={playerList[currentIndex]}
+      currentRole={roles[currentIndex]}
+      showRole={isShowingRole}
       handleShowRole={handleShowRole}
-      handleShowRoleAndNextPlayer={handleShowRoleAndNextPlayer}
+      handleNextPlayer={handleNextPlayer}
+      handleStartGame={handleStartGame}
+      isLastPlayer={currentIndex === playerList.length - 1}
     />
   );
 }
