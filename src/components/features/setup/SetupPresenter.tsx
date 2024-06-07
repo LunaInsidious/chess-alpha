@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button/Button";
-import { generateUniqueIdentifier } from '@/utils/randomId';
+import { generateUniqueIdentifier } from "@/utils/randomId";
 
 type Props = {
   players: string[];
@@ -38,7 +38,7 @@ export function SetupPresenter({
     {
       text: "スタート",
       onClick: handleStart,
-      variant: enableToStart() ? "primary" : "black",
+      variant: "primary",
       disabled: !enableToStart(),
     },
   ];
@@ -52,7 +52,7 @@ export function SetupPresenter({
       />
       <div className="mt-10">
         <h1 className="font-serif text-center text-h3 md:text-h1">
-          プレイヤーを入力
+          プレイヤー名を入力
         </h1>
         <div className="mt-12 gap-2 md:mt-24 lg:mt-12 md:gap-2 flex flex-col items-center">
           {players.map((player, index) => (
@@ -69,15 +69,14 @@ export function SetupPresenter({
                     value={player}
                     onChange={(e) => handlePlayerChange(index, e.target.value)}
                   />
-                  {showingRemoveBtn() && (
-                    <Button
-                      className="w-20 h-8 md:w-20 md:h-12 md:text-l lg:text-xl"
-                      onClick={() => handleRemovePlayer(index)}
-                      variant="delete"
-                    >
-                      削除
-                    </Button>
-                  )}
+                  <Button
+                    className="w-20 h-8 md:w-20 md:h-12 md:text-l lg:text-xl bg-red-500 text-white"
+                    onClick={() => handleRemovePlayer(index)}
+                    disabled={!showingRemoveBtn()}
+                    variant="delete"
+                  >
+                    削除
+                  </Button>
                 </div>
               </div>
               <div className="flex justify-center w-full">

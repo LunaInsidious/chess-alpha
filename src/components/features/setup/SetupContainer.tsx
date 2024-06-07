@@ -27,20 +27,18 @@ export function SetupContainer() {
   };
 
   const playersQuery = (): string => {
-    const query = players.reduce(
-      (acc: string, player: string) => acc.concat(`${player}, `),
-      "",
-    );
-    return query;
+    const encodedPlayers = players.map((player) => encodeURIComponent(player));
+
+    return encodedPlayers.join(", ");
   };
 
   const enableToStart = (): boolean =>
-    players.length > MIN_USER && players.length < MAX_USER;
+    players.length >= MIN_USER && players.length <= MAX_USER;
 
   const handleStart = () => {
     if (hasDuplicates(players)) {
       showError({
-        message: "プレイター名が重複しています。",
+        message: "プレイヤー名が重複しています。",
       });
       return;
     }
