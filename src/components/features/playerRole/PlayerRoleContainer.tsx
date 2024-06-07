@@ -32,7 +32,7 @@ export function PlayerRoleContainer() {
     }
 
     throw new Error("人狼の人数がプレイヤー数を超えています。");
-    };
+  };
 
   const queryParams = new URLSearchParams(location.search);
 
