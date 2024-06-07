@@ -11,27 +11,17 @@ export function PlayerRoleContainer() {
   const location = useLocation();
   const { showError } = useAlert();
 
-  const shuffleArray = (array: string[]): string[] => {
-    const shuffledArray = [...array];
-    for (let i = shuffledArray.length - 1; i > 0; i -= 1) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [shuffledArray[i], shuffledArray[j]] = [
-        shuffledArray[j],
-        shuffledArray[i],
-      ];
-    }
-    return shuffledArray;
-  };
-
   const assignRoles = (players: string[]) => {
-    const roles = Array(players.length).fill("市民");
-    const randomIndex = generateRandomNumber(players.length - 1);
-    if (roles.length > randomIndex) {
-      roles[randomIndex] = "人狼";
-      return shuffleArray(roles);
+    if (players.length >= 2 && players.length <= 6) {
+      const roles = Array(players.length).fill("市民");
+      const randomIndex = generateRandomNumber(players.length - 1);
+      if (roles.length > randomIndex) {
+        roles[randomIndex] = "人狼";
+        return roles;
+      }
     }
 
-    throw new Error("人狼の人数がプレイヤー数を超えています。");
+    throw new Error("予期しないエラー");
   };
 
   const queryParams = new URLSearchParams(location.search);
