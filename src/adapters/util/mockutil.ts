@@ -13,7 +13,3 @@ export function generateRandomString(maxLength: number) {
   }
   return result;
 }
-
-export function generateRandomNumber(maxNumber: number) {
-  return Math.floor(Math.random() * maxNumber); // Generate a random length between 0 and maxNumber
-}
