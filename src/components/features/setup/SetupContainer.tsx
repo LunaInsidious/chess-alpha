@@ -31,7 +31,7 @@ export function SetupContainer() {
     navigate(appURL.home);
   };
 
-  const hasDuplicates = (array: string[]) => {
+  const hasDuplicates = (array: Player[]) => {
     const uniqueElements = new Set(array);
     return uniqueElements.size !== array.length;
   };
@@ -85,7 +85,7 @@ export function SetupContainer() {
 
   const handlePlayerChange = (index: number, name: string) => {
     const newPlayers = [...players];
-    newPlayers[index] = name;
+    newPlayers[index].name = name;
     setPlayers(newPlayers);
   };
 
