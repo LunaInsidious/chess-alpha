@@ -6,6 +6,7 @@ type Props = {
   showRole: boolean;
   handleShowRole: () => void;
   handleNextPlayer: () => void;
+  handlePreviousPlayer: () => void;
   handleStartGame: () => void;
   isLastPlayer: boolean;
 };
@@ -16,6 +17,7 @@ export function PlayerRolePresenter({
   showRole,
   handleShowRole,
   handleNextPlayer,
+  handlePreviousPlayer,
   handleStartGame,
   isLastPlayer,
 }: Props): JSX.Element {
@@ -56,6 +58,15 @@ export function PlayerRolePresenter({
                 variant="primary"
               >
                 {isLastPlayer ? "ゲームを開始する" : "次の人の役職を見る"}
+              </Button>
+            </div>
+            <div className="flex justify-end w-full mt-4">
+              <Button
+                className="flex items-center gap-3 w-full"
+                onClick={handlePreviousPlayer}
+                variant="secondary"
+              >
+                戻る
               </Button>
             </div>
           </div>

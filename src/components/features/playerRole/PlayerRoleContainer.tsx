@@ -87,6 +87,15 @@ export function PlayerRoleContainer() {
     navigate(`${appURL.game}?color=${color}&players=${playersQuery}`);
   };
 
+  const handlePreviousPlayer = () => {
+    if (currentIndex > 0) {
+      setShowRole(false);
+      setCurrentPlayerIndex(currentIndex - 1);
+    } else if (currentIndex === 0) {
+      navigate(appURL.playerSetup);
+    }
+  };
+
   return (
     <PlayerRolePresenter
       currentPlayer={playerList[currentIndex]}
@@ -94,6 +103,7 @@ export function PlayerRoleContainer() {
       showRole={isShowingRole}
       handleShowRole={handleShowRole}
       handleNextPlayer={handleNextPlayer}
+      handlePreviousPlayer={handlePreviousPlayer}
       handleStartGame={handleStartGame}
       isLastPlayer={currentIndex === playerList.length - 1}
     />
