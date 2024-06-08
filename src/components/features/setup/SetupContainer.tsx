@@ -7,7 +7,7 @@ import { appURL } from "@/config/url";
 import { useAlert } from "@/hooks/alert";
 
 type Player = {
-  id: number;
+  id: string;
   name: string;
 };
 
