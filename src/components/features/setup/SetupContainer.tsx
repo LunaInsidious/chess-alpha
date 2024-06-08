@@ -1,15 +1,25 @@
 import { useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 
+import { generateUniqueIdentifier } from "@/utils/randomId";
 import { SetupPresenter } from "@/components/features/setup/SetupPresenter";
 import { appURL } from "@/config/url";
 import { useAlert } from "@/hooks/alert";
+
+type Player = {
+  id: number;
+  name: string;
+};
 
 export function SetupContainer() {
   const [searchParams] = useSearchParams();
   const color = searchParams.get("color");
 
-  const [players, setPlayers] = useState<string[]>(["", "", ""]);
+  const [players, setPlayers] = useState<Player[]>([
+    { id: generateUniqueIdentifier(), name: "" },
+    { id: generateUniqueIdentifier(), name: "" },
+    { id: generateUniqueIdentifier(), name: "" },
+  ]);
 
   const MIN_USER = 3;
   const MAX_USER = 6;
@@ -27,9 +37,11 @@ export function SetupContainer() {
   };
 
   const playersQuery = (): string => {
-    const encodedPlayers = players.map((player) => encodeURIComponent(player));
+    const encodedPlayers = players.map((player) =>
+      encodeURIComponent(player.name),
+    );
 
-    return encodedPlayers.join(", ");
+    return encodedPlayers.join(",");
   };
 
   const enableToStart = (): boolean =>
@@ -53,13 +65,12 @@ export function SetupContainer() {
 
   const handleAddPlayer = () => {
     if (players.length < MAX_USER) {
-      setPlayers([...players, ""]);
+      setPlayers([...players, { id: generateUniqueIdentifier(), name: "" }]);
     }
   };
 
-  const showingAddBtn = (index: number): boolean => {
-    const isLastIndex = index === players.length - 1;
-    return isLastIndex && players.length < MAX_USER;
+  const showingAddBtn = (): boolean => {
+    return players.length < MAX_USER;
   };
 
   const showingRemoveBtn = (): boolean => {
