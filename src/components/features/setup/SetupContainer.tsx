@@ -1,10 +1,10 @@
 import { useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 
-import { generateUniqueIdentifier } from "@/utils/randomId";
 import { SetupPresenter } from "@/components/features/setup/SetupPresenter";
 import { appURL } from "@/config/url";
 import { useAlert } from "@/hooks/alert";
+import { generateUniqueIdentifier } from "@/utils/randomId";
 
 type Player = {
   id: string;
@@ -69,9 +69,7 @@ export function SetupContainer() {
     }
   };
 
-  const showingAddBtn = (): boolean => {
-    return players.length < MAX_USER;
-  };
+  const showingAddBtn: boolean = players.length < MAX_USER;
 
   const showingRemoveBtn = (): boolean => {
     if (players.length <= MIN_USER) return false;

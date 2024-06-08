@@ -2,12 +2,12 @@ import { Button } from "@/components/ui/button/Button";
 
 type Props = {
   players: string[];
+  showingAddBtn: boolean;
   handleAddPlayer: () => void;
   handleRemovePlayer: (index: number) => void;
   handlePlayerChange: (index: number, name: string) => void;
   handleBackHome: () => void;
   handleStart: () => void;
-  showingAddBtn: () => boolean;
   showingRemoveBtn: () => boolean;
   enableToStart: () => boolean;
 };
@@ -67,7 +67,9 @@ export function SetupPresenter({
                       className="border p-2 h-8 md:h-10"
                       placeholder="プレイヤー名を入力"
                       value={player.name}
-                      onChange={(e) => handlePlayerChange(index, e.target.value)}
+                      onChange={(e) =>
+                        handlePlayerChange(index, e.target.value)
+                      }
                     />
                     <Button
                       className="w-20 h-8 md:w-20 md:h-12 md:text-l lg:text-xl bg-red-500 text-white"
@@ -87,7 +89,7 @@ export function SetupPresenter({
               className="w-48 h-10 md:w-48 md:h-12 md:text-l lg:text-l mt-4"
               onClick={handleAddPlayer}
               variant="primary"
-              disabled={!showingAddBtn()}
+              disabled={!showingAddBtn}
             >
               + 追加
             </Button>
