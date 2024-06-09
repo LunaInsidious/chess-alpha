@@ -4,25 +4,17 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 import { SetupPresenter } from "@/components/features/setup/SetupPresenter";
 import { appURL } from "@/config/url";
 import { useAlert } from "@/hooks/alert";
-import { generateUniqueIdentifier } from "@/utils/randomId";
-
-type Player = {
-  id: string;
-  name: string;
-};
+import { createPlayer, createInitPlayer } from "@/utils/player";
+import type { Player } from "@/utils/player";
 
 export function SetupContainer() {
   const [searchParams] = useSearchParams();
   const color = searchParams.get("color");
 
-  const [players, setPlayers] = useState<Player[]>([
-    { id: generateUniqueIdentifier(), name: "" },
-    { id: generateUniqueIdentifier(), name: "" },
-    { id: generateUniqueIdentifier(), name: "" },
-  ]);
-
   const MIN_USER = 3;
   const MAX_USER = 6;
+
+  const [players, setPlayers] = useState<Player[]>(createInitPlayer(MIN_USER));
 
   const navigate = useNavigate();
   const { showError } = useAlert();
@@ -65,7 +57,7 @@ export function SetupContainer() {
 
   const handleAddPlayer = () => {
     if (players.length < MAX_USER) {
-      setPlayers([...players, { id: generateUniqueIdentifier(), name: "" }]);
+      setPlayers([...players, createPlayer()]);
     }
   };
 

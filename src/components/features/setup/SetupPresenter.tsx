@@ -1,7 +1,8 @@
 import { Button } from "@/components/ui/button/Button";
+import { Player } from "@/utils/player";
 
 type Props = {
-  players: string[];
+  players: Player[];
   showingAddBtn: boolean;
   handleAddPlayer: () => void;
   handleRemovePlayer: (index: number) => void;
