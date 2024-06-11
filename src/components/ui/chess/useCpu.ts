@@ -115,7 +115,7 @@ export const useCpu = ({
       const promotionCandidates = ["Q", "R", "B", "N"];
       const promotionPieceType =
         promotionCandidates[
-        Math.floor(Math.random() * promotionCandidates.length)
+          Math.floor(Math.random() * promotionCandidates.length)
         ];
       const newBoardStatusInPromotion = [
         ...newBoardStatusInCpuTurn.board.map((row) => [...row]),

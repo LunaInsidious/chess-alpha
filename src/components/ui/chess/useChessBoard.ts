@@ -43,9 +43,9 @@ export const useChessBoard = ({ playerColor }: ChessBoardHookProps) => {
   // ポーンのプロモーションの場合、プロモーションの処理を行い、その後にCPUのターンに移るための情報
   const [promotionInfo, setPromotionInfo] = useState<
     | {
-      mass: Position;
-      callback: (board: Board) => Promise<void>;
-    }
+        mass: Position;
+        callback: (board: Board) => Promise<void>;
+      }
     | undefined
   >(undefined);
 
@@ -152,7 +152,7 @@ export const useChessBoard = ({ playerColor }: ChessBoardHookProps) => {
     const piece = boardStatus.board[position.y][position.x];
 
     // 駒のない場所や相手の駒を選択した場合は何もしない
-    if (isNullOrUndefined(piece) || piece.color !== playerColor) return
+    if (isNullOrUndefined(piece) || piece.color !== playerColor) return;
 
     // 駒をすでに選択していた場合
     if (!isNullOrUndefined(selectedPiecePosition)) {
@@ -183,8 +183,7 @@ export const useChessBoard = ({ playerColor }: ChessBoardHookProps) => {
       if (escapeMoves.length <= 0) {
         showAlert({
           severity: "warning",
-          message:
-            "チェックされています。王手を回避する手を選択してください。",
+          message: "チェックされています。王手を回避する手を選択してください。",
           timeout: 3000,
         });
       } else {
@@ -212,7 +211,11 @@ export const useChessBoard = ({ playerColor }: ChessBoardHookProps) => {
   };
 
   const handleMovePiece = async (to: Position) => {
-    if (isNullOrUndefined(playerColor) || isNullOrUndefined(selectedPiecePosition)) return;
+    if (
+      isNullOrUndefined(playerColor) ||
+      isNullOrUndefined(selectedPiecePosition)
+    )
+      return;
     const piece =
       boardStatus.board[selectedPiecePosition.y][selectedPiecePosition.x];
     if (isNullOrUndefined(piece)) {
@@ -304,9 +307,7 @@ export const useChessBoard = ({ playerColor }: ChessBoardHookProps) => {
     handleSelectPiece(position);
   };
 
-  const handleClickPromotion = (
-    type: "Q" | "R" | "B" | "N",
-  ) => {
+  const handleClickPromotion = (type: "Q" | "R" | "B" | "N") => {
     if (isNullOrUndefined(promotionInfo)) return;
     const { mass, callback } = promotionInfo;
     const piece = boardStatus.board[mass.y][mass.x];

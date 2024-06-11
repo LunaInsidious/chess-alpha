@@ -1,8 +1,9 @@
 import {
   isArray,
-  isDateOrUndefined,
-  isFileOrUndefined,
+  isDateOrNullOrUndefined,
+  isFileOrNullOrUndefined,
   isKeysOf,
+  isNullOrUndefined,
   isNumber,
   isString,
   isStringOrNumberOrSymbol,
@@ -59,6 +60,31 @@ describe("Type Guard Tests", () => {
     );
   });
 
+  describe("isNullOrUndefined", () => {
+    const testData: { value: unknown; expected: boolean }[] = [
+      { value: "", expected: false },
+      { value: new Date(), expected: false },
+      { value: new File([""], "filename"), expected: false },
+      { value: 123, expected: false },
+      { value: sym1, expected: false },
+      {
+        value: { key1: "string", key2: 1, key3: undefined },
+        expected: false,
+      },
+      { value: [new Date(), undefined], expected: false },
+      { value: undefined, expected: true },
+      { value: null, expected: true },
+      { value: true, expected: false },
+      { value: () => {}, expected: false },
+    ];
+    it.each(testData)(
+      `inputが$valueの時、$expectedを返す`,
+      ({ value, expected }) => {
+        expect(isNullOrUndefined(value)).toBe(expected);
+      },
+    );
+  });
+
   describe("isDateOrUndefined", () => {
     const testData: { value: unknown; expected: boolean }[] = [
       { value: "", expected: false },
@@ -79,7 +105,7 @@ describe("Type Guard Tests", () => {
     it.each(testData)(
       `inputが$valueの時、$expectedを返す`,
       ({ value, expected }) => {
-        expect(isDateOrUndefined(value)).toBe(expected);
+        expect(isDateOrNullOrUndefined(value)).toBe(expected);
       },
     );
   });
@@ -107,7 +133,7 @@ describe("Type Guard Tests", () => {
     it.each(testData)(
       `inputが$valueの時、$expectedを返す`,
       ({ value, expected }) => {
-        expect(isFileOrUndefined(value)).toBe(expected);
+        expect(isFileOrNullOrUndefined(value)).toBe(expected);
       },
     );
   });

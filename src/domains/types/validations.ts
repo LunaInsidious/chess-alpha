@@ -13,7 +13,8 @@ export const emailValidate = (value: string): boolean => {
   return !regex.test(value) && value !== "";
 };
 
-export const dateValidate = (value: Date): boolean => isNullOrUndefined(value.getDate());
+export const dateValidate = (value: Date): boolean =>
+  isNullOrUndefined(value.getDate());
 
 export const lengthValidate = (value: string[] | number[]): boolean =>
   value.length === 0;
