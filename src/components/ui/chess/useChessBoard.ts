@@ -305,7 +305,7 @@ export const useChessBoard = ({ playerColor }: ChessBoardHookProps) => {
   };
 
   const handleClickPromotion = (
-    type: "Queen" | "Rook" | "Bishop" | "Knight",
+    type: "Q" | "R" | "B" | "N",
   ) => {
     if (isNullOrUndefined(promotionInfo)) return;
     const { mass, callback } = promotionInfo;
@@ -316,18 +316,9 @@ export const useChessBoard = ({ playerColor }: ChessBoardHookProps) => {
     if (isNullOrUndefined(playerColor)) {
       throw new Error("プレイヤーの色が設定されていません。");
     }
-    const typeDict: Record<
-      "Queen" | "Rook" | "Bishop" | "Knight",
-      "Q" | "R" | "B" | "N"
-    > = {
-      Queen: "Q",
-      Rook: "R",
-      Bishop: "B",
-      Knight: "N",
-    };
     const newBoard = promotion(
       boardStatus.board,
-      typeDict[type],
+      type,
       piece,
       mass,
       playerColor,

@@ -2,7 +2,7 @@ import { Modal } from "@/components/ui/Modal";
 import { Button } from "@/components/ui/button/Button";
 
 type PromotionModalProps = {
-  handleClickPromotion: (piece: "Queen" | "Rook" | "Bishop" | "Knight") => void;
+  handleClickPromotion: (piece: "Q" | "R" | "B" | "N") => void;
   playerColor?: "white" | "black";
 };
 
@@ -35,7 +35,7 @@ export function PromotionModal({
             <Button
               className="mt-2"
               variant="secondary"
-              onClick={() => handleClickPromotion(piece)}
+              onClick={() => handleClickPromotion(typeDict[piece])}
             >
               <img
                 className="w-16 md:w-24 aspect-square"
