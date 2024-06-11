@@ -4,6 +4,7 @@ import Cookies from "js-cookie";
 import { Token, newToken } from "@/domains/auth/entity";
 import { validateAuthInfo } from "@/domains/auth/validation";
 import { Auth } from "@/usecases/ports/auth";
+import { isNullOrUndefined } from "@/utils/typeGuard";
 
 export const cookiesKey = "AuthInfo";
 
@@ -27,7 +28,7 @@ export function useAuthDriverForAxios(): Auth {
     },
     getAuthInfo(): Token {
       const cookie = decodeURIComponent(<string>Cookies.get(cookiesKey));
-      if (cookie == null) {
+      if (isNullOrUndefined(cookie)) {
         this.resetAuthInfo();
         return newToken();
       }

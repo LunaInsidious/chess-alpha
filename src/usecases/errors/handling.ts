@@ -22,10 +22,11 @@ import {
   UnauthorizedError,
   unauthorizedError,
 } from "@/usecases/errors/unauthorizedError";
+import { isNullOrUndefined } from "@/utils/typeGuard";
 
 // 400
 export const isBadRequestError = (e: any): e is BadRequestError => {
-  if (e != null) {
+  if (!isNullOrUndefined(e)) {
     return e.name === badRequestError;
   }
   return false;
@@ -33,7 +34,7 @@ export const isBadRequestError = (e: any): e is BadRequestError => {
 
 // 401
 export const isUnauthorizedError = (e: any): e is UnauthorizedError => {
-  if (e != null) {
+  if (!isNullOrUndefined(e)) {
     return e.name === unauthorizedError;
   }
   return false;
@@ -41,7 +42,7 @@ export const isUnauthorizedError = (e: any): e is UnauthorizedError => {
 
 // 403
 export const isForbiddenError = (e: any): e is ForbiddenError => {
-  if (e != null) {
+  if (!isNullOrUndefined(e)) {
     return e.name === forbiddenError;
   }
   return false;
@@ -49,7 +50,7 @@ export const isForbiddenError = (e: any): e is ForbiddenError => {
 
 // 404
 export const isNotFoundError = (e: any): e is NotFoundError => {
-  if (e != null) {
+  if (!isNullOrUndefined(e)) {
     return e.name === notFoundError;
   }
   return false;
@@ -57,7 +58,7 @@ export const isNotFoundError = (e: any): e is NotFoundError => {
 
 // 408
 export const isRequestTimeout = (e: any): e is RequestTimeoutError => {
-  if (e != null) {
+  if (!isNullOrUndefined(e)) {
     return e.name === requestTimeoutError;
   }
   return false;
@@ -65,14 +66,14 @@ export const isRequestTimeout = (e: any): e is RequestTimeoutError => {
 
 // 409
 export const isConflict = (e: any): e is ConflictError => {
-  if (e != null) {
+  if (!isNullOrUndefined(e)) {
     return e.name === conflictError;
   }
   return false;
 };
 
 export const isTooManyRequest = (e: any): e is TooManyRequestsError => {
-  if (e != null) {
+  if (!isNullOrUndefined(e)) {
     return e.name === tooManyRequestsError;
   }
   return false;
@@ -80,7 +81,7 @@ export const isTooManyRequest = (e: any): e is TooManyRequestsError => {
 
 // 500
 export const isInternalServerError = (e: any): e is InternalServerError => {
-  if (e != null) {
+  if (!isNullOrUndefined(e)) {
     return e.name === internalServerError;
   }
   return false;

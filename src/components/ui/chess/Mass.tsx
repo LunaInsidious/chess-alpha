@@ -1,4 +1,5 @@
 import { Piece, Position } from "@/domains/piece/piece";
+import { isNullOrUndefined } from "@/utils/typeGuard";
 
 type MassProps = {
   colIndex: number;
@@ -22,15 +23,15 @@ export function Mass({
   handleClickMass,
 }: MassProps) {
   const isSelectedMass =
-    selectedPosition != null &&
+    !isNullOrUndefined(selectedPosition) &&
     selectedPosition.x === colIndex &&
     selectedPosition.y === rowIndex;
   const isMovableMass = movablePositions.some(
     (pos) => pos.x === colIndex && pos.y === rowIndex,
   );
   const isClickable =
-    (selectedPosition != null && isMovableMass) ||
-    (selectedPosition == null && piece?.color === playerColor);
+    (!isNullOrUndefined(selectedPosition) && isMovableMass) ||
+    (isNullOrUndefined(selectedPosition) && piece?.color === playerColor);
   return (
     <button
       type="button"
@@ -46,7 +47,7 @@ export function Mass({
       ${isMovableMass ? "border-2 lg:border-4 border-dashed border-red-400" : ""}
       ${isClickable ? "cursor-pointer" : "cursor-default"}`}
     >
-      {piece != null && (
+      {!isNullOrUndefined(piece) && (
         <img src={piece.imageUrl} alt={piece.id} className="object-fill" />
       )}
     </button>

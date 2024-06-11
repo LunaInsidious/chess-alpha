@@ -5,6 +5,7 @@ import { useGameDataAPI } from "@/adapters/api/game/api";
 import { HomePresenter } from "@/components/features/home/HomePresenter";
 import { appURL } from "@/config/url";
 import { useAlert } from "@/hooks/alert";
+import { isNullOrUndefined } from "@/utils/typeGuard";
 
 export function HomeContainer() {
   const [isRuleBookOpen, setIsRuleBookOpen] = useState(false);
@@ -26,7 +27,7 @@ export function HomeContainer() {
   const handleClickCPUBattle = async () => {
     try {
       const latest = await gameDataAPI.findLatest();
-      if (latest == null) {
+      if (isNullOrUndefined(latest)) {
         setModalMode("cpu");
       } else {
         setModalMode("prevData");

@@ -6,6 +6,7 @@ import { ResultModal } from "@/components/ui/chess/modal/Result";
 import { RetireModal } from "@/components/ui/chess/modal/Retire";
 import { RuleBook } from "@/components/ui/chess/modal/RuleBook";
 import { useChessBoard } from "@/components/ui/chess/useChessBoard";
+import { isNullOrUndefined } from "@/utils/typeGuard";
 
 type ChessBoardProps = {
   className?: string;
@@ -36,10 +37,8 @@ export function ChessBoard({ playerColor, className = "" }: ChessBoardProps) {
   });
 
   const isResultModalOpen =
-    gameStatus.player !== "playing" &&
-    gameStatus.enemy !== "playing" &&
-    gameStatus.player !== "checked" &&
-    gameStatus.enemy !== "checked";
+    (gameStatus.player !== "playing" && gameStatus.player !== "checked") ||
+    (gameStatus.enemy !== "playing" && gameStatus.enemy !== "checked");
 
   return (
     <div className="flex flex-col">
@@ -128,7 +127,7 @@ export function ChessBoard({ playerColor, className = "" }: ChessBoardProps) {
           </div>
         </Card>
       )}
-      {promotionInfo != null && (
+      {!isNullOrUndefined(promotionInfo) && (
         <PromotionModal
           handleClickPromotion={handleClickPromotion}
           playerColor={playerColor}

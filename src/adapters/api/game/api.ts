@@ -6,6 +6,7 @@ import {
 } from "@/adapters/api/game/schema";
 import { Board, BoardStatus } from "@/domains/piece/piece";
 import { GameAPI } from "@/usecases/ports/game";
+import { isNullOrUndefined } from "@/utils/typeGuard";
 
 // indexedDBにゲームデータを保存する
 const db = new GameDatabase();
@@ -42,7 +43,7 @@ export const useGameDataAPI = (): GameAPI => ({
     { gameData: BoardStatus; playerColor: "white" | "black" } | undefined
   > => {
     const latestGame = await db.game.orderBy("turn").last();
-    if (latestGame == null) return undefined;
+    if (isNullOrUndefined(latestGame)) return undefined;
     const boardFormatted = convertBoardInDBToEntity(latestGame.board);
     return {
       gameData: {

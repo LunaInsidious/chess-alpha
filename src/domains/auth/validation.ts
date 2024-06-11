@@ -3,6 +3,7 @@ import { t as translation } from "i18next";
 import { ErrorObject, error, noError } from "@/domains/types/errorObject";
 import { Validations } from "@/domains/types/validationObject";
 import { LoginReq } from "@/usecases/dto/auth";
+import { isNullOrUndefined } from "@/utils/typeGuard";
 
 const validateLoginId = (t: typeof translation, l: LoginReq): ErrorObject => {
   if (l.loginId === "") {
@@ -36,7 +37,7 @@ export const generateValidationsLoginReq = (
 ];
 
 export const validateAuthInfo = (obj: unknown): boolean => {
-  if (typeof obj !== "object" || obj == null) {
+  if (typeof obj !== "object" || isNullOrUndefined(obj)) {
     return false;
   }
   if (!("accessToken" in obj && typeof obj.accessToken === "string")) {

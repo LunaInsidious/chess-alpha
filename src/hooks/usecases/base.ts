@@ -1,5 +1,7 @@
 import { useState } from "react";
 
+import { isNullOrUndefined } from "@/utils/typeGuard";
+
 export type UseCaseHookType<ResponseType> = {
   hasFailed: boolean;
   isExecuting: boolean;
@@ -47,11 +49,11 @@ export const useUseCase = <ResponseType>(): UseCaseHookType<ResponseType> => {
     setHasFailed(false);
     try {
       const res = await exec();
-      if (successCallback != null) {
+      if (!isNullOrUndefined(successCallback)) {
         await successCallback(res);
       }
     } catch (e) {
-      if (failedCallback != null) {
+      if (!isNullOrUndefined(failedCallback)) {
         await failedCallback();
       }
       setHasFailed(true);
