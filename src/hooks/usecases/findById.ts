@@ -2,6 +2,7 @@ import { useCallback, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
 import { useUseCase } from "@/hooks/usecases/base";
+import { isNullOrUndefined } from "@/utils/typeGuard";
 
 export type FindByIdHookType<ResponseType> = {
   ret: ResponseType;
@@ -38,7 +39,7 @@ export const useFindById = <ResponseType>(
           setRet(newRet());
           return newRet();
         }
-        if (findKey == null || findKey === "") {
+        if (isNullOrUndefined(findKey) || findKey === "") {
           throw new Error("id not found");
         }
         const result = await findById(findKey);

@@ -4,6 +4,7 @@ import { Divider } from "@/components/ui/Divider";
 import { IconWrapper } from "@/components/ui/IconWrapper";
 import { Heading2 } from "@/components/ui/text/Heading2";
 import { Heading4 } from "@/components/ui/text/Heading4";
+import { isNullOrUndefined } from "@/utils/typeGuard";
 
 export type ModalProps = {
   /**
@@ -46,12 +47,12 @@ export function Modal({
   const modalRef = useRef<HTMLDivElement>(null);
   const handleKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
     // エスケープキー押下でモーダルを閉じる
-    if (e.key === "Escape" && handleCloseModal != null) {
+    if (e.key === "Escape" && !isNullOrUndefined(handleCloseModal)) {
       handleCloseModal();
     }
   };
   useEffect(() => {
-    if (modalRef.current != null) {
+    if (!isNullOrUndefined(modalRef.current)) {
       // モーダルを開いたときにフォーカスをモーダルに移す(エスケープキーで閉じるため)
       modalRef.current.focus();
     }
@@ -76,7 +77,7 @@ export function Modal({
         <div className="flex items-center justify-between">
           <Heading2 className="hidden md:block">{header}</Heading2>
           <Heading4 className="md:hidden">{header}</Heading4>
-          {handleCloseModal != null && (
+          {!isNullOrUndefined(handleCloseModal) && (
             <button
               className="hover:bg-black hover:bg-opacity-10 p-0.5 rounded"
               aria-label="モーダルを閉じる"

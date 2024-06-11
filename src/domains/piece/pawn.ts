@@ -4,6 +4,7 @@ import { Knight } from "@/domains/piece/knight";
 import { Piece, BoardStatus, Position, Board } from "@/domains/piece/piece";
 import { Queen } from "@/domains/piece/queen";
 import { Rook } from "@/domains/piece/rook";
+import { isNullOrUndefined } from "@/utils/typeGuard";
 
 // playerの場合、y座標が増える方向に進む
 // enemyの場合、y座標が減る方向に進む
@@ -18,7 +19,7 @@ const isEnemyExist = (
   if (position.x < 0 || position.x > 7 || position.y < 0 || position.y > 7)
     return false;
   const piece = boardStatus.board[position.y][position.x];
-  return piece != null && piece.color === enemyColor;
+  return !isNullOrUndefined(piece) && piece.color === enemyColor;
 };
 
 const isPieceExist = (
@@ -27,7 +28,7 @@ const isPieceExist = (
 ): boolean => {
   if (position.x < 0 || position.x > 7 || position.y < 0 || position.y > 7)
     return false;
-  return boardStatus.board[position.y][position.x] != null;
+  return !isNullOrUndefined(boardStatus.board[position.y][position.x]);
 };
 
 export const isPromotion = (
@@ -198,7 +199,7 @@ export class Pawn extends Piece {
   constructor(id: string, isNotMoved?: boolean, turnMovedTwo?: number) {
     super(id);
     if (this.type !== "P") throw new Error("ポーンのidが不正です。");
-    if (isNotMoved != null) this.isNotMoved = isNotMoved;
-    if (turnMovedTwo != null) this.turnMovedTwo = turnMovedTwo;
+    if (!isNullOrUndefined(isNotMoved)) this.isNotMoved = isNotMoved;
+    if (!isNullOrUndefined(turnMovedTwo)) this.turnMovedTwo = turnMovedTwo;
   }
 }

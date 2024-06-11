@@ -16,6 +16,16 @@ export function PromotionModal({
     "Bishop",
     "Knight",
   ];
+
+  const typeDict: Record<
+    "Queen" | "Rook" | "Bishop" | "Knight",
+    "Q" | "R" | "B" | "N"
+  > = {
+    Queen: "Q",
+    Rook: "R",
+    Bishop: "B",
+    Knight: "N",
+  };
   return (
     <Modal header="Promotion">
       <div className="flex flex-col md:flex-row justify-between mt-4 gap-4">
@@ -29,7 +39,7 @@ export function PromotionModal({
             >
               <img
                 className="w-16 md:w-24 aspect-square"
-                src={`/piece/${playerColor}_${piece[0]}.png`}
+                src={`/piece/${playerColor}_${typeDict[piece]}.png`}
                 alt={piece}
               />
             </Button>

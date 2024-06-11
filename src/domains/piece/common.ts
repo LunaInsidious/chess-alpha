@@ -6,6 +6,7 @@ import {
   PieceType,
   Position,
 } from "@/domains/piece/piece";
+import { isNullOrUndefined } from "@/utils/typeGuard";
 
 // whiteまたはblackを受け取り、逆の色を返す
 export const reverseColor = (color: "white" | "black"): "white" | "black" =>
@@ -22,7 +23,7 @@ export const getMyPieces = (
 
   board.forEach((row, y) => {
     row.forEach((mass, x) => {
-      if (mass == null) return;
+      if (isNullOrUndefined(mass)) return;
       if (mass.color === myColor) {
         myPieces.push({ piece: mass, position: { x, y } });
       }
@@ -41,7 +42,7 @@ export const getMyPiecePositionsByType = (
 
   boardStatus.board.forEach((row, y) => {
     row.forEach((mass, x) => {
-      if (mass == null) return;
+      if (isNullOrUndefined(mass)) return;
       if (mass.color === myColor && mass.type === type) {
         myPiecePositions.push({ x, y });
       }
@@ -61,7 +62,7 @@ export const isChecked = (
   // 前一マスにキングがいるか、前方向に駒を挟まずクイーン、ルークがいるかを確認
   for (let y = kingPosition.y + 1; y < 8; y += 1) {
     const targetMass = board[y][kingPosition.x];
-    if (targetMass != null) {
+    if (!isNullOrUndefined(targetMass)) {
       if (targetMass.color === myColor) break;
       if (y === kingPosition.y + 1 && targetMass.type === "K") return true;
       if (targetMass.type === "Q" || targetMass.type === "R") return true;
@@ -72,7 +73,7 @@ export const isChecked = (
   // 右上斜め１マスにポーン(プレイヤーの場合)、キングがいるか、右上斜めに駒を挟まずビショップ、クイーンがいるかを確認
   for (let i = 1; kingPosition.x + i < 8 && kingPosition.y + i < 8; i += 1) {
     const targetMass = board[kingPosition.y + i][kingPosition.x + i];
-    if (targetMass != null) {
+    if (!isNullOrUndefined(targetMass)) {
       if (targetMass.color === myColor) break;
       const firstMassCheck = isPlayer
         ? i === 1 && (targetMass.type === "P" || targetMass.type === "K")
@@ -86,7 +87,7 @@ export const isChecked = (
   // 左上斜め１マスにポーン(プレイヤーの場合)、キングがいるか、左上斜めに駒を挟まずビショップ、クイーンがいるかを確認
   for (let i = 1; kingPosition.x - i >= 0 && kingPosition.y + i < 8; i += 1) {
     const targetMass = board[kingPosition.y + i][kingPosition.x - i];
-    if (targetMass != null) {
+    if (!isNullOrUndefined(targetMass)) {
       if (targetMass.color === myColor) break;
       const firstMassCheck = isPlayer
         ? i === 1 && (targetMass.type === "P" || targetMass.type === "K")
@@ -100,7 +101,7 @@ export const isChecked = (
   // 右１マスにキングがいるか、右に駒を挟まずルーク、クイーンがいるかを確認
   for (let x = kingPosition.x + 1; x < 8; x += 1) {
     const targetMass = board[kingPosition.y][x];
-    if (targetMass != null) {
+    if (!isNullOrUndefined(targetMass)) {
       if (targetMass.color === myColor) break;
       if (x === kingPosition.x + 1 && targetMass.type === "K") return true;
       if (targetMass.type === "R" || targetMass.type === "Q") return true;
@@ -111,7 +112,7 @@ export const isChecked = (
   // 左１マスにキングがいるか、左に駒を挟まずルーク、クイーンがいるかを確認
   for (let x = kingPosition.x - 1; x >= 0; x -= 1) {
     const targetMass = board[kingPosition.y][x];
-    if (targetMass != null) {
+    if (!isNullOrUndefined(targetMass)) {
       if (targetMass.color === myColor) break;
       if (x === kingPosition.x - 1 && targetMass.type === "K") return true;
       if (targetMass.type === "R" || targetMass.type === "Q") return true;
@@ -122,7 +123,7 @@ export const isChecked = (
   // 右下斜め一マスにポーン(プレイヤーでない場合)、キングがいるか、右下斜めに駒を挟まずビショップ、クイーンがいるかを確認
   for (let i = 1; kingPosition.x + i < 8 && kingPosition.y - i >= 0; i += 1) {
     const targetMass = board[kingPosition.y - i][kingPosition.x + i];
-    if (targetMass != null) {
+    if (!isNullOrUndefined(targetMass)) {
       if (targetMass.color === myColor) break;
       const firstMassCheck = isPlayer
         ? i === 1 && targetMass.type === "K"
@@ -136,7 +137,7 @@ export const isChecked = (
   // 左下斜め一マスにポーン(プレイヤーでない場合)、キングがいるか、左下斜めに駒を挟まずビショップ、クイーンがいるかを確認
   for (let i = 1; kingPosition.x - i >= 0 && kingPosition.y - i >= 0; i += 1) {
     const targetMass = board[kingPosition.y - i][kingPosition.x - i];
-    if (targetMass != null) {
+    if (!isNullOrUndefined(targetMass)) {
       if (targetMass.color === myColor) break;
       const firstMassCheck = isPlayer
         ? i === 1 && targetMass.type === "K"
@@ -150,7 +151,7 @@ export const isChecked = (
   // 下一マスにキングがいるか、下に駒を挟まずクイーン、ルークがいるかを確認
   for (let y = kingPosition.y - 1; y >= 0; y -= 1) {
     const targetMass = board[y][kingPosition.x];
-    if (targetMass != null) {
+    if (!isNullOrUndefined(targetMass)) {
       if (targetMass.color === myColor) break;
       if (y === kingPosition.y + 1 && targetMass.type === "K") return true;
       if (targetMass.type === "Q" || targetMass.type === "R") return true;
@@ -180,7 +181,7 @@ export const isChecked = (
       const targetMass =
         board[kingPosition.y + move.y][kingPosition.x + move.x];
       if (
-        targetMass != null &&
+        !isNullOrUndefined(targetMass) &&
         targetMass.color !== myColor &&
         targetMass.type === "N"
       )
@@ -411,7 +412,7 @@ export const movePiece = (
   const targetMass = boardStatus.board[to.y][to.x];
   const isFiftyMoveRuleTurnUpdate =
     piece.type === "P" ||
-    (targetMass != null && targetMass.color !== piece.color);
+    (!isNullOrUndefined(targetMass) && targetMass.color !== piece.color);
   const newBoard = [...boardStatus.board.map((row) => [...row])];
   newBoard[from.y][from.x] = undefined;
   newBoard[to.y][to.x] = piece;
@@ -439,7 +440,7 @@ export const getMovablePositions = (
     for (let y = from.y + 1; y < 8; y += 1) {
       // 何もない場合、その位置に進める
       const targetMass = boardStatus.board[y][from.x];
-      if (targetMass == null) {
+      if (isNullOrUndefined(targetMass)) {
         movablePositions.push({ x: from.x, y });
       } else if (targetMass.color !== playerColor) {
         // 敵の駒がある場合、その位置に進めるが、それ以上進めない
@@ -454,7 +455,7 @@ export const getMovablePositions = (
     for (let y = from.y - 1; y >= 0; y -= 1) {
       // 何もない場合、その位置に進める
       const targetMass = boardStatus.board[y][from.x];
-      if (targetMass == null) {
+      if (isNullOrUndefined(targetMass)) {
         movablePositions.push({ x: from.x, y });
       } else if (targetMass.color !== playerColor) {
         // 敵の駒がある場合、その位置に進めるが、それ以上進めない
@@ -473,7 +474,7 @@ export const getMovablePositions = (
     // (プレイヤーから見て)右方向
     for (let x = from.x + 1; x < 8; x += 1) {
       const targetMass = boardStatus.board[from.y][x];
-      if (targetMass == null) {
+      if (isNullOrUndefined(targetMass)) {
         movablePositions.push({ x, y: from.y });
       } else if (targetMass.color !== playerColor) {
         movablePositions.push({ x, y: from.y });
@@ -485,7 +486,7 @@ export const getMovablePositions = (
     // (プレイヤーから見て)左方向
     for (let x = from.x - 1; x >= 0; x -= 1) {
       const targetMass = boardStatus.board[from.y][x];
-      if (targetMass == null) {
+      if (isNullOrUndefined(targetMass)) {
         movablePositions.push({ x, y: from.y });
       } else if (targetMass.color !== playerColor) {
         movablePositions.push({ x, y: from.y });
@@ -502,7 +503,7 @@ export const getMovablePositions = (
     // 右上方向
     for (let i = 1; from.x + i < 8 && from.y + i < 8; i += 1) {
       const targetMass = boardStatus.board[from.y + i][from.x + i];
-      if (targetMass == null) {
+      if (isNullOrUndefined(targetMass)) {
         movablePositions.push({ x: from.x + i, y: from.y + i });
       } else if (targetMass.color !== playerColor) {
         movablePositions.push({ x: from.x + i, y: from.y + i });
@@ -514,7 +515,7 @@ export const getMovablePositions = (
     // 左上方向
     for (let i = 1; from.x - i >= 0 && from.y + i < 8; i += 1) {
       const targetMass = boardStatus.board[from.y + i][from.x - i];
-      if (targetMass == null) {
+      if (isNullOrUndefined(targetMass)) {
         movablePositions.push({ x: from.x - i, y: from.y + i });
       } else if (targetMass.color !== playerColor) {
         movablePositions.push({ x: from.x - i, y: from.y + i });
@@ -526,7 +527,7 @@ export const getMovablePositions = (
     // 右下方向
     for (let i = 1; from.x + i < 8 && from.y - i >= 0; i += 1) {
       const targetMass = boardStatus.board[from.y - i][from.x + i];
-      if (targetMass == null) {
+      if (isNullOrUndefined(targetMass)) {
         movablePositions.push({ x: from.x + i, y: from.y - i });
       } else if (targetMass.color !== playerColor) {
         movablePositions.push({ x: from.x + i, y: from.y - i });
@@ -538,7 +539,7 @@ export const getMovablePositions = (
     // 左下方向
     for (let i = 1; from.x - i >= 0 && from.y - i >= 0; i += 1) {
       const targetMass = boardStatus.board[from.y - i][from.x - i];
-      if (targetMass == null) {
+      if (isNullOrUndefined(targetMass)) {
         movablePositions.push({ x: from.x - i, y: from.y - i });
       } else if (targetMass.color !== playerColor) {
         movablePositions.push({ x: from.x - i, y: from.y - i });

@@ -5,6 +5,7 @@ import {
 import { IconWrapper } from "@/components/ui/IconWrapper";
 import { Button } from "@/components/ui/button/Button";
 import { Paragraph } from "@/components/ui/text/Paragraph";
+import { isNullOrUndefined } from "@/utils/typeGuard";
 
 type PropType = {
   isAlertOpen: boolean;
@@ -82,7 +83,7 @@ export function Alert({
                   {message}
                 </Paragraph>
 
-                {button != null && (
+                {!isNullOrUndefined(button) && (
                   <div className="flex gap-4 mt-4 items-center">
                     <Button
                       variant="secondary"

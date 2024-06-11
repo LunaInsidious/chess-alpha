@@ -12,6 +12,7 @@ import {
 } from "@/domains/piece/piece";
 import { Queen } from "@/domains/piece/queen";
 import { Rook } from "@/domains/piece/rook";
+import { isNullOrUndefined } from "@/utils/typeGuard";
 
 type CpuHookProps = {
   setBoardStatus: Dispatch<SetStateAction<BoardStatus>>;
@@ -85,7 +86,7 @@ export const useCpu = ({
     const cpuColor = playerColor === "white" ? "black" : "white";
     const cpuPieces = getMyPieces(boardStatus.board, cpuColor);
     const randomPosition = getRandomMovablePosition(boardStatus, cpuPieces);
-    if (randomPosition == null) {
+    if (isNullOrUndefined(randomPosition)) {
       throw new Error("動かせる駒が存在しません。");
     }
     const newBoardStatusInCpuTurn = randomPosition.piece.move(
@@ -100,7 +101,7 @@ export const useCpu = ({
       newBoardStatusInCpuTurn.board,
       cpuColor,
     ).find((piece) => piece.piece.type === "K");
-    if (kingPosition == null) {
+    if (isNullOrUndefined(kingPosition)) {
       throw new Error("CPUのキングが存在しません。");
     }
 
@@ -114,7 +115,7 @@ export const useCpu = ({
       const promotionCandidates = ["Q", "R", "B", "N"];
       const promotionPieceType =
         promotionCandidates[
-          Math.floor(Math.random() * promotionCandidates.length)
+        Math.floor(Math.random() * promotionCandidates.length)
         ];
       const newBoardStatusInPromotion = [
         ...newBoardStatusInCpuTurn.board.map((row) => [...row]),

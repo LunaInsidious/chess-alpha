@@ -1,5 +1,7 @@
 import { createContext, useState } from "react";
 
+import { isNullOrUndefined } from "@/utils/typeGuard";
+
 export type Severity =
   | "success"
   | "error"
@@ -60,7 +62,7 @@ function useAlertContextValues(): AlertStates {
     setButtonContext(button);
     setAlertOpen(true);
 
-    if (param.timeout != null)
+    if (!isNullOrUndefined(param.timeout))
       setTimeout(() => {
         setAlertOpen(false);
       }, param.timeout);

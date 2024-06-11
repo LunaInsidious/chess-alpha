@@ -15,11 +15,20 @@ export function isNumber(value: unknown): value is number {
 }
 
 /**
+ * 引数がnullまたはundefinedならばtrueを返す関数です。
+ * この関数を使うことで、型ガードを行うことができます。
+ */
+export function isNullOrUndefined(value: unknown): value is null | undefined {
+  // `==`でnullとundefinedが判定できる。
+  return value == null
+}
+
+/**
  * 引数がDateまたはundefinedならばtrueを返す関数です。
  * この関数を使うことで、型ガードを行うことができます。
  */
 export function isDateOrUndefined(date: unknown): date is Date | undefined {
-  return date instanceof Date || date == null;
+  return date instanceof Date || isNullOrUndefined(date)
 }
 
 /**
@@ -27,7 +36,7 @@ export function isDateOrUndefined(date: unknown): date is Date | undefined {
  * この関数を使うことで、型ガードを行うことができます。
  */
 export function isFileOrUndefined(value: unknown): value is File | undefined {
-  return value instanceof File || value == null;
+  return value instanceof File || isNullOrUndefined(value)
 }
 
 /**
@@ -49,7 +58,7 @@ export function isArray<ArrayType>(
   value: unknown,
   typeGuard?: (item: unknown) => item is ArrayType,
 ): value is ArrayType[] {
-  return Array.isArray(value) && (typeGuard == null || value.every(typeGuard));
+  return Array.isArray(value) && (isNullOrUndefined(typeGuard) || value.every(typeGuard));
 }
 
 /**

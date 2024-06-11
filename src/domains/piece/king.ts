@@ -1,6 +1,7 @@
 import { isChecked, movePiece } from "@/domains/piece/common";
 import { BoardStatus, Piece, Position } from "@/domains/piece/piece";
 import { Rook } from "@/domains/piece/rook";
+import { isNullOrUndefined } from "@/utils/typeGuard";
 
 const getKingMovablePositions = (
   boardStatus: BoardStatus,
@@ -25,7 +26,7 @@ const getKingMovablePositions = (
     if (newX < 0 || newX >= 8 || newY < 0 || newY >= 8) return;
     const targetMass = boardStatus.board[newY][newX];
     // 進む先に駒がないか、敵の駒がある場合のみ進める
-    if (targetMass == null || targetMass.color !== piece.color) {
+    if (isNullOrUndefined(targetMass) || targetMass.color !== piece.color) {
       movablePositions.push({ x: newX, y: newY });
     }
   });
@@ -36,7 +37,7 @@ const getKingMovablePositions = (
     if (rightRook instanceof Rook && rightRook.isNotMoved) {
       // 途中のマスが相手にチェックされておらず、駒がない場合のみキャスリング可能
       const canCastling = [1, 2, 3].every((x) => {
-        if (boardStatus.board[from.y][x] != null) return false;
+        if (!isNullOrUndefined(boardStatus.board[from.y][x])) return false;
         return !isChecked(
           boardStatus.board,
           { x, y: from.y },
@@ -53,7 +54,7 @@ const getKingMovablePositions = (
     const leftRook = boardStatus.board[from.y][7];
     if (leftRook instanceof Rook && leftRook.isNotMoved) {
       const canCastling = [5, 6].every((x) => {
-        if (boardStatus.board[from.y][x] != null) return false;
+        if (!isNullOrUndefined(boardStatus.board[from.y][x])) return false;
         return !isChecked(
           boardStatus.board,
           { x, y: from.y },
@@ -130,6 +131,6 @@ export class King extends Piece {
   constructor(id: string, isNotMoved?: boolean) {
     super(id);
     if (this.type !== "K") throw new Error("キングのidが不正です。");
-    if (isNotMoved != null) this.isNotMoved = isNotMoved;
+    if (!isNullOrUndefined(isNotMoved)) this.isNotMoved = isNotMoved;
   }
 }

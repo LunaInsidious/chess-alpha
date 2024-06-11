@@ -17,6 +17,7 @@ import {
 import { isPromotion, promotion } from "@/domains/piece/pawn";
 import { Board, BoardStatus, Piece, Position } from "@/domains/piece/piece";
 import { useAlert } from "@/hooks/alert";
+import { isNullOrUndefined } from "@/utils/typeGuard";
 
 type ChessBoardHookProps = {
   playerColor?: "white" | "black";
@@ -42,9 +43,9 @@ export const useChessBoard = ({ playerColor }: ChessBoardHookProps) => {
   // ポーンのプロモーションの場合、プロモーションの処理を行い、その後にCPUのターンに移るための情報
   const [promotionInfo, setPromotionInfo] = useState<
     | {
-        mass: Position;
-        callback: (board: Board) => Promise<void>;
-      }
+      mass: Position;
+      callback: (board: Board) => Promise<void>;
+    }
     | undefined
   >(undefined);
 
@@ -79,7 +80,7 @@ export const useChessBoard = ({ playerColor }: ChessBoardHookProps) => {
   }> => {
     // ゲームデータを保存
     try {
-      if (playerColor == null) {
+      if (isNullOrUndefined(playerColor)) {
         throw new Error("プレイヤーの色が設定されていません。");
       }
       await gameDataAPI.create(board, playerColor);
@@ -127,7 +128,7 @@ export const useChessBoard = ({ playerColor }: ChessBoardHookProps) => {
       isPlayer,
       gameDataAPI.countByBoard,
     );
-    if (drawStatus != null) {
+    if (!isNullOrUndefined(drawStatus)) {
       setGameStatus({
         player: drawStatus,
         enemy: drawStatus,
@@ -149,73 +150,72 @@ export const useChessBoard = ({ playerColor }: ChessBoardHookProps) => {
 
   const handleSelectPiece = (position: Position) => {
     const piece = boardStatus.board[position.y][position.x];
-    if (piece != null) {
-      // 相手の駒を選択した場合は何もしない
-      if (piece.color !== playerColor) return;
 
-      // 駒をすでに選択していた場合
-      if (selectedPiecePosition != null) {
-        // 選択した駒と同じ駒を選択した場合は何もしない
-        if (
-          selectedPiecePosition.x === position.x &&
-          selectedPiecePosition.y === position.y
-        )
-          return;
-        // 自分の駒を選択した場合は、アラートを表示して何もしない
+    // 駒のない場所や相手の駒を選択した場合は何もしない
+    if (isNullOrUndefined(piece) || piece.color !== playerColor) return
+
+    // 駒をすでに選択していた場合
+    if (!isNullOrUndefined(selectedPiecePosition)) {
+      // 選択した駒と同じ駒を選択した場合は何もしない
+      if (
+        selectedPiecePosition.x === position.x &&
+        selectedPiecePosition.y === position.y
+      )
+        return;
+      // 自分の駒を選択した場合は、アラートを表示して何もしない
+      showAlert({
+        severity: "warning",
+        message:
+          "touch moveルールにより、選択した駒を選び直すことはできません。",
+        timeout: 3000,
+      });
+      return;
+    }
+
+    // 選択した駒が動かせる位置を取得
+    if (gameStatus.player === "checked") {
+      const escapeMoves = findEscapeMoves(
+        boardStatus,
+        position,
+        playerColor,
+        true,
+      );
+      if (escapeMoves.length <= 0) {
         showAlert({
           severity: "warning",
           message:
-            "touch moveルールにより、選択した駒を選び直すことはできません。",
+            "チェックされています。王手を回避する手を選択してください。",
+          timeout: 3000,
+        });
+      } else {
+        setMovablePositions(escapeMoves.map((move) => move.to));
+        setSelectedPiecePosition(position);
+      }
+    } else {
+      const validMoves = getSafeMovablePositions(
+        boardStatus,
+        piece,
+        position,
+        true,
+      );
+      if (validMoves.length <= 0) {
+        showAlert({
+          severity: "warning",
+          message: "その駒は動かせません。他の駒を選択してください。",
           timeout: 3000,
         });
         return;
       }
-
-      // 選択した駒が動かせる位置を取得
-      if (gameStatus.player === "checked") {
-        const escapeMoves = findEscapeMoves(
-          boardStatus,
-          position,
-          playerColor,
-          true,
-        );
-        if (escapeMoves.length <= 0) {
-          showAlert({
-            severity: "warning",
-            message:
-              "チェックされています。王手を回避する手を選択してください。",
-            timeout: 3000,
-          });
-        } else {
-          setMovablePositions(escapeMoves.map((move) => move.to));
-          setSelectedPiecePosition(position);
-        }
-      } else {
-        const validMoves = getSafeMovablePositions(
-          boardStatus,
-          piece,
-          position,
-          true,
-        );
-        if (validMoves.length <= 0) {
-          showAlert({
-            severity: "warning",
-            message: "その駒は動かせません。他の駒を選択してください。",
-            timeout: 3000,
-          });
-          return;
-        }
-        setMovablePositions(validMoves);
-        setSelectedPiecePosition(position);
-      }
+      setMovablePositions(validMoves);
+      setSelectedPiecePosition(position);
     }
   };
 
   const handleMovePiece = async (to: Position) => {
-    if (playerColor == null || selectedPiecePosition == null) return;
+    if (isNullOrUndefined(playerColor) || isNullOrUndefined(selectedPiecePosition)) return;
     const piece =
       boardStatus.board[selectedPiecePosition.y][selectedPiecePosition.x];
-    if (piece == null) {
+    if (isNullOrUndefined(piece)) {
       throw new Error("選択した駒が存在しません。");
     }
     const newBoardStatus = piece.move(
@@ -307,13 +307,13 @@ export const useChessBoard = ({ playerColor }: ChessBoardHookProps) => {
   const handleClickPromotion = (
     type: "Queen" | "Rook" | "Bishop" | "Knight",
   ) => {
-    if (promotionInfo == null) return;
+    if (isNullOrUndefined(promotionInfo)) return;
     const { mass, callback } = promotionInfo;
     const piece = boardStatus.board[mass.y][mass.x];
-    if (piece == null) {
+    if (isNullOrUndefined(piece)) {
       throw new Error("選択した駒が存在しません。");
     }
-    if (playerColor == null) {
+    if (isNullOrUndefined(playerColor)) {
       throw new Error("プレイヤーの色が設定されていません。");
     }
     const typeDict: Record<
@@ -365,7 +365,7 @@ export const useChessBoard = ({ playerColor }: ChessBoardHookProps) => {
   };
 
   const handleRetire = async () => {
-    if (playerColor == null) return;
+    if (isNullOrUndefined(playerColor)) return;
     try {
       await gameDataAPI.delete();
     } catch (e) {
@@ -379,7 +379,7 @@ export const useChessBoard = ({ playerColor }: ChessBoardHookProps) => {
   };
 
   useEffect(() => {
-    if (playerColor == null) return;
+    if (isNullOrUndefined(playerColor)) return;
 
     setIsLoading(true);
     const playerPieceIdPrefix = playerColor === "white" ? "w" : "b";
@@ -388,7 +388,7 @@ export const useChessBoard = ({ playerColor }: ChessBoardHookProps) => {
     (async () => {
       try {
         const latestBoardStatus = await gameDataAPI.findLatest();
-        if (latestBoardStatus == null) {
+        if (isNullOrUndefined(latestBoardStatus)) {
           setBoardStatus(initialBoard);
           // プレイヤーが黒の場合は、CPUが先手で動く
           setIsPlayerTurn(playerColor === "white");

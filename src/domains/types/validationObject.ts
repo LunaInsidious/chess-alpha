@@ -1,4 +1,5 @@
 import { ErrorObject, noError } from "@/domains/types/errorObject";
+import { isNullOrUndefined } from "@/utils/typeGuard";
 
 export type ValidationObject<ObjType> = {
   key: keyof ObjType;
@@ -30,7 +31,7 @@ export const validateByKey = <ObjType>(
   index?: number,
 ): ErrorObject => {
   const validateObj = validations.find((v) => v.key === key);
-  if (validateObj == null) {
+  if (isNullOrUndefined(validateObj)) {
     return noError();
   }
   return validateObj.validate(obj, index);

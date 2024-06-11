@@ -1,3 +1,5 @@
+import { isNullOrUndefined } from "@/utils/typeGuard";
+
 export const enValidate = (value: string): boolean => {
   const regex = /^[a-zA-Z0-9 !@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]*$/;
   return !regex.test(value as string);
@@ -11,7 +13,7 @@ export const emailValidate = (value: string): boolean => {
   return !regex.test(value) && value !== "";
 };
 
-export const dateValidate = (value: Date): boolean => value.getDate() == null;
+export const dateValidate = (value: Date): boolean => isNullOrUndefined(value.getDate());
 
 export const lengthValidate = (value: string[] | number[]): boolean =>
   value.length === 0;
