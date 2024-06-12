@@ -38,25 +38,25 @@ export function PlayerRoleContainer() {
           .map((player) => decodeURIComponent(player))
       : [];
 
-  const [roles, setRoles] = useState<string[]>(() =>
-    (() => {
-      const savedRoles = localStorage.getItem("roles");
-      const parsedItems = JSON.parse(savedRoles ?? "null");
+  function loadRolesFromLocalStorage(): string[] {
+    const savedRoles = localStorage.getItem("roles");
+    const parsedItems = JSON.parse(savedRoles ?? "null");
 
-      if (isArray(parsedItems, isString)) {
-        return parsedItems;
-      }
+    if (isArray(parsedItems, isString)) {
+      return parsedItems;
+    }
 
-      return [];
-    })(),
-  );
+    return []
+  }
 
-  const [currentIndex, setCurrentPlayerIndex] = useState<number>(0);
+  const [roles, setRoles] = useState<string[]>(loadRolesFromLocalStorage());
 
-  const handleRoleAssignment = (players: string[]) => {
+  const [currentIndex, setCurrentIndex] = useState<number>(0);
+
+  const setAssignmentRoles = (players: string[]) => {
     const assignedRoles = assignRoles(players);
     setRoles(assignedRoles);
-    localStorage.setItem("roles", JSON.stringify(assignedRoles)); // localStorageに保存
+    localStorage.setItem("roles", JSON.stringify(assignedRoles));
   };
 
   useEffect(() => {
@@ -66,20 +66,20 @@ export function PlayerRoleContainer() {
       });
       navigate(appURL.playerSetup);
     } else if (roles.length === 0) {
-      handleRoleAssignment(playerList);
+      setAssignmentRoles(playerList);
     }
   }, [playerList]);
 
-  const [isShowingRole, setShowRole] = useState(false);
+  const [isShowingRole, setIsShowingRole] = useState(false);
 
   const handleShowRole = () => {
-    setShowRole(true);
+    setIsShowingRole(true);
   };
 
   const handleNextPlayer = () => {
     if (currentIndex < playerList.length - 1) {
-      setShowRole(false);
-      setCurrentPlayerIndex(currentIndex + 1);
+      setIsShowingRole(false);
+      setCurrentIndex(currentIndex + 1);
     }
   };
 
@@ -89,8 +89,8 @@ export function PlayerRoleContainer() {
 
   const handlePreviousPlayer = () => {
     if (currentIndex > 0) {
-      setShowRole(false);
-      setCurrentPlayerIndex(currentIndex - 1);
+      setIsShowingRole(false);
+      setCurrentIndex(currentIndex - 1);
     } else if (currentIndex === 0) {
       navigate(appURL.playerSetup);
     }
