@@ -1,23 +1,23 @@
 import { Button } from "@/components/ui/button/Button";
-import { Player } from "@/utils/player";
+import type { User } from "@/domains/user/entity";
 
 type Props = {
-  players: Player[];
+  users: User[];
   showingAddBtn: boolean;
   showingRemoveBtn: boolean;
-  handleAddPlayer: () => void;
-  handleRemovePlayer: (index: number) => void;
-  handlePlayerChange: (index: number, name: string) => void;
+  handleAddUser: () => void;
+  handleRemoveUser: (index: number) => void;
+  handleUserChange: (index: number, name: string) => void;
   handleBackHome: () => void;
   handleStart: () => void;
   enableToStart: () => boolean;
 };
 
 export function SetupPresenter({
-  players,
-  handleAddPlayer,
-  handleRemovePlayer,
-  handlePlayerChange,
+  users,
+  handleAddUser,
+  handleRemoveUser,
+  handleUserChange,
   handleBackHome,
   handleStart,
   showingAddBtn,
@@ -56,25 +56,20 @@ export function SetupPresenter({
         </h1>
         <div className="mt-12 gap-2 md:mt-24 lg:mt-12 md:gap-2 flex flex-col items-center">
           <div className="md:flex md:flex-col gap-4 lg:grid lg:grid-cols-2">
-            {players.map((player, index) => (
-              <div
-                key={player.id}
-                className="flex flex-col items-center gap-2"
-              >
+            {users.map((user, index) => (
+              <div key={user.id} className="flex flex-col items-center gap-2">
                 <div className="flex gap-2 flex-col">
                   <span className="md:text-l lg:text-xl">{`プレイヤー${index + 1}`}</span>
                   <div className="flex gap-2 items-center">
                     <input
                       className="border p-2 h-8 md:h-10"
                       placeholder="プレイヤー名を入力"
-                      value={player.name}
-                      onChange={(e) =>
-                        handlePlayerChange(index, e.target.value)
-                      }
+                      value={user.name}
+                      onChange={(e) => handleUserChange(index, e.target.value)}
                     />
                     <Button
                       className="w-20 h-8 md:w-20 md:h-12 md:text-l lg:text-xl bg-red-500 text-white"
-                      onClick={() => handleRemovePlayer(index)}
+                      onClick={() => handleRemoveUser(index)}
                       disabled={!showingRemoveBtn}
                       variant="delete"
                     >
@@ -88,7 +83,7 @@ export function SetupPresenter({
           <div className="flex justify-center w-full">
             <Button
               className="w-48 h-10 md:w-48 md:h-12 text-l mt-4"
-              onClick={handleAddPlayer}
+              onClick={handleAddUser}
               variant="primary"
               disabled={!showingAddBtn}
             >

@@ -3,9 +3,9 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 
 import { SetupPresenter } from "@/components/features/setup/SetupPresenter";
 import { appURL } from "@/config/url";
+import { newUser, getNewUsers } from "@/domains/user/entity";
+import type { User } from "@/domains/user/entity";
 import { useAlert } from "@/hooks/alert";
-import { createPlayer, createInitPlayer } from "@/utils/player";
-import type { Player } from "@/utils/player";
 
 export function SetupContainer() {
   const [searchParams] = useSearchParams();
@@ -14,7 +14,7 @@ export function SetupContainer() {
   const MIN_USER = 3;
   const MAX_USER = 6;
 
-  const [players, setPlayers] = useState<Player[]>(createInitPlayer(MIN_USER));
+  const [users, setUsers] = useState<User[]>(getNewUsers(MIN_USER));
 
   const navigate = useNavigate();
   const { showError } = useAlert();
@@ -23,27 +23,23 @@ export function SetupContainer() {
     navigate(appURL.home);
   };
 
-  const hasDuplicates = (array: Player[]) => {
-    const playerNameArray = array.map((player: Player) => {
-      return player.name;
-    })
-    const uniqueElements = new Set(playerNameArray);
-    return uniqueElements.size !== playerNameArray.length;
+  const hasDuplicates = (array: User[]) => {
+    const userNameArray = array.map((user: User) => user.name);
+    const uniqueElements = new Set(userNameArray);
+    return uniqueElements.size !== userNameArray.length;
   };
 
-  const playersQuery = (): string => {
-    const encodedPlayers = players.map((player) =>
-      encodeURIComponent(player.name),
-    );
+  const usersQuery = (): string => {
+    const encodedUsers = users.map((user) => encodeURIComponent(user.name));
 
-    return encodedPlayers.join(",");
+    return encodedUsers.join(",");
   };
 
   const enableToStart = (): boolean =>
-    players.length >= MIN_USER && players.length <= MAX_USER;
+    users.length >= MIN_USER && users.length <= MAX_USER;
 
   const handleStart = () => {
-    if (hasDuplicates(players)) {
+    if (hasDuplicates(users)) {
       showError({
         message: "プレイヤー名が重複しています。",
       });
@@ -55,38 +51,38 @@ export function SetupContainer() {
       });
       return;
     }
-    navigate(`${appURL.playerRole}?color=${color}&players=${playersQuery()}`);
+    navigate(`${appURL.playerRole}?color=${color}&players=${usersQuery()}`);
   };
 
-  const handleAddPlayer = () => {
-    if (players.length < MAX_USER) {
-      setPlayers([...players, createPlayer()]);
+  const handleAddUser = () => {
+    if (users.length < MAX_USER) {
+      setUsers([...users, newUser()]);
     }
   };
 
-  const showingAddBtn: boolean = players.length < MAX_USER;
+  const showingAddBtn: boolean = users.length < MAX_USER;
 
-  const showingRemoveBtn: boolean = players.length > MIN_USER;
+  const showingRemoveBtn: boolean = users.length > MIN_USER;
 
-  const handleRemovePlayer = (index: number) => {
-    if (players.length > 1) {
-      const newPlayers = players.filter((_, i) => i !== index);
-      setPlayers(newPlayers);
+  const handleRemoveUser = (index: number) => {
+    if (users.length > 1) {
+      const newUsers = users.filter((_, i) => i !== index);
+      setUsers(newUsers);
     }
   };
 
-  const handlePlayerChange = (index: number, name: string) => {
-    const newPlayers = [...players];
-    newPlayers[index].name = name;
-    setPlayers(newPlayers);
+  const handleUserChange = (index: number, name: string) => {
+    const newUsers = [...users];
+    newUsers[index].name = name;
+    setUsers(newUsers);
   };
 
   return (
     <SetupPresenter
-      players={players}
-      handleAddPlayer={handleAddPlayer}
-      handleRemovePlayer={handleRemovePlayer}
-      handlePlayerChange={handlePlayerChange}
+      users={users}
+      handleAddUser={handleAddUser}
+      handleRemoveUser={handleRemoveUser}
+      handleUserChange={handleUserChange}
       handleBackHome={handleBackHome}
       handleStart={handleStart}
       showingAddBtn={showingAddBtn}
