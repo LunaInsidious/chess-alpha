@@ -24,8 +24,11 @@ export function SetupContainer() {
   };
 
   const hasDuplicates = (array: Player[]) => {
-    const uniqueElements = new Set(array);
-    return uniqueElements.size !== array.length;
+    const playerNameArray = array.map((player: Player) => {
+      return player.name;
+    })
+    const uniqueElements = new Set(playerNameArray);
+    return uniqueElements.size !== playerNameArray.length;
   };
 
   const playersQuery = (): string => {
