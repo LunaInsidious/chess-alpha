@@ -44,7 +44,7 @@ export function SetupPresenter({
   ];
 
   return (
-    <div className="flex relative justify-center">
+    <div className="flex relative justify-center px-4">
       <img
         className="absolute -z-10 h-screen aspect-auto"
         src="/home.png"
@@ -55,13 +55,13 @@ export function SetupPresenter({
           プレイヤー名を入力
         </h1>
         <div className="mt-12 gap-2 md:mt-24 lg:mt-12 md:gap-2 flex flex-col items-center">
-          <div className="md:flex md:flex-col gap-2 lg:grid lg:grid-cols-2">
+          <div className="md:flex md:flex-col gap-4 lg:grid lg:grid-cols-2">
             {players.map((player, index) => (
               <div
                 key={player.id}
                 className="flex flex-col items-center gap-2"
               >
-                <div className="flex gap-2 md:flex-col">
+                <div className="flex gap-2 flex-col">
                   <span className="md:text-l lg:text-xl">{`プレイヤー${index + 1}`}</span>
                   <div className="flex gap-2 items-center">
                     <input
