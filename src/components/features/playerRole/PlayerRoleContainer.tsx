@@ -46,7 +46,7 @@ export function PlayerRoleContainer() {
       return parsedItems;
     }
 
-    return []
+    return [];
   }
 
   const [roles, setRoles] = useState<string[]>(loadRolesFromLocalStorage());
