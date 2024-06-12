@@ -52,7 +52,7 @@ export function SetupContainer() {
       });
       return;
     }
-    navigate(`${appURL.playerRole}?color=${color}&players=${playersQuery}`);
+    navigate(`${appURL.playerRole}?color=${color}&players=${playersQuery()}`);
   };
 
   const handleAddPlayer = () => {
@@ -63,10 +63,7 @@ export function SetupContainer() {
 
   const showingAddBtn: boolean = players.length < MAX_USER;
 
-  const showingRemoveBtn = (): boolean => {
-    if (players.length <= MIN_USER) return false;
-    return true;
-  };
+  const showingRemoveBtn: boolean = players.length > MIN_USER;
 
   const handleRemovePlayer = (index: number) => {
     if (players.length > 1) {
