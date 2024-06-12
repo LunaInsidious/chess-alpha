@@ -4,12 +4,12 @@ import { Player } from "@/utils/player";
 type Props = {
   players: Player[];
   showingAddBtn: boolean;
+  showingRemoveBtn: boolean;
   handleAddPlayer: () => void;
   handleRemovePlayer: (index: number) => void;
   handlePlayerChange: (index: number, name: string) => void;
   handleBackHome: () => void;
   handleStart: () => void;
-  showingRemoveBtn: () => boolean;
   enableToStart: () => boolean;
 };
 
@@ -55,13 +55,13 @@ export function SetupPresenter({
           プレイヤー名を入力
         </h1>
         <div className="mt-12 gap-2 md:mt-24 lg:mt-12 md:gap-2 flex flex-col items-center">
-          <div className="mt:flex mt:flex-col gap-2 lg:grid lg:grid-cols-2">
+          <div className="md:flex md:flex-col gap-2 lg:grid lg:grid-cols-2">
             {players.map((player, index) => (
               <div
                 key={player.id}
-                className="flex flex-col items-center lg:gap-2 md:gap-2"
+                className="flex flex-col items-center gap-2"
               >
-                <div className="lg:flex gap-2 md:flex md:flex-col">
+                <div className="flex gap-2 md:flex-col">
                   <span className="md:text-l lg:text-xl">{`プレイヤー${index + 1}`}</span>
                   <div className="flex gap-2 items-center">
                     <input
@@ -75,7 +75,7 @@ export function SetupPresenter({
                     <Button
                       className="w-20 h-8 md:w-20 md:h-12 md:text-l lg:text-xl bg-red-500 text-white"
                       onClick={() => handleRemovePlayer(index)}
-                      disabled={!showingRemoveBtn()}
+                      disabled={!showingRemoveBtn}
                       variant="delete"
                     >
                       削除
@@ -87,7 +87,7 @@ export function SetupPresenter({
           </div>
           <div className="flex justify-center w-full">
             <Button
-              className="w-48 h-10 md:w-48 md:h-12 md:text-l lg:text-l mt-4"
+              className="w-48 h-10 md:w-48 md:h-12 text-l mt-4"
               onClick={handleAddPlayer}
               variant="primary"
               disabled={!showingAddBtn}
@@ -95,10 +95,10 @@ export function SetupPresenter({
               + 追加
             </Button>
           </div>
-          <div className="mt-4 gap-2 md:mt-4 lg:mt-4 md:gap-2 flex items-center">
+          <div className="mt-4 gap-2 flex items-center">
             {pageButtons.map((button) => (
               <Button
-                className="w-24 h-10 md:w-24 lg:w-24 md:h-12 md:text-l lg:text-l"
+                className="w-24 h-10 md:h-12 text-l"
                 key={button.text}
                 onClick={button.onClick}
                 variant={button.variant}
