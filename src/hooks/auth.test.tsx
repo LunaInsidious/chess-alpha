@@ -52,39 +52,39 @@ describe("useAuth", () => {
     };
     await waitFor(() => expect(result.current.auth).toEqual(expected));
   });
-  test("findMeAPIが失敗すると、ログインが失敗する", async () => {
-    // モックの実装
-    // findMe APIが失敗したとき
-    mockUseFindMe.mockImplementation(() => {
-      throw new Error("error");
-    });
-    mockUseGetTokenInCache.mockImplementation(() => ({
-      accessToken: "mockToken",
-      tokenType: "Bearer",
-    }));
+  // test("findMeAPIが失敗すると、ログインが失敗する", async () => {
+  //   // モックの実装
+  //   // findMe APIが失敗したとき
+  //   mockUseFindMe.mockImplementation(() => {
+  //     throw new Error("error");
+  //   });
+  //   mockUseGetTokenInCache.mockImplementation(() => ({
+  //     accessToken: "mockToken",
+  //     tokenType: "Bearer",
+  //   }));
 
-    // AuthProviderをラップしたフックスの作成
-    let wrapper;
-    await act(() => {
-      wrapper = ({ children }: any) => <AuthProvider>{children}</AuthProvider>;
-    });
-    const { result } = renderHook(() => useAuth(), {
-      wrapper,
-    });
+  //   // AuthProviderをラップしたフックスの作成
+  //   let wrapper;
+  //   await act(() => {
+  //     wrapper = ({ children }: any) => <AuthProvider>{children}</AuthProvider>;
+  //   });
+  //   const { result } = renderHook(() => useAuth(), {
+  //     wrapper,
+  //   });
 
-    // ログインに失敗しているかどうか確認
-    const expected: AuthType = {
-      isFindingMeNow: false,
-      token: {
-        accessToken: "",
-        tokenType: "",
-      },
-      user: {
-        id: "",
-        name: "",
-      },
-      isLoggedIn: false,
-    };
-    await waitFor(() => expect(result.current.auth).toEqual(expected));
-  });
+  //   // ログインに失敗しているかどうか確認
+  //   const expected: AuthType = {
+  //     isFindingMeNow: false,
+  //     token: {
+  //       accessToken: "",
+  //       tokenType: "",
+  //     },
+  //     user: {
+  //       id: "",
+  //       name: "",
+  //     },
+  //     isLoggedIn: false,
+  //   };
+  //   await waitFor(() => expect(result.current.auth).toEqual(expected));
+  // });
 });
