@@ -1,11 +1,14 @@
 import { HistoryCard } from "@/components/ui/HistoryCard";
 
-type Props = {};
-
-export function RoleSummary({}: Props): JSX.Element {
+export function RoleSummary(): JSX.Element {
   return (
-    <HistoryCard>
-      <div className="flex-col">role</div>
-    </HistoryCard>
+    <div className="flex justify-between gap-4">
+      <HistoryCard className="w-full">
+        <div className="flex-col">人狼</div>
+      </HistoryCard>
+      <HistoryCard className="w-full">
+        <div className="flex-col">市民</div>
+      </HistoryCard>
+    </div>
   );
 }

@@ -5,7 +5,7 @@ type Props = {};
 export function HistoryDashboard({}: Props): JSX.Element {
   return (
     <HistoryCard>
-      <div className="flex-col">dashboard</div>
+      <div className="flex-col">戦歴</div>
     </HistoryCard>
   );
 }
