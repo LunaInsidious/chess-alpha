@@ -4,4 +4,5 @@ export const appURL = {
   playerSetup: "/chess-alpha/players-setup",
   playerRole: "/chess-alpha/players-role",
   game: "/chess-alpha/game",
+  history: "/chess-alpha/history",
 };

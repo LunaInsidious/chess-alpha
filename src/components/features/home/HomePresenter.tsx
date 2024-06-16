@@ -49,7 +49,7 @@ export function HomePresenter({
       variant: "secondary",
     },
     {
-      text: "対戦履歴を見る(準備中)",
+      text: "対戦履歴",
       onClick: handleClickHistory,
       variant: "secondary",
     },

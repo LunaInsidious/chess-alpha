@@ -10,6 +10,7 @@ import { Error404 } from "@/components/pages/Error404";
 import { Game } from "@/components/pages/Game";
 import { Home } from "@/components/pages/Home";
 import { Setup } from "@/components/pages/Setup";
+import { History } from "@/components/pages/History";
 import { AlertProvider } from "@/components/providers/AlertProvider";
 import { AuthProvider } from "@/components/providers/AuthProvider";
 import { appURL } from "@/config/url";
@@ -21,6 +22,7 @@ const router = createBrowserRouter(
       <Route path={appURL.home} element={<Home />} />
       <Route path={appURL.game} element={<Game />} />
       <Route path={appURL.playerSetup} element={<Setup />} />
+      <Route path={appURL.history} element={<History />} />
     </Route>,
   ),
 );
