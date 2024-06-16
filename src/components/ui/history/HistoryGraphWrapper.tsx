@@ -8,8 +8,8 @@ export function HistoryGraphWrapper({}: Props): JSX.Element {
   return (
     <HistoryCard>
       <div className="flex justify-evenly h-50">
-        <WinRateGraph/>
-        <TierGraph/>
+        <WinRateGraph />
+        <TierGraph />
       </div>
     </HistoryCard>
   );
