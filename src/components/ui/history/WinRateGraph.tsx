@@ -6,7 +6,7 @@ const option = {
   },
   series: [
     {
-      name: 'Access From',
+      name: '勝率',
       type: 'pie',
       radius: ['40%', '70%'],
       avoidLabelOverlap: false,
