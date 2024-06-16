@@ -7,7 +7,7 @@ type Props = {};
 
 export function HistoryPresenter({}: Props): JSX.Element {
   return (
-    <div className="flex flex-col p-8 gap-8">
+    <div className="flex flex-col p-8 gap-6">
       <HistoryHeader />
       <HistoryGraphWrapper />
       <RoleSummary />

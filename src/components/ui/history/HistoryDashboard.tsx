@@ -1,11 +1,11 @@
-import { Card } from "@/components/ui/Card";
+import { HistoryCard } from "@/components/ui/HistoryCard";
 
 type Props = {};
 
 export function HistoryDashboard({}: Props): JSX.Element {
   return (
-    <Card>
+    <HistoryCard>
       <div className="flex-col">dashboard</div>
-    </Card>
+    </HistoryCard>
   );
 }
