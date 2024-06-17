@@ -27,8 +27,8 @@ const option = {
         show: false,
       },
       data: [
-        { value: 1048, name: "Win" },
-        { value: 735, name: "Lose" },
+        { value: 1048, name: "Win", itemStyle: { color: "#3b82f6" } },
+        { value: 735, name: "Lose", itemStyle: { color: "#EF4444" } },
       ],
     },
   ],
