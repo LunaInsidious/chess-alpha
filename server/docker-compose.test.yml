@@ -1,0 +1,42 @@
+# テスト用の構成
+services:
+  test-api:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    volumes:
+      - .:/app
+    ports:
+      - 88:80
+    tty: true
+    environment:
+      - DB_USER=docker
+      - DB_PASSWORD=password
+      - DB_HOST=mysql
+      - DB_PORT=3306
+      - DB_NAME=template_test
+      - ENV=test
+      - CONTAINER_EMV=true
+    command: >
+      ash -c "go run main.go"
+    depends_on:
+      mysql:
+        condition: service_healthy
+
+  mysql:
+    image: mysql:8.0.28
+    platform: linux/x86_64
+    ports:
+      - 3306:3306
+    environment:
+      - MYSQL_ROOT_PASSWORD=password
+      - MYSQL_DATABASE=template_test
+      - MYSQL_USER=docker
+      - MYSQL_PASSWORD=password
+      - TZ=Asia/Tokyo
+      - MYSQL_TCP_PORT=3306
+    volumes:
+      - ./mysql/my.cnf:/etc/mysql/conf.d/my.cnf
+      - ./mysql/init-db.sql:/docker-entrypoint-initdb.d/init-db.sql
+    healthcheck:
+      test: mysqladmin ping -h 127.0.0.1 -u$$MYSQL_USER -p$$MYSQL_PASSWORD
