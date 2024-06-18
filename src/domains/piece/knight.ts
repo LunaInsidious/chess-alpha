@@ -1,5 +1,6 @@
 import { movePiece } from "@/domains/piece/common";
 import { BoardStatus, Piece, Position } from "@/domains/piece/piece";
+import { isNullOrUndefined } from "@/utils/typeGuard";
 
 const getKnightMovablePositions = (
   boardStatus: BoardStatus,
@@ -23,7 +24,7 @@ const getKnightMovablePositions = (
     if (newX < 0 || newX > 7 || newY < 0 || newY > 7) return;
     const targetMass = boardStatus.board[newY][newX];
     // 進む先に駒がないか、敵の駒がある場合のみ進める
-    if (targetMass == null || targetMass.color !== piece.color) {
+    if (isNullOrUndefined(targetMass) || targetMass.color !== piece.color) {
       movablePositions.push({ x: newX, y: newY });
     }
   });

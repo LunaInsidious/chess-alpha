@@ -1,5 +1,6 @@
 import { getMovablePositions, movePiece } from "@/domains/piece/common";
 import { BoardStatus, Piece, Position } from "@/domains/piece/piece";
+import { isNullOrUndefined } from "@/utils/typeGuard";
 
 const getRookMovablePositions = (
   boardStatus: BoardStatus,
@@ -45,6 +46,6 @@ export class Rook extends Piece {
   constructor(id: string, isNotMoved?: boolean) {
     super(id);
     if (this.type !== "R") throw new Error("ルークのidが不正です。");
-    if (isNotMoved != null) this.isNotMoved = isNotMoved;
+    if (!isNullOrUndefined(isNotMoved)) this.isNotMoved = isNotMoved;
   }
 }

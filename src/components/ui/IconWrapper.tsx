@@ -4,6 +4,8 @@ import { IoIosInformationCircleOutline, IoIosArrowDown } from "react-icons/io";
 import { IoClose } from "react-icons/io5";
 import { MdOutlineCancel } from "react-icons/md";
 
+import { isNullOrUndefined } from "@/utils/typeGuard";
+
 export type IconName =
   | "IoClose"
   | "MdOutlineCancel"
@@ -49,7 +51,7 @@ export function IconWrapper({ className, iconName, iconSize, onClick }: Props) {
 
   return (
     <div
-      className={`justify-center rounded-full ${onClick != null && "cursor-pointer"} ${className}`}
+      className={`justify-center rounded-full ${!isNullOrUndefined(onClick) && "cursor-pointer"} ${className}`}
     >
       <IconComponent
         className={`w-${iconSize ?? DEFAULT_SIZE} h-${iconSize ?? DEFAULT_SIZE}`}

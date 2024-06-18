@@ -1,6 +1,7 @@
 import { ReactNode, useState } from "react";
 
 import { SixDotsScaleMiddle } from "@/components/ui/SixdotsScaleMiddle";
+import { isNullOrUndefined } from "@/utils/typeGuard";
 
 type Variant = "primary" | "secondary" | "black" | "delete";
 
@@ -69,7 +70,7 @@ export function Button({
     e: React.MouseEvent<HTMLButtonElement>,
   ) => {
     setIsLoading(true);
-    if (onClick != null) {
+    if (!isNullOrUndefined(onClick)) {
       await onClick(e);
     }
     setIsLoading(false);

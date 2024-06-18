@@ -7,6 +7,7 @@ import { Pawn } from "@/domains/piece/pawn";
 import { Board } from "@/domains/piece/piece";
 import { Queen } from "@/domains/piece/queen";
 import { Rook } from "@/domains/piece/rook";
+import { isNullOrUndefined } from "@/utils/typeGuard";
 
 export type BoardInDB = (
   | { id: string; isNotMoved?: boolean; turnMovedTwo?: number }
@@ -34,7 +35,7 @@ export class GameDatabase extends Dexie {
 export const convertEntityToBoardInDB = (board: Board): BoardInDB =>
   board.map((row) =>
     row.map((mass) => {
-      if (mass == null) return undefined;
+      if (isNullOrUndefined(mass)) return undefined;
       if (mass instanceof Pawn) {
         return {
           id: mass.id,
@@ -56,7 +57,7 @@ export const convertEntityToBoardInDB = (board: Board): BoardInDB =>
 export const convertBoardInDBToEntity = (board: BoardInDB): Board =>
   board.map((row) =>
     row.map((mass) => {
-      if (mass == null) return undefined;
+      if (isNullOrUndefined(mass)) return undefined;
       const type = mass.id[1];
       switch (type) {
         case "P":
