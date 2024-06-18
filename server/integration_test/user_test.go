@@ -26,9 +26,6 @@ func TestFindMe(t *testing.T) {
 
 	// 初期状態の設定
 	user := addTestUser(t, tx, 1)
-	if err := tx.Create(user).Error; err != nil {
-		t.Fatal(err)
-	}
 	// テストケース
 	tests := []struct {
 		name        string
@@ -51,6 +48,7 @@ func TestFindMe(t *testing.T) {
 					return
 				})
 				resp, err = c.R().
+					SetError(errRes).
 					SetHeader("Authorization", "Bearer token").
 					SetResult(findMeRes).
 					Get(s.URL + "/api/user/me")

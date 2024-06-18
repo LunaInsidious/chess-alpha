@@ -5,10 +5,10 @@
 package mock_output_port
 
 import (
+	entity "chess-alpha/server/domain/entity"
 	reflect "reflect"
 	time "time"
 
-	entity "chess-alpha/server/domain/entity"
 	gomock "github.com/golang/mock/gomock"
 )
 
@@ -103,36 +103,6 @@ func (mr *MockUserAuthMockRecorder) Authenticate(token interface{}) *gomock.Call
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Authenticate", reflect.TypeOf((*MockUserAuth)(nil).Authenticate), token)
 }
 
-// AuthenticateForUpdateEmail mocks base method.
-func (m *MockUserAuth) AuthenticateForUpdateEmail(token string) (string, error) {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "AuthenticateForUpdateEmail", token)
-	ret0, _ := ret[0].(string)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
-}
-
-// AuthenticateForUpdateEmail indicates an expected call of AuthenticateForUpdateEmail.
-func (mr *MockUserAuthMockRecorder) AuthenticateForUpdateEmail(token interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "AuthenticateForUpdateEmail", reflect.TypeOf((*MockUserAuth)(nil).AuthenticateForUpdateEmail), token)
-}
-
-// AuthenticateForUpdatePassword mocks base method.
-func (m *MockUserAuth) AuthenticateForUpdatePassword(token string) (string, error) {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "AuthenticateForUpdatePassword", token)
-	ret0, _ := ret[0].(string)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
-}
-
-// AuthenticateForUpdatePassword indicates an expected call of AuthenticateForUpdatePassword.
-func (mr *MockUserAuthMockRecorder) AuthenticateForUpdatePassword(token interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "AuthenticateForUpdatePassword", reflect.TypeOf((*MockUserAuth)(nil).AuthenticateForUpdatePassword), token)
-}
-
 // CheckPassword mocks base method.
 func (m *MockUserAuth) CheckPassword(user entity.User, password string) error {
 	m.ctrl.T.Helper()
@@ -190,34 +160,4 @@ func (m *MockUserAuth) IssueUserToken(user entity.User, issuedAt time.Time) (str
 func (mr *MockUserAuthMockRecorder) IssueUserToken(user, issuedAt interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "IssueUserToken", reflect.TypeOf((*MockUserAuth)(nil).IssueUserToken), user, issuedAt)
-}
-
-// IssueUserTokenForUpdateEmail mocks base method.
-func (m *MockUserAuth) IssueUserTokenForUpdateEmail(user entity.User, issuedAt time.Time) (string, error) {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "IssueUserTokenForUpdateEmail", user, issuedAt)
-	ret0, _ := ret[0].(string)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
-}
-
-// IssueUserTokenForUpdateEmail indicates an expected call of IssueUserTokenForUpdateEmail.
-func (mr *MockUserAuthMockRecorder) IssueUserTokenForUpdateEmail(user, issuedAt interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "IssueUserTokenForUpdateEmail", reflect.TypeOf((*MockUserAuth)(nil).IssueUserTokenForUpdateEmail), user, issuedAt)
-}
-
-// IssueUserTokenForUpdatePassword mocks base method.
-func (m *MockUserAuth) IssueUserTokenForUpdatePassword(user entity.User, issuedAt time.Time) (string, error) {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "IssueUserTokenForUpdatePassword", user, issuedAt)
-	ret0, _ := ret[0].(string)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
-}
-
-// IssueUserTokenForUpdatePassword indicates an expected call of IssueUserTokenForUpdatePassword.
-func (mr *MockUserAuthMockRecorder) IssueUserTokenForUpdatePassword(user, issuedAt interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "IssueUserTokenForUpdatePassword", reflect.TypeOf((*MockUserAuth)(nil).IssueUserTokenForUpdatePassword), user, issuedAt)
 }

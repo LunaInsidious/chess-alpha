@@ -20,11 +20,11 @@ func TestUserUseCase_Login(t *testing.T) {
 		loginID, password string
 	}
 	type mockReturns struct {
-		findByEmailReturn    entity.User
+		findByLoginIDReturn  entity.User
 		issueUserTokenReturn string
 	}
 	type errorCases struct {
-		findByEmailError    error
+		findByLoginIDError  error
 		checkPasswordError  error
 		issueUserTokenError error
 	}
@@ -34,7 +34,7 @@ func TestUserUseCase_Login(t *testing.T) {
 		err   error
 	}
 	type expectedMockCounts struct {
-		findByEmail, checkPassword, issueUserToken, now int
+		findByLoginID, checkPassword, issueUserToken, now int
 	}
 
 	tests := []struct {
@@ -49,7 +49,7 @@ func TestUserUseCase_Login(t *testing.T) {
 			name: "success",
 			args: args{loginID: "00000000", password: "password"},
 			mockReturns: mockReturns{
-				findByEmailReturn:    entity.User{UserID: "testUser"},
+				findByLoginIDReturn:  entity.User{UserID: "testUser"},
 				issueUserTokenReturn: "testToken",
 			},
 			errors: errorCases{},
@@ -58,27 +58,27 @@ func TestUserUseCase_Login(t *testing.T) {
 				token: "testToken",
 				err:   nil,
 			},
-			expectedMockCounts: expectedMockCounts{findByEmail: 1, checkPassword: 1, issueUserToken: 1, now: 1},
+			expectedMockCounts: expectedMockCounts{findByLoginID: 1, checkPassword: 1, issueUserToken: 1, now: 1},
 		},
 		{
 			name:        "fail; user not found",
 			args:        args{loginID: "00000000", password: "password"},
 			mockReturns: mockReturns{},
 			errors: errorCases{
-				findByEmailError: errors.New("user not found"),
+				findByLoginIDError: errors.New("user not found"),
 			},
 			expectedResponse: expectedResponse{
 				user:  entity.User{},
 				token: "",
 				err:   errors.New("user not found"),
 			},
-			expectedMockCounts: expectedMockCounts{findByEmail: 1, checkPassword: 0, issueUserToken: 0, now: 0},
+			expectedMockCounts: expectedMockCounts{findByLoginID: 1, checkPassword: 0, issueUserToken: 0, now: 0},
 		},
 		{
 			name: "fail; wrong password",
 			args: args{loginID: "00000000", password: "password"},
 			mockReturns: mockReturns{
-				findByEmailReturn: entity.User{UserID: "testUser"},
+				findByLoginIDReturn: entity.User{UserID: "testUser"},
 			},
 			errors: errorCases{
 				checkPasswordError: errors.New("wrong password"),
@@ -88,13 +88,13 @@ func TestUserUseCase_Login(t *testing.T) {
 				token: "",
 				err:   errors.New("wrong password"),
 			},
-			expectedMockCounts: expectedMockCounts{findByEmail: 1, checkPassword: 1, issueUserToken: 0, now: 0},
+			expectedMockCounts: expectedMockCounts{findByLoginID: 1, checkPassword: 1, issueUserToken: 0, now: 0},
 		},
 		{
 			name: "fail; issue token error",
 			args: args{loginID: "00000000", password: "password"},
 			mockReturns: mockReturns{
-				findByEmailReturn: entity.User{UserID: "testUser"},
+				findByLoginIDReturn: entity.User{UserID: "testUser"},
 			},
 			errors: errorCases{
 				issueUserTokenError: errors.New("failed to issue token"),
@@ -104,7 +104,7 @@ func TestUserUseCase_Login(t *testing.T) {
 				token: "",
 				err:   errors.New("failed to issue token"),
 			},
-			expectedMockCounts: expectedMockCounts{findByEmail: 1, checkPassword: 1, issueUserToken: 1, now: 1},
+			expectedMockCounts: expectedMockCounts{findByLoginID: 1, checkPassword: 1, issueUserToken: 1, now: 1},
 		},
 	}
 
@@ -119,10 +119,10 @@ func TestUserUseCase_Login(t *testing.T) {
 			mockUserAuth := mock_output_port.NewMockUserAuth(mockCtrl)
 			mockUserRepo := mock_output_port.NewMockUserRepository(mockCtrl)
 
-			mockUserRepo.EXPECT().FindByLoginID(tt.args.loginID).Return(tt.mockReturns.findByEmailReturn, tt.errors.findByEmailError).Times(tt.expectedMockCounts.findByEmail)
-			mockUserAuth.EXPECT().CheckPassword(tt.mockReturns.findByEmailReturn, tt.args.password).Return(tt.errors.checkPasswordError).Times(tt.expectedMockCounts.checkPassword)
+			mockUserRepo.EXPECT().FindByLoginID(tt.args.loginID).Return(tt.mockReturns.findByLoginIDReturn, tt.errors.findByLoginIDError).Times(tt.expectedMockCounts.findByLoginID)
+			mockUserAuth.EXPECT().CheckPassword(tt.mockReturns.findByLoginIDReturn, tt.args.password).Return(tt.errors.checkPasswordError).Times(tt.expectedMockCounts.checkPassword)
 			mockClock.EXPECT().Now().Return(time.Now()).Times(tt.expectedMockCounts.now)
-			mockUserAuth.EXPECT().IssueUserToken(tt.mockReturns.findByEmailReturn, gomock.Any()).Return(tt.mockReturns.issueUserTokenReturn, tt.errors.issueUserTokenError).Times(tt.expectedMockCounts.issueUserToken)
+			mockUserAuth.EXPECT().IssueUserToken(tt.mockReturns.findByLoginIDReturn, gomock.Any()).Return(tt.mockReturns.issueUserTokenReturn, tt.errors.issueUserTokenError).Times(tt.expectedMockCounts.issueUserToken)
 
 			u := interactor.NewUserUseCase(mockClock, nil, nil, mockUserAuth, mockUserRepo).(*interactor.UserUseCase)
 			gotUser, gotToken, err := u.Login(tt.args.loginID, tt.args.password)

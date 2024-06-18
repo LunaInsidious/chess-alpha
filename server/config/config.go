@@ -11,10 +11,6 @@ var (
 	awsSecretAccessKey            string
 	awsRegion                     string
 	env                           string
-	frontendURL                   string
-	postCodeJPToken               string
-	s3Bucket                      string
-	emailFrom                     string
 	sigKey                        string // JWTトークンの署名
 	slowQueryThresholdMilliSecond int64
 )
@@ -39,23 +35,6 @@ func init() {
 	awsRegion = os.Getenv("AWS_REGION")
 	if awsRegion == "" {
 		log.Print("AWS_REGION environment variable is empty")
-	}
-	s3Bucket = os.Getenv("S3_BUCKET")
-	if s3Bucket == "" {
-		log.Print("S3_BUCKET environment variable is empty")
-	}
-	emailFrom = os.Getenv("EMAIL_FROM")
-	if emailFrom == "" {
-		log.Print("EMAIL_FROM environment variable is empty")
-	}
-	postCodeJPToken = os.Getenv("POST_CODE_JP_TOKEN")
-	if postCodeJPToken == "" {
-		log.Print("POST_CODE_JP_TOKEN environment variable is empty")
-	}
-	frontendURL = os.Getenv("FRONTEND_URL")
-	if frontendURL == "" {
-		log.Print("FRONTEND_URL environment variable is empty")
-		frontendURL = "http://example.com"
 	}
 	th, err := strconv.ParseInt(os.Getenv("SLOW_QUERY_THRESHOLD_MILLISECOND"), 10, 64)
 	if err != nil {
@@ -96,22 +75,6 @@ func AWSRegion() string {
 
 func SigKey() string {
 	return sigKey
-}
-
-func EmailFrom() string {
-	return emailFrom
-}
-
-func S3Bucket() string {
-	return s3Bucket
-}
-
-func PostCodeJPToken() string {
-	return postCodeJPToken
-}
-
-func FrontendURL() string {
-	return frontendURL
 }
 
 func SlowQueryThresholdMilliSecond() int64 {

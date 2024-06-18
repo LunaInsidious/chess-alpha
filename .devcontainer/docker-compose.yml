@@ -1,0 +1,79 @@
+services:
+  server:
+    image: mcr.microsoft.com/vscode/devcontainers/base:bookworm
+    command: sleep infinity
+    environment:
+      - ENV=devcontainer
+    working_dir: '/workspace/server'
+    volumes:
+      - ..:/workspace
+
+  api:
+    build:
+      context: ../server
+      dockerfile: ../server/Dockerfile.dev
+    volumes:
+      - ../server:/app
+    ports:
+      - 80:80
+    tty: true
+    env_file: ../server/.env.dev
+    command: >
+      ash -c "go run main.go"
+    depends_on:
+      mysql:
+        condition: service_healthy
+
+  test-api:
+    build:
+      context: ../server
+      dockerfile: ../server/Dockerfile.dev
+    volumes:
+      - ../server:/app
+    ports:
+      - 88:80
+    tty: true
+    environment:
+      - DB_USER=docker
+      - DB_PASSWORD=password
+      - DB_HOST=mysql
+      - DB_PORT=3306
+      - DB_NAME=template_test
+      - ENV=test
+    command: >
+      ash -c "go run main.go"
+    depends_on:
+      mysql:
+        condition: service_healthy
+
+  mysql:
+    image: mysql:8.0.28
+    platform: linux/x86_64
+    ports:
+      - 3306:3306
+    environment:
+      - MYSQL_ROOT_PASSWORD=password
+      - MYSQL_DATABASE=template
+      - MYSQL_USER=docker
+      - MYSQL_PASSWORD=password
+      - TZ=Asia/Tokyo
+    volumes:
+      - ../server/mysql/mysql-data:/var/lib/mysql
+      - ../server/mysql/my.cnf:/etc/mysql/conf.d/my.cnf
+      - ../server/mysql/init-db.sql:/docker-entrypoint-initdb.d/init-db.sql
+    healthcheck:
+      test: mysqladmin ping -h 127.0.0.1 -u$$MYSQL_USER -p$$MYSQL_PASSWORD
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    platform: linux/x86_64
+    environment:
+      - PMA_ARBITRARY=1
+      - PMA_HOST=mysql
+      - PMA_USER=docker
+      - PMA_PASSWORD=password
+    ports:
+      - 4040:80
+    depends_on:
+      mysql:
+        condition: service_healthy

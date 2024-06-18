@@ -30,10 +30,6 @@ func IssueUserToken(userID string, issuedAt time.Time, scopes []string) (string,
 	var expiredAt time.Time
 	if contains(scopes, output_port.TokenScopeGeneral) {
 		expiredAt = issuedAt.Add(output_port.TokenGeneralExpireDuration)
-	} else if contains(scopes, output_port.TokenScopeUpdateEmail) {
-		expiredAt = issuedAt.Add(output_port.TokenEmailUpdateExpireDuration)
-	} else if contains(scopes, output_port.TokenScopeUpdatePassword) {
-		expiredAt = issuedAt.Add(output_port.TokenChangePasswordExpireDuration)
 	} else {
 		return "", output_port.ErrUnknownScope
 	}

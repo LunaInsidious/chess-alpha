@@ -23,14 +23,6 @@ func (a *UserAuth) IssueUserToken(user entity.User, issuedAt time.Time) (string,
 	return IssueUserToken(user.UserID, issuedAt, []string{output_port.TokenScopeGeneral})
 }
 
-func (a *UserAuth) IssueUserTokenForUpdateEmail(user entity.User, issuedAt time.Time) (string, error) {
-	return IssueUserToken(user.UserID, issuedAt, []string{output_port.TokenScopeUpdateEmail})
-}
-
-func (a *UserAuth) IssueUserTokenForUpdatePassword(user entity.User, issuedAt time.Time) (string, error) {
-	return IssueUserToken(user.UserID, issuedAt, []string{output_port.TokenScopeUpdatePassword})
-}
-
 func (a *UserAuth) HashPassword(password string) (string, error) {
 	hp, err := HashBcryptPassword(password)
 	if err != nil {
@@ -41,14 +33,6 @@ func (a *UserAuth) HashPassword(password string) (string, error) {
 
 func (a *UserAuth) Authenticate(token string) (string, error) {
 	return VerifyUserToken(token, []string{output_port.TokenScopeGeneral})
-}
-
-func (a *UserAuth) AuthenticateForUpdateEmail(token string) (string, error) {
-	return VerifyUserToken(token, []string{output_port.TokenScopeUpdateEmail})
-}
-
-func (a *UserAuth) AuthenticateForUpdatePassword(token string) (string, error) {
-	return VerifyUserToken(token, []string{output_port.TokenScopeUpdatePassword})
 }
 
 func (a *UserAuth) GenerateInitialPassword(length int) (string, error) {

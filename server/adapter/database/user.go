@@ -24,30 +24,6 @@ func NewUserRepository(
 	return &UserRepository{db: db, ulid: ulid}
 }
 
-func (r *UserRepository) Create(user entity.User) (err error) {
-	defer output_port.WrapDatabaseError(&err)
-
-	m := &model.User{
-		UserID:         user.UserID,
-		LoginID:        user.UserID,
-		Name:           user.Name,
-		Rate:           user.Rate,
-		HashedPassword: user.HashedPassword,
-	}
-	if err := r.db.Create(m).Error; err != nil {
-		return err
-	}
-	return nil
-}
-
-func (r *UserRepository) Delete(userID string) (err error) {
-	defer output_port.WrapDatabaseError(&err)
-
-	return r.db.Model(&model.User{}).
-		Where("user_id = ?", userID).
-		Delete(nil).Error
-}
-
 func (r *UserRepository) FindByLoginID(loginID string) (_ entity.User, err error) {
 	defer output_port.WrapDatabaseError(&err)
 	ret := &model.User{}
@@ -65,8 +41,6 @@ func (r *UserRepository) FindByID(userID string) (_ entity.User, err error) {
 	defer output_port.WrapDatabaseError(&err)
 	res := model.User{}
 	err = r.db.
-		Preload("UserDetail").
-		Preload("UserDetail").
 		Where("user_id = ?", userID).
 		First(&res).
 		Error

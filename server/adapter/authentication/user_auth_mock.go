@@ -9,23 +9,7 @@ import (
 
 type UserAuthMock struct{}
 
-func (a *UserAuthMock) AuthenticateForUpdateEmail(token string) (string, error) {
-	return "a", nil
-}
-
-func (a *UserAuthMock) AuthenticateForUpdatePassword(token string) (string, error) {
-	return "a", nil
-}
-
 func (a *UserAuthMock) IssueUserToken(user entity.User, issuedAt time.Time) (string, error) {
-	return "a", nil
-}
-
-func (a *UserAuthMock) IssueUserTokenForUpdateEmail(user entity.User, issuedAt time.Time) (string, error) {
-	return "a", nil
-}
-
-func (a *UserAuthMock) IssueUserTokenForUpdatePassword(user entity.User, issuedAt time.Time) (string, error) {
 	return "a", nil
 }
 

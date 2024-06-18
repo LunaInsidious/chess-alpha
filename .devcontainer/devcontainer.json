@@ -1,0 +1,37 @@
+{
+  "name": "api",
+  "dockerComposeFile": "docker-compose.yml",
+  "service": "server",
+  "workspaceFolder": "/workspace",
+  "remoteUser": "root",
+  "updateRemoteUserUID": true,
+  "features": {
+        "ghcr.io/devcontainers/features/go:1": {
+            "version": "1.21",
+            "golangciLintVersion": "1.54.1"
+        },
+        "ghcr.io/devcontainers/features/common-utils:2": {
+            "installZsh": "true",
+            "configureZshAsDefaultShell": "true",
+            "installOhMyZsh": "true",
+            "installOhMyZshConfig": "true"
+        },
+        "ghcr.io/devcontainers/features/docker-outside-of-docker": {
+            "version": "latest",
+            "dockerSock": "/var/run/docker.sock"
+        }
+    },
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "golang.Go",
+        "emeraldwalk.RunOnSave",
+        "ms-azuretools.vscode-docker",
+        "streetsidesoftware.code-spell-checker",
+        "PKief.material-icon-theme",
+        "Arjun.swagger-viewer",
+        "shardulm94.trailing-spaces"
+      ]
+    }
+  }
+}

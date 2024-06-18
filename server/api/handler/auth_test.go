@@ -94,7 +94,7 @@ func TestAuthHandler_Login(t *testing.T) {
 			response: res{
 				user:  entity.User{},
 				token: "",
-				err:   interactor.NewNotFoundError("email", "00000000"),
+				err:   interactor.NewNotFoundError("loginID", "00000000"),
 			},
 			wantErr: true,
 			args: args{
