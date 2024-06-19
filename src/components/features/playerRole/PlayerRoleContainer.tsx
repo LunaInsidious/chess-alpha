@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 
 import { PlayerRolePresenter } from "@/components/features/playerRole/PlayerRolePresenter";
@@ -28,6 +28,14 @@ export function PlayerRoleContainer() {
 
   const playersQuery = queryParams.get("players");
 
+  if (playersQuery === null) {
+    showError({
+      message: "プレイヤーが指定されていません。",
+    });
+    navigate(appURL.playerSetup);
+    return null;
+  }
+
   const color = queryParams.get("color");
 
   const playerList =
@@ -38,7 +46,15 @@ export function PlayerRoleContainer() {
           .map((player) => decodeURIComponent(player))
       : [];
 
-  function loadRolesFromLocalStorage(): string[] {
+  if (playerList.length < 3 || playerList.length > 6) {
+    showError({
+      message: "プレイヤーの数は3人から6人でなければなりません。",
+    });
+    navigate(appURL.playerSetup);
+    return null;
+  }
+
+  const loadRolesFromLocalStorage = (): string[] => {
     const savedRoles = localStorage.getItem("roles");
     const parsedItems = JSON.parse(savedRoles ?? "null");
 
@@ -47,28 +63,17 @@ export function PlayerRoleContainer() {
     }
 
     return [];
-  }
+  };
 
   const [roles, setRoles] = useState<string[]>(loadRolesFromLocalStorage());
 
-  const [currentIndex, setCurrentIndex] = useState<number>(0);
-
-  const setAssignmentRoles = (players: string[]) => {
-    const assignedRoles = assignRoles(players);
+  if (roles.length === 0) {
+    const assignedRoles = assignRoles(playerList);
     setRoles(assignedRoles);
     localStorage.setItem("roles", JSON.stringify(assignedRoles));
-  };
+  }
 
-  useEffect(() => {
-    if (playerList.length === 0) {
-      showError({
-        message: "プレイヤーが指定されていません。",
-      });
-      navigate(appURL.playerSetup);
-    } else if (roles.length === 0) {
-      setAssignmentRoles(playerList);
-    }
-  }, [playerList]);
+  const [currentIndex, setCurrentIndex] = useState<number>(0);
 
   const [isShowingRole, setIsShowingRole] = useState(false);
 
@@ -76,10 +81,21 @@ export function PlayerRoleContainer() {
     setIsShowingRole(true);
   };
 
+  const [isFirstPlayer, setIsFirstPlayer] = useState(true);
+
+  const handleChangeIsFirstPlayer = (playerIndex: number) => {
+    if (playerIndex === 0) {
+      setIsFirstPlayer(true);
+    } else {
+      setIsFirstPlayer(false);
+    }
+  };
+
   const handleNextPlayer = () => {
     if (currentIndex < playerList.length - 1) {
       setIsShowingRole(false);
       setCurrentIndex(currentIndex + 1);
+      handleChangeIsFirstPlayer(currentIndex + 1);
     }
   };
 
@@ -91,9 +107,12 @@ export function PlayerRoleContainer() {
     if (currentIndex > 0) {
       setIsShowingRole(false);
       setCurrentIndex(currentIndex - 1);
-    } else if (currentIndex === 0) {
-      navigate(appURL.playerSetup);
+      handleChangeIsFirstPlayer(currentIndex - 1);
     }
+  };
+
+  const handleBackToSetup = () => {
+    navigate(appURL.playerSetup);
   };
 
   return (
@@ -106,6 +125,8 @@ export function PlayerRoleContainer() {
       handlePreviousPlayer={handlePreviousPlayer}
       handleStartGame={handleStartGame}
       isLastPlayer={currentIndex === playerList.length - 1}
+      handleBackToSetup={handleBackToSetup}
+      isFirstPlayer={isFirstPlayer}
     />
   );
 }
