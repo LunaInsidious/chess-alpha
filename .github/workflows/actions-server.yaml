@@ -39,6 +39,7 @@ jobs:
           MYSQL_DATABASE: test
           MYSQL_USER: template-test
           MYSQL_PASSWORD: password
+          MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
         ports:
           - 3306:3306
 
