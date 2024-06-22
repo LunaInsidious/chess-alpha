@@ -17,8 +17,8 @@ import { appURL } from "@/config/url";
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route element={<DefaultLayout />}>
-      <Route path={appURL.home} element={<Home />} />
       <Route path={appURL.error} element={<Error404 />} />
+      <Route path={appURL.home} element={<Home />} />
       <Route path={appURL.game} element={<Game />} />
       <Route path={appURL.playerSetup} element={<Setup />} />
     </Route>,
