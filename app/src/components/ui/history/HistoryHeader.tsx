@@ -1,8 +1,6 @@
 import { HistoryCard } from "@/components/ui/HistoryCard";
 
-type Props = {};
-
-export function HistoryHeader({}: Props): JSX.Element {
+export function HistoryHeader(): JSX.Element {
   return (
     <HistoryCard className="p-2">
       <div className="flex justify-between h-12">

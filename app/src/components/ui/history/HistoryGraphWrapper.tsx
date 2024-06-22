@@ -1,10 +1,8 @@
 import { HistoryCard } from "@/components/ui/HistoryCard";
-import { WinRateGraph } from "@/components/ui/history/WinRateGraph";
 import { TierGraph } from "@/components/ui/history/TierGraph";
+import { WinRateGraph } from "@/components/ui/history/WinRateGraph";
 
-type Props = {};
-
-export function HistoryGraphWrapper({}: Props): JSX.Element {
+export function HistoryGraphWrapper(): JSX.Element {
   return (
     <HistoryCard>
       <div className="flex justify-evenly h-30">

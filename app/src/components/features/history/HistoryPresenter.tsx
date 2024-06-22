@@ -1,7 +1,7 @@
-import { HistoryHeader } from "@/components/ui/history/HistoryHeader";
-import { HistoryGraphWrapper } from "@/components/ui/history/HistoryGraphWrapper";
-import { RoleSummary } from "@/components/ui/history/RoleSummary";
 import { HistoryDashboard } from "@/components/ui/history/HistoryDashboard";
+import { HistoryGraphWrapper } from "@/components/ui/history/HistoryGraphWrapper";
+import { HistoryHeader } from "@/components/ui/history/HistoryHeader";
+import { RoleSummary } from "@/components/ui/history/RoleSummary";
 
 export function HistoryPresenter(): JSX.Element {
   return (

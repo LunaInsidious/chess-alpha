@@ -7,7 +7,7 @@ export function HistoryDashboard(): JSX.Element {
     created_at: number;
     duration: number;
     rate: number;
-    tag: string[];
+    tags: string[];
   }[] = [
     {
       result: "win",
@@ -15,7 +15,7 @@ export function HistoryDashboard(): JSX.Element {
       created_at: -1,
       duration: 13_000,
       rate: 330,
-      tag: ["Warewolf", "Perfect Win"],
+      tags: ["Warewolf", "Perfect Win"],
     },
     {
       result: "lose",
@@ -23,7 +23,7 @@ export function HistoryDashboard(): JSX.Element {
       created_at: -2,
       duration: 19_000,
       rate: 310,
-      tag: ["Bad Boy"],
+      tags: ["Bad Boy"],
     },
     {
       result: "win",
@@ -31,14 +31,14 @@ export function HistoryDashboard(): JSX.Element {
       created_at: -7,
       duration: 12_000,
       rate: 320,
-      tag: ["King Slayer"],
+      tags: ["King Slayer"],
     },
   ];
 
   const rtf = new Intl.RelativeTimeFormat("en", {
-    localeMatcher: "best fit", // other values: "lookup"
-    numeric: "always", // other values: "auto"
-    style: "long", // other values: "short" or "narrow"
+    localeMatcher: "best fit",
+    numeric: "always",
+    style: "long",
   });
 
   return (
@@ -56,19 +56,30 @@ export function HistoryDashboard(): JSX.Element {
                   : "flex justify-between gap-8 rounded bg-red-500/75 px-4 py-2"
               }
             >
-              <div className="flex flex-col w-12">
+              <div className="flex flex-col w-12 justify-between">
                 <span className="text-xl font-bold">{row.result}</span>
                 <span>{`${row.duration / 1000}分`}</span>
               </div>
-              <div className="flex justify-between w-full">
-                <div className="flex rounded-full bg-white w-12 h-12 justify-center items-center">
+              <div className="flex justify-between w-full items-center">
+                <div className="flex rounded bg-white w-16 h-full justify-center items-center">
                   <span className="font-bold text-xl">
-                    {row.role === "wolf" ? "狼" : "市"}
+                    {row.role === "wolf" ? "人狼" : "市民"}
                   </span>
                 </div>
-                <div className="flex flex-col items-end">
+                <div className="flex flex-col items-end gap-2">
                   <span>{rtf.format(row.created_at, "day")}</span>
-                  <span></span>
+                  <div className="flex gap-2">
+                    {row.tags.map((tag) => (
+                      <div
+                        className={
+                          row.result === "win"
+                            ? "flex px-2 py-1 rounded border-2 border-blue-500/90 border-solid"
+                            : "flex px-2 py-1 rounded border-2 border-red-500/90 border-solid"
+                        } >
+                        {tag}
+                      </div>
+                    ))}
+                  </div>
                 </div>
               </div>
             </div>
