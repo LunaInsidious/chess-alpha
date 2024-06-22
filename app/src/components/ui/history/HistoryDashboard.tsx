@@ -75,7 +75,8 @@ export function HistoryDashboard(): JSX.Element {
                           row.result === "win"
                             ? "flex px-2 py-1 rounded border-2 border-blue-500/90 border-solid"
                             : "flex px-2 py-1 rounded border-2 border-red-500/90 border-solid"
-                        } >
+                        }
+                      >
                         {tag}
                       </div>
                     ))}
