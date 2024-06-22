@@ -1,0 +1,68 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'server/**'
+  pull_request:
+    paths:
+      - 'server/**'
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    services:
+      mysql:
+        image: mysql:latest
+        env:
+          MYSQL_ROOT_PASSWORD: password
+          MYSQL_DATABASE: test
+          MYSQL_USER: template-test
+          MYSQL_PASSWORD: password
+        ports:
+          - 3306:3306
+        options: >-
+          --health-cmd="mysqladmin ping --silent"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=3
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v2
+
+      - name: Set up Go
+        uses: actions/setup-go@v3
+        with:
+          go-version: 1.21
+
+      - name: Wait for MySQL to be healthy
+        run: |
+          for i in {30..0}; do
+            if docker exec ${HOSTNAME} mysqladmin ping --silent; then
+              break
+            fi
+            echo 'MySQL is unavailable - sleeping'
+            sleep 1
+          done
+          if [ "$i" = 0 ]; then
+            echo 'MySQL did not become available in time' >&2
+            exit 1
+          fi
+
+      - name: Run tests
+        env:
+          DB_USER: root
+          DB_PASSWORD: password
+          DB_HOST: mysql
+          DB_PORT: 3306
+          DB_NAME: test
+          TZ: Asia/Tokyo
+        run: |
+          make check
+          make test-github
+        working-directory: server
