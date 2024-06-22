@@ -25,7 +25,7 @@ jobs:
 
       - name: Run lint
         run: |
-          make lint
+          make lint-init
         working-directory: server
 
   test:
