@@ -12,6 +12,22 @@ on:
   workflow_dispatch:
 
 jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v2
+
+      - name: Set up Go
+        uses: actions/setup-go@v3
+        with:
+          go-version: 1.21
+
+      - name: Run lint
+        run: |
+          make lint
+        working-directory: server
+
   test:
     runs-on: ubuntu-latest
 
@@ -25,11 +41,6 @@ jobs:
           MYSQL_PASSWORD: password
         ports:
           - 3306:3306
-        options: >-
-          --health-cmd="mysqladmin ping --silent"
-          --health-interval=10s
-          --health-timeout=5s
-          --health-retries=3
 
     steps:
       - name: Check out repository
@@ -39,20 +50,6 @@ jobs:
         uses: actions/setup-go@v3
         with:
           go-version: 1.21
-
-      - name: Wait for MySQL to be healthy
-        run: |
-          for i in {30..0}; do
-            if docker exec ${HOSTNAME} mysqladmin ping --silent; then
-              break
-            fi
-            echo 'MySQL is unavailable - sleeping'
-            sleep 1
-          done
-          if [ "$i" = 0 ]; then
-            echo 'MySQL did not become available in time' >&2
-            exit 1
-          fi
 
       - name: Run tests
         env:
