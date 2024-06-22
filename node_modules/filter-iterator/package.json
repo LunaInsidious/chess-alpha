@@ -1,0 +1,20 @@
+{
+  "name": "filter-iterator",
+  "description": "filter a javascript iterator",
+  "keywords": ["filter", "iterator", "generator"],
+  "version": "0.0.1",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/jb55/filter-iterator.git"
+  },
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha --harmony --reporter spec"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "expect.js": "*",
+    "mocha": "*",
+    "naturals": "^1.0.0"
+  }
+}
