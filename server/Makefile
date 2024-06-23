@@ -106,8 +106,8 @@ else
 	docker exec api-test-api-1 go test `go list ./... | grep -v chess-alpha/server/integration_tests`
 endif
 
-.PHONY: test-gitlab
-test-gitlab:
+.PHONY: test-github
+test-github:
 	go test -v -cover -coverpkg $(COVERAGE_TARGET_PACKAGES) ./... -coverprofile=coverage.txt && go tool cover -func coverage.txt
 	go get github.com/boumenot/gocover-cobertura
 	go run github.com/boumenot/gocover-cobertura < coverage.txt > coverage.xml

@@ -1,0 +1,72 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'server/**'
+  pull_request:
+    paths:
+      - 'server/**'
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v2
+
+      - name: Set up Go
+        uses: actions/setup-go@v3
+        with:
+          go-version: 1.21
+
+      - name: Run lint
+        run: |
+          make lint-init
+        working-directory: server
+
+  test:
+    runs-on: ubuntu-latest
+
+    services:
+      mysql:
+        image: mysql:latest
+        env:
+          MYSQL_ROOT_PASSWORD: password
+          MYSQL_DATABASE: test
+          MYSQL_USER: template-test
+          MYSQL_PASSWORD: password
+          MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
+        ports:
+          - 3306:3306
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v2
+
+      - name: Set up Go
+        uses: actions/setup-go@v3
+        with:
+          go-version: 1.21
+
+      - name: Wait for MySQL
+        run: |
+          until mysqladmin ping -h "127.0.0.1" --port=3306 --silent; do
+            echo 'waiting for mysql...'
+            sleep 5
+          done
+
+      - name: Run tests
+        env:
+          DB_USER: root
+          DB_PASSWORD: password
+          DB_HOST: 127.0.0.1
+          DB_PORT: 3306
+          DB_NAME: test
+        run: |
+          make check
+          make test-github
+        working-directory: server
