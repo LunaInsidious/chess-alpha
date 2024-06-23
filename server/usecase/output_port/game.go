@@ -1,8 +1,9 @@
 package output_port
 
 import (
-	"chess-alpha/server/domain/entity"
 	"time"
+
+	"chess-alpha/server/domain/entity"
 )
 
 type GameRepository interface {

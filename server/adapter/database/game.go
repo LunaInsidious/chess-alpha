@@ -38,7 +38,7 @@ func (r *GameRepository) Create(game entity.Game) (err error) {
 		}(),
 		WerewolfID: game.Werewolf.UserID,
 		GameRecord: game.GameRecord,
-		Result:     game.Result,
+		Result:     game.Result.String(),
 		StartAt:    game.StartAt,
 		EndAt:      game.EndAt,
 	}).Error

@@ -1,11 +1,12 @@
 package constructor
 
 import (
-	"chess-alpha/server/domain/entconst"
-	"chess-alpha/server/domain/entity"
 	"errors"
 	"fmt"
 	"time"
+
+	"chess-alpha/server/domain/entconst"
+	"chess-alpha/server/domain/entity"
 )
 
 type NewGameArgs struct {
@@ -43,6 +44,11 @@ func NewGame(args NewGameArgs) (entity.Game, error) {
 		errs = append(errs, entconst.NewValidationErrorFromMsg("gameRecord is required"))
 	}
 
+	result, err := entconst.ConvertResultFromString(args.Result)
+	if err != nil {
+		errs = append(errs, err)
+	}
+
 	if args.StartAt.IsZero() {
 		errs = append(errs, entconst.NewValidationErrorFromMsg("startAt is required"))
 	}
@@ -66,7 +72,7 @@ func NewGame(args NewGameArgs) (entity.Game, error) {
 			UserID: args.WerewolfID,
 		},
 		GameRecord: args.GameRecord,
-		Result:     args.Result,
+		Result:     result,
 		StartAt:    args.StartAt,
 		EndAt:      args.EndAt,
 	}, nil

@@ -52,3 +52,12 @@ func (r *UserRepository) FindByID(userID string) (_ entity.User, err error) {
 	}
 	return res.Entity(), nil
 }
+
+func (r *UserRepository) UpdateRate(userID string, rate int) (err error) {
+	defer output_port.WrapDatabaseError(&err)
+	return r.db.
+		Where("user_id = ?", userID).
+		Updates(&model.User{
+			Rate: rate,
+		}).Error
+}

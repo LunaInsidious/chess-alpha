@@ -18,7 +18,7 @@ func (r Result) String() string {
 
 func validateResult(result string) error {
 	switch Result(result) {
-	case CPUWin, CPULose, SucceedToCheat, FailedToCheat, Stalemate, UnderResource, FiftyRule:
+	case "", CPUWin, CPULose, SucceedToCheat, FailedToCheat, Stalemate, UnderResource, FiftyRule:
 		return nil
 	default:
 		return NewValidationErrorFromMsg("invalid result")
@@ -30,4 +30,21 @@ func ConvertResultFromString(result string) (Result, error) {
 		return "", err
 	}
 	return Result(result), nil
+}
+
+func GetRateDiff(result Result, isCitizen bool) int {
+	switch result {
+	case CPUWin, SucceedToCheat:
+		if isCitizen {
+			return -10
+		}
+		return 10
+	case CPULose, FailedToCheat:
+		if isCitizen {
+			return 10
+		}
+		return -10
+	default:
+		return 0
+	}
 }

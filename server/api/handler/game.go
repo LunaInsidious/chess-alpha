@@ -1,10 +1,11 @@
 package handler
 
 import (
+	"net/http"
+
 	"chess-alpha/server/api/middleware"
 	"chess-alpha/server/api/schema"
 	"chess-alpha/server/usecase/input_port"
-	"net/http"
 
 	"github.com/labstack/echo/v4"
 )

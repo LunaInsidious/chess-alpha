@@ -1,10 +1,11 @@
 package middleware
 
 import (
-	"chess-alpha/server/domain/entconst"
-	"chess-alpha/server/log"
 	"errors"
 	"net/http"
+
+	"chess-alpha/server/domain/entconst"
+	"chess-alpha/server/log"
 
 	"github.com/labstack/echo/v4"
 	"go.uber.org/zap"

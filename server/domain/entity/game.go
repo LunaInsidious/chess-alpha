@@ -1,6 +1,7 @@
 package entity
 
 import (
+	"chess-alpha/server/domain/entconst"
 	"time"
 )
 
@@ -9,7 +10,7 @@ type Game struct {
 	Citizens   []User
 	Werewolf   User
 	GameRecord string
-	Result     string
+	Result     entconst.Result
 	StartAt    time.Time
 	EndAt      *time.Time
 }

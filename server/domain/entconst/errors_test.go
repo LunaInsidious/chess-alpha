@@ -1,9 +1,10 @@
 package entconst_test
 
 import (
-	"chess-alpha/server/domain/entconst"
 	"errors"
 	"testing"
+
+	"chess-alpha/server/domain/entconst"
 
 	"github.com/stretchr/testify/assert"
 )

@@ -1,8 +1,10 @@
 package model
 
 import (
-	"chess-alpha/server/domain/entity"
 	"time"
+
+	"chess-alpha/server/domain/entconst"
+	"chess-alpha/server/domain/entity"
 
 	"gorm.io/gorm"
 )
@@ -28,7 +30,7 @@ func (g Game) Entity() entity.Game {
 		Citizens:   ToEntities(g.Citizens),
 		Werewolf:   g.Werewolf.Entity(),
 		GameRecord: g.GameRecord,
-		Result:     g.Result,
+		Result:     entconst.Result(g.Result),
 		StartAt:    g.StartAt,
 		EndAt:      g.EndAt,
 	}
