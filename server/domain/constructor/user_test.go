@@ -38,7 +38,7 @@ func TestNewUser(t *testing.T) {
 			modify: func(args *constructor.NewUserArgs) {
 				args.UserID = ""
 			},
-			expectedError: entconst.NewValidationError("userID is required."),
+			expectedError: entconst.NewValidationErrorFromMsg("userID is required."),
 		},
 		{
 			name: "Invalid loginID",
@@ -66,14 +66,14 @@ func TestNewUser(t *testing.T) {
 			modify: func(args *constructor.NewUserArgs) {
 				args.Name = ""
 			},
-			expectedError: entconst.NewValidationError("name is required."),
+			expectedError: entconst.NewValidationErrorFromMsg("name is required."),
 		},
 		{
 			name: "Empty hashed password",
 			modify: func(args *constructor.NewUserArgs) {
 				args.HashedPassword = ""
 			},
-			expectedError: entconst.NewValidationError("password is not hashed."),
+			expectedError: entconst.NewValidationErrorFromMsg("password is not hashed."),
 		},
 		{
 			name: "Invalid password",
@@ -98,7 +98,7 @@ func TestNewUser(t *testing.T) {
 				return
 			}
 			if diff := cmp.Diff(err.Error(), tt.expectedError.Error()); diff != "" {
-				t.Errorf("NewUpdatePassword() error mismatch (-want +got):\n%s", diff)
+				t.Errorf("NewUser() error mismatch (-want +got):\n%s", diff)
 			}
 		})
 	}

@@ -27,6 +27,7 @@ func NewServer(
 		e.Use(middleware.Logger())
 	}
 	e.Use(middleware.Recover())
+	e.Use(apiMiddleware.NewErrorMiddleware().HandleError)
 	e.Pre(middleware.RemoveTrailingSlash())
 
 	authHandler := handler.NewAuthHandler(userUC)
