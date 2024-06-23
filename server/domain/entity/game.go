@@ -1,8 +1,9 @@
 package entity
 
 import (
-	"chess-alpha/server/domain/entconst"
 	"time"
+
+	"chess-alpha/server/domain/entconst"
 )
 
 type Game struct {
