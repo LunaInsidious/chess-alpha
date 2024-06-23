@@ -42,6 +42,9 @@ export function ChessBoard({ playerColor, className = "" }: ChessBoardProps) {
 
   return (
     <div className="flex flex-col">
+      <div>
+        {isPlayerTurn ? 'マイターン' : '相手ターン'}
+      </div>
       <div className="flex">
         <div className="flex flex-col-reverse">
           {["1", "2", "3", "4", "5", "6", "7", "8"].map((col) => (
@@ -84,6 +87,10 @@ export function ChessBoard({ playerColor, className = "" }: ChessBoardProps) {
             {col}
           </div>
         ))}
+      </div>
+      <div className="flex">
+        <div>怪しい</div>
+        <div>投票</div>
       </div>
       {/* playerが黒のときリロード時に「相手のターンです」がちらつくため */}
       {isLoading ? (
