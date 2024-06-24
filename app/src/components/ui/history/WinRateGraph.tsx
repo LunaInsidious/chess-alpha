@@ -16,13 +16,6 @@ const option = {
         show: false,
         position: "center",
       },
-      emphasis: {
-        label: {
-          show: true,
-          fontSize: 40,
-          fontWeight: "bold",
-        },
-      },
       labelLine: {
         show: false,
       },
@@ -37,12 +30,14 @@ const option = {
 export function WinRateGraph() {
   return (
     <div className="flex flex-col w-full h-full">
-      <span className="font-black text-xl">勝率</span>
+      <span className="font-black text-xl w-full">勝率</span>
       <EChartsReact
         option={option}
         opts={{ renderer: "svg", width: "auto", height: "auto" }}
-        style={{ width: "100%", height: "400px" }}
+        style={{ width: "100%", height: "220px" }}
+        className="relative"
       />
+      <span className="absolute w-full h-full flex top-0 left-0">65%</span>
     </div>
   );
 }

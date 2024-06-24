@@ -18,12 +18,12 @@ const option = {
 
 export function TierGraph() {
   return (
-    <div className="flex flex-col w-full">
-      <span className="font-black text-xl">レート</span>
+    <div className="flex flex-col w-full h-full">
+      <span className="font-black text-xl w-full">レート</span>
       <EChartsReact
         option={option}
-        opts={{ renderer: "svg", width: "auto", height: "auto" }}
-        style={{ width: "100%", height: "400px" }}
+        opts={{ renderer: "svg", width: "auto", height: "260px" }}
+        style={{ width: "100%", height: "220px" }}
       />
     </div>
   );

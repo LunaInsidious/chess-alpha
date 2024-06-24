@@ -4,8 +4,8 @@ import { WinRateGraph } from "@/components/ui/history/WinRateGraph";
 
 export function HistoryGraphWrapper(): JSX.Element {
   return (
-    <HistoryCard>
-      <div className="flex justify-evenly h-30">
+    <HistoryCard className="h-full w-full">
+      <div className="sm:flex sm:flex-col md:flex md:flex-row justify-evenly w-full h-full">
         <WinRateGraph />
         <TierGraph />
       </div>
