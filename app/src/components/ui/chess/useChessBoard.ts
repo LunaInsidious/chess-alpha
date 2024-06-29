@@ -153,7 +153,12 @@ export const useChessBoard = ({ playerColor }: ChessBoardHookProps) => {
     };
   };
 
-  const cpuHook = useCpu({ setBoardStatus, playerColor, moveCallback });
+  const cpuHook = useCpu({
+    setBoardStatus,
+    players,
+    playerColor,
+    moveCallback,
+  });
 
   const handleSelectPiece = (position: Position) => {
     const piece = boardStatus.board[position.y][position.x];
@@ -296,7 +301,7 @@ export const useChessBoard = ({ playerColor }: ChessBoardHookProps) => {
 
     // cpuのターン。レスポンス早くてもびっくりするので、少し待たせる
     setIsPlayerTurn(false);
-    setBoardStatus({...newBoardStatus, playing: 'CPU'});
+    setBoardStatus({ ...newBoardStatus, playing: "CPU" });
     setTimeout(() => {
       cpuHook.cpuMove(newBoardStatus, isEnemyChecked, enemyEscapeMoves);
       setIsPlayerTurn(true);

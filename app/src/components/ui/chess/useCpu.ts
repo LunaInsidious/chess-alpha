@@ -16,6 +16,7 @@ import { isNullOrUndefined } from "@/utils/typeGuard";
 
 type CpuHookProps = {
   setBoardStatus: Dispatch<SetStateAction<BoardStatus>>;
+  players: string;
   playerColor: "white" | "black" | undefined;
   moveCallback: (
     board: BoardStatus,
@@ -34,6 +35,7 @@ type CpuHookProps = {
 
 export const useCpu = ({
   setBoardStatus,
+  players,
   playerColor,
   moveCallback,
 }: CpuHookProps) => {
@@ -95,7 +97,13 @@ export const useCpu = ({
       randomPosition.to,
       false,
     );
-    setBoardStatus(newBoardStatusInCpuTurn);
+
+    const index =
+      playerColor === "white"
+        ? Math.floor((newBoardStatusInCpuTurn.turn + 1) / 2)
+        : Math.floor(newBoardStatusInCpuTurn.turn / 2);
+    const playing = players[index % players.length];
+    setBoardStatus({ ...newBoardStatusInCpuTurn, playing });
 
     const kingPosition = getMyPieces(
       newBoardStatusInCpuTurn.board,
