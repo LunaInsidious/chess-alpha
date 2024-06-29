@@ -15,22 +15,21 @@ export function SuspectModal({
   handleSuspect,
 }: SuspectModalProps) {
   return (
-    <Modal header="怪しい" handleCloseModal={handleCloseSuspectModal}>
-      <div className="text-xs text-center md:text-lg font-bold mb-4">
-        怪しいプレイヤーを選んでください。
-      </div>
-      <div className="w-full flex gap-2">
-        {players.map((player) => (
-          <button
-            onClick={() => handleSuspect(player)}
-            key={player}
-            type="button"
-            disabled={player === suspectingPlayer}
-            className="h-16 px-6 border border-primary border-solid rounded flex justify-center items-center"
-          >
-            {player}
-          </button>
-        ))}
+    <Modal header="怪しいプレイヤー選択" handleCloseModal={handleCloseSuspectModal}>
+      <div className="w-full flex justify-center">
+        <div className="flex gap-2 mb-4 flex-wrap">
+          {players.map((player) => (
+            <Button
+              onClick={() => handleSuspect(player)}
+              variant="secondary"
+              key={player}
+              disabled={player === suspectingPlayer}
+              className="h-8 md:h-16 px-3 md:px-6 border border-primary border-solid rounded flex justify-center items-center"
+            >
+              {player}
+            </Button>
+          ))}
+        </div>
       </div>
       <div className="flex flex-col md:flex-row justify-end items-center gap-4">
         <Button
