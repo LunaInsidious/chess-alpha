@@ -49,7 +49,9 @@ export const useChessBoard = ({ playerColor }: ChessBoardHookProps) => {
     | undefined
   >(undefined);
 
-  const [suspectingPlayer, setSuspectingPlayer] = useState<string | undefined>();
+  const [suspectingPlayer, setSuspectingPlayer] = useState<
+    string | undefined
+  >();
 
   const [isPlayerTurn, setIsPlayerTurn] = useState<boolean>(false);
 

@@ -24,6 +24,8 @@ export function SuspectModal({
           <button
             onClick={() => handleSuspect(player)}
             key={player}
+            type="button"
+            disabled={player === suspectingPlayer}
             className="h-16 px-6 border border-primary border-solid rounded flex justify-center items-center"
           >
             {player}
