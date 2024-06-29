@@ -35,17 +35,17 @@ func TestValidateEmail(t *testing.T) {
 		{
 			name:  "失敗; validation error",
 			input: "invalid",
-			want:  entconst.NewValidationError("email address is invalid"),
+			want:  entconst.NewValidationErrorFromMsg("email address is invalid"),
 		},
 		{
 			name:  "失敗; validation error (domain)",
 			input: "invalid@example_test.com",
-			want:  entconst.NewValidationError("email address is invalid"),
+			want:  entconst.NewValidationErrorFromMsg("email address is invalid"),
 		},
 		{
 			name:  "失敗; too long email address",
 			input: testCharacter256EmailAddress,
-			want:  entconst.NewValidationError("email address is too long"),
+			want:  entconst.NewValidationErrorFromMsg("email address is too long"),
 		},
 	}
 
@@ -78,17 +78,17 @@ func TestValidatePassword(t *testing.T) {
 		{
 			name:  "失敗; validation error",
 			input: "invalid!",
-			want:  entconst.NewValidationError("password is invalid"),
+			want:  entconst.NewValidationErrorFromMsg("password is invalid"),
 		},
 		{
 			name:  "失敗; too long password",
 			input: testCharacter256Password,
-			want:  entconst.NewValidationError("password is too long"),
+			want:  entconst.NewValidationErrorFromMsg("password is too long"),
 		},
 		{
 			name:  "失敗; too short password(7文字)",
 			input: "example",
-			want:  entconst.NewValidationError("password is too short"),
+			want:  entconst.NewValidationErrorFromMsg("password is too short"),
 		},
 	}
 

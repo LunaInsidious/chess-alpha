@@ -8,10 +8,10 @@ import (
 )
 
 var (
-	ErrInvalidPhoneNumberLength = entconst.NewValidationError("invalid phone number length")
-	ErrInvalidPhoneNumber       = entconst.NewValidationError("invalid phone number")
-	ErrInvalidCharacterLimit    = entconst.NewValidationError("invalid character limit")
-	ErrInvalidCharacterLength   = entconst.NewValidationError("invalid character length")
+	ErrInvalidPhoneNumberLength = entconst.NewValidationErrorFromMsg("invalid phone number length")
+	ErrInvalidPhoneNumber       = entconst.NewValidationErrorFromMsg("invalid phone number")
+	ErrInvalidCharacterLimit    = entconst.NewValidationErrorFromMsg("invalid character limit")
+	ErrInvalidCharacterLength   = entconst.NewValidationErrorFromMsg("invalid character length")
 )
 
 func ValidatePhoneNumber(phone string) error {

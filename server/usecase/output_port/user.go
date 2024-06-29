@@ -19,6 +19,7 @@ var (
 type UserRepository interface {
 	FindByLoginID(loginID string) (entity.User, error)
 	FindByID(userID string) (entity.User, error)
+	UpdateRate(userID string, rate int) error
 }
 
 type UserAuth interface {

@@ -7,9 +7,9 @@ import (
 )
 
 var (
-	ErrTooLongEmail   = entconst.NewValidationError("email address is too long")
-	ErrInvalidEmail   = entconst.NewValidationError("email address is invalid")
-	ErrInvalidLoginID = entconst.NewValidationError("loginID is invalid")
+	ErrTooLongEmail   = entconst.NewValidationErrorFromMsg("email address is too long")
+	ErrInvalidEmail   = entconst.NewValidationErrorFromMsg("email address is invalid")
+	ErrInvalidLoginID = entconst.NewValidationErrorFromMsg("loginID is invalid")
 )
 
 func ValidateEmail(email string) error {
@@ -27,9 +27,9 @@ func ValidateEmail(email string) error {
 }
 
 var (
-	ErrTooShortPassword = entconst.NewValidationError("password is too short")
-	ErrTooLongPassword  = entconst.NewValidationError("password is too long")
-	ErrInvalidPassword  = entconst.NewValidationError("password is invalid")
+	ErrTooShortPassword = entconst.NewValidationErrorFromMsg("password is too short")
+	ErrTooLongPassword  = entconst.NewValidationErrorFromMsg("password is too long")
+	ErrInvalidPassword  = entconst.NewValidationErrorFromMsg("password is invalid")
 )
 
 func ValidatePassword(password string) error {
