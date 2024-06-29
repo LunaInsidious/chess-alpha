@@ -51,8 +51,7 @@ export function HomeContainer() {
   };
 
   const handleClickHistory = () => {
-    // TODO: Implement history
-    console.log("clicked history");
+    navigate(appURL.history);
   };
 
   const handleCloseRuleBook = () => {
