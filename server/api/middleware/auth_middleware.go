@@ -1,7 +1,6 @@
 package middleware
 
 import (
-	"net/http"
 	"strings"
 
 	"github.com/labstack/echo/v4"
@@ -14,6 +13,7 @@ import (
 	"context"
 	"errors"
 
+	"chess-alpha/server/domain/entconst"
 	"chess-alpha/server/domain/entity"
 )
 
@@ -40,7 +40,7 @@ func (m *AuthMiddleware) Authenticate(next echo.HandlerFunc) echo.HandlerFunc {
 		authHeader := c.Request().Header.Get("Authorization")
 		if authHeader == "" || !strings.HasPrefix(authHeader, schema.TokenType+" ") {
 			logger.Warn("Failed to authenticate", zap.Error(ErrNoAuthorizationHeader))
-			return echo.NewHTTPError(http.StatusUnauthorized)
+			return entconst.NewUnauthorizedErrorFromMsg("token is invalid")
 		}
 		token := strings.TrimPrefix(authHeader, schema.TokenType+" ")
 
@@ -48,14 +48,14 @@ func (m *AuthMiddleware) Authenticate(next echo.HandlerFunc) echo.HandlerFunc {
 		userID, err := m.userUC.Authenticate(token)
 		if err != nil {
 			logger.Warn("Failed to authenticate", zap.Error(err))
-			return echo.NewHTTPError(http.StatusUnauthorized)
+			return entconst.NewUnauthorizedErrorFromMsg("token is invalid")
 		}
 
 		// set user detail to context
 		user, err := m.userUC.FindByID(userID)
 		if err != nil {
 			logger.Warn("Failed to find me", zap.Error(err))
-			return echo.NewHTTPError(http.StatusUnauthorized)
+			return entconst.NewUnauthorizedErrorFromMsg("token is invalid")
 		}
 		c = SetToContext(c, user)
 

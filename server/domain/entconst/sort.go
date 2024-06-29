@@ -26,5 +26,5 @@ func ValidateOrder(order string) error {
 	if order == string(ASC) || order == string(DESC) {
 		return nil
 	}
-	return NewValidationError("invalid order")
+	return NewValidationErrorFromMsg("invalid order")
 }
