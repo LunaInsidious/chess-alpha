@@ -49,6 +49,8 @@ export const useChessBoard = ({ playerColor }: ChessBoardHookProps) => {
     | undefined
   >(undefined);
 
+  const [suspectingPlayer, setSuspectingPlayer] = useState<string | undefined>();
+
   const [isPlayerTurn, setIsPlayerTurn] = useState<boolean>(false);
 
   const [isRuleBookOpen, setIsRuleBookOpen] = useState<boolean>(false);
@@ -343,6 +345,10 @@ export const useChessBoard = ({ playerColor }: ChessBoardHookProps) => {
     callback(newBoard);
   };
 
+  const handleClickSuspectingPlayer = (name: string) => {
+    setSuspectingPlayer(name);
+  };
+
   const handleClickRule = () => {
     setIsRuleBookOpen(true);
   };
@@ -469,26 +475,28 @@ export const useChessBoard = ({ playerColor }: ChessBoardHookProps) => {
   }, [playerColor]);
 
   return {
+    players,
     boardStatus,
     selectedPiecePosition,
     movablePositions,
+    gameStatus,
+    isLoading,
+    isPlayerTurn,
+    isSuspectModalOpen,
+    promotionInfo,
+    isRuleBookOpen,
+    isRetireModalOpen,
+    suspectingPlayer,
+    handleClickSuspectingPlayer,
     handleClickMass,
-    handleClickRule,
-    handleCloseRuleBook,
     handleClickPromotion,
+    handleCloseRuleBook,
+    handleClickRule,
     handleClickRetireButton,
+    handleCloseRetireModal,
     handleRetire,
     handleReturnHome,
-    handleCloseRetireModal,
     handleClickSuspectModal,
     handleCloseSuspectModal,
-    gameStatus,
-    isPlayerTurn,
-    promotionInfo,
-    isRetireModalOpen,
-    isRuleBookOpen,
-    isSuspectModalOpen,
-    isLoading,
-    players,
   };
 };

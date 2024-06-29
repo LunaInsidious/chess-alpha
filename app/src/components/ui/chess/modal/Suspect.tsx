@@ -3,12 +3,14 @@ import { Button } from "@/components/ui/button/Button";
 
 type SuspectModalProps = {
   players: string[];
-  handleSuspect?: () => Promise<void>;
+  suspectingPlayer: string | undefined;
+  handleSuspect: (name: string) => void;
   handleCloseSuspectModal: () => void;
 };
 
 export function SuspectModal({
   players,
+  suspectingPlayer,
   handleCloseSuspectModal,
   handleSuspect,
 }: SuspectModalProps) {
@@ -18,9 +20,10 @@ export function SuspectModal({
         怪しいプレイヤーを選んでください。
       </div>
       <div className="w-full flex gap-2">
-        {players.map((player, idx) => (
+        {players.map((player) => (
           <button
-            key={`${player}-${idx}`}
+            onClick={() => handleSuspect(player)}
+            key={player}
             className="h-16 px-6 border border-primary border-solid rounded flex justify-center items-center"
           >
             {player}

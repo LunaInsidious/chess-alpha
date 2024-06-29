@@ -27,6 +27,8 @@ export function ChessBoard({ playerColor, className = "" }: ChessBoardProps) {
     promotionInfo,
     isRuleBookOpen,
     isRetireModalOpen,
+    suspectingPlayer,
+    handleClickSuspectingPlayer,
     handleClickMass,
     handleClickPromotion,
     handleCloseRuleBook,
@@ -94,7 +96,7 @@ export function ChessBoard({ playerColor, className = "" }: ChessBoardProps) {
         <Button
           onClick={handleClickSuspectModal}
           variant="primary"
-          className="w-20 h-20 rounded-full text-sm text-white"
+          className="w-20 h-20 rounded-full text-sm text-white font-bold"
         >
           怪しい
         </Button>
@@ -158,6 +160,8 @@ export function ChessBoard({ playerColor, className = "" }: ChessBoardProps) {
       {isRuleBookOpen && <RuleBook handleCloseRuleBook={handleCloseRuleBook} />}
       {isSuspectModalOpen && (
         <SuspectModal
+          suspectingPlayer={suspectingPlayer}
+          handleSuspect={handleClickSuspectingPlayer}
           handleCloseSuspectModal={handleCloseSuspectModal}
           players={players}
         />
