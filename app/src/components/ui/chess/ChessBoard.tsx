@@ -5,6 +5,7 @@ import { PromotionModal } from "@/components/ui/chess/modal/Promotion";
 import { ResultModal } from "@/components/ui/chess/modal/Result";
 import { RetireModal } from "@/components/ui/chess/modal/Retire";
 import { RuleBook } from "@/components/ui/chess/modal/RuleBook";
+import { SuspectModal } from "@/components/ui/chess/modal/Suspect";
 import { useChessBoard } from "@/components/ui/chess/useChessBoard";
 import { isNullOrUndefined } from "@/utils/typeGuard";
 
@@ -15,15 +16,21 @@ type ChessBoardProps = {
 
 export function ChessBoard({ playerColor, className = "" }: ChessBoardProps) {
   const {
+    players,
     boardStatus,
     selectedPiecePosition,
     movablePositions,
     gameStatus,
     isLoading,
     isPlayerTurn,
+    isSuspectModalOpen,
     promotionInfo,
     isRuleBookOpen,
     isRetireModalOpen,
+    suspectingPlayer,
+    isResultModalOpen,
+    handleOpenResultModal,
+    handleClickSuspectingPlayer,
     handleClickMass,
     handleClickPromotion,
     handleCloseRuleBook,
@@ -32,11 +39,13 @@ export function ChessBoard({ playerColor, className = "" }: ChessBoardProps) {
     handleCloseRetireModal,
     handleRetire,
     handleReturnHome,
+    handleClickSuspectModal,
+    handleCloseSuspectModal,
   } = useChessBoard({
     playerColor,
   });
 
-  const isResultModalOpen =
+  const isFinished =
     (gameStatus.player !== "playing" && gameStatus.player !== "checked") ||
     (gameStatus.enemy !== "playing" && gameStatus.enemy !== "checked");
 
@@ -85,6 +94,15 @@ export function ChessBoard({ playerColor, className = "" }: ChessBoardProps) {
           </div>
         ))}
       </div>
+      <div className="flex justify-end mb-4">
+        <Button
+          onClick={handleClickSuspectModal}
+          variant="primary"
+          className="w-20 h-20 rounded-full text-sm text-white font-bold"
+        >
+          怪しい
+        </Button>
+      </div>
       {/* playerが黒のときリロード時に「相手のターンです」がちらつくため */}
       {isLoading ? (
         <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50" />
@@ -92,20 +110,16 @@ export function ChessBoard({ playerColor, className = "" }: ChessBoardProps) {
         <Card>
           <div className="flex flex-col gap-y-4">
             <div className="flex justify-between items-start">
-              <div>{boardStatus.turn + 1}手目</div>
+              <div>
+                <span>{boardStatus.turn + 1}手目</span>
+              </div>
               <div
                 className={`mr-4 md:text-xl ${isPlayerTurn ? "text-blue-400" : "text-red-400"}`}
               >
-                {isPlayerTurn ? (
-                  <div>
-                    あなた ({playerColor === "white" ? "白" : "黒"})
-                    のターンです
-                  </div>
-                ) : (
-                  <div>
-                    相手 ({playerColor === "white" ? "黒" : "白"}) のターンです
-                  </div>
-                )}
+                <div>
+                  {boardStatus.playing}
+                  のターンです
+                </div>
               </div>
             </div>
             <div className="flex justify-end gap-x-8">
@@ -146,6 +160,25 @@ export function ChessBoard({ playerColor, className = "" }: ChessBoardProps) {
         />
       )}
       {isRuleBookOpen && <RuleBook handleCloseRuleBook={handleCloseRuleBook} />}
+      {isSuspectModalOpen && (
+        <SuspectModal
+          mode="suspect"
+          suspectingPlayer={suspectingPlayer}
+          handleSuspect={handleClickSuspectingPlayer}
+          handleCloseSuspectModal={handleCloseSuspectModal}
+          players={players}
+        />
+      )}
+      {isFinished && (
+        <SuspectModal
+          mode="poll"
+          suspectingPlayer={suspectingPlayer}
+          handleSuspect={handleClickSuspectingPlayer}
+          handleCloseSuspectModal={handleCloseSuspectModal}
+          handleOpenResultModal={handleOpenResultModal}
+          players={players}
+        />
+      )}
     </div>
   );
 }

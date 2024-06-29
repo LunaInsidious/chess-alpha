@@ -422,6 +422,7 @@ export const movePiece = (
     fiftyMoveRuleTurn: isFiftyMoveRuleTurnUpdate
       ? 0
       : boardStatus.fiftyMoveRuleTurn + 1,
+    playing: "",
   };
 };
 

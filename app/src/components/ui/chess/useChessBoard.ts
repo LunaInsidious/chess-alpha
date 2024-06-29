@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
 import { useGameDataAPI } from "@/adapters/api/game/api";
 import { setUpInitialBoard } from "@/components/ui/chess/initialBoard";
@@ -24,11 +24,11 @@ type ChessBoardHookProps = {
 };
 
 export const useChessBoard = ({ playerColor }: ChessBoardHookProps) => {
-  const [boardStatus, setBoardStatus] = useState<BoardStatus>({
-    board: Array(8).fill(Array(8).fill(undefined)),
-    turn: 0,
-    fiftyMoveRuleTurn: 0,
-  });
+  const location = useLocation();
+  const queryParams = new URLSearchParams(location.search);
+  const playersQuery = queryParams.get("players") ?? "";
+
+  const players = playersQuery.split(",");
 
   const { showError, showAlert } = useAlert();
 
@@ -49,11 +49,19 @@ export const useChessBoard = ({ playerColor }: ChessBoardHookProps) => {
     | undefined
   >(undefined);
 
+  const [suspectingPlayer, setSuspectingPlayer] = useState<
+    string | undefined
+  >();
+
   const [isPlayerTurn, setIsPlayerTurn] = useState<boolean>(false);
 
   const [isRuleBookOpen, setIsRuleBookOpen] = useState<boolean>(false);
 
   const [isRetireModalOpen, setIsRetireModalOpen] = useState<boolean>(false);
+
+  const [isSuspectModalOpen, setIsSuspectModalOpen] = useState<boolean>(false);
+
+  const [isResultModalOpen, setIsResultModalOpen] = useState<boolean>(false);
 
   const [gameStatus, setGameStatus] = useState<{
     player: GameStatus;
@@ -61,6 +69,13 @@ export const useChessBoard = ({ playerColor }: ChessBoardHookProps) => {
   }>({
     player: "playing",
     enemy: "playing",
+  });
+
+  const [boardStatus, setBoardStatus] = useState<BoardStatus>({
+    board: Array(8).fill(Array(8).fill(undefined)),
+    turn: 0,
+    fiftyMoveRuleTurn: 0,
+    playing: "",
   });
 
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -146,7 +161,12 @@ export const useChessBoard = ({ playerColor }: ChessBoardHookProps) => {
     };
   };
 
-  const cpuHook = useCpu({ setBoardStatus, playerColor, moveCallback });
+  const cpuHook = useCpu({
+    setBoardStatus,
+    players,
+    playerColor,
+    moveCallback,
+  });
 
   const handleSelectPiece = (position: Position) => {
     const piece = boardStatus.board[position.y][position.x];
@@ -289,6 +309,7 @@ export const useChessBoard = ({ playerColor }: ChessBoardHookProps) => {
 
     // cpuのターン。レスポンス早くてもびっくりするので、少し待たせる
     setIsPlayerTurn(false);
+    setBoardStatus({ ...newBoardStatus, playing: "CPU" });
     setTimeout(() => {
       cpuHook.cpuMove(newBoardStatus, isEnemyChecked, enemyEscapeMoves);
       setIsPlayerTurn(true);
@@ -328,6 +349,10 @@ export const useChessBoard = ({ playerColor }: ChessBoardHookProps) => {
     callback(newBoard);
   };
 
+  const handleClickSuspectingPlayer = (name: string) => {
+    setSuspectingPlayer(name);
+  };
+
   const handleClickRule = () => {
     setIsRuleBookOpen(true);
   };
@@ -342,6 +367,18 @@ export const useChessBoard = ({ playerColor }: ChessBoardHookProps) => {
 
   const handleCloseRetireModal = () => {
     setIsRetireModalOpen(false);
+  };
+
+  const handleClickSuspectModal = () => {
+    setIsSuspectModalOpen(true);
+  };
+
+  const handleCloseSuspectModal = () => {
+    setIsSuspectModalOpen(false);
+  };
+
+  const handleOpenResultModal = () => {
+    setIsResultModalOpen(true);
   };
 
   const handleReturnHome = () => {
@@ -375,13 +412,13 @@ export const useChessBoard = ({ playerColor }: ChessBoardHookProps) => {
 
     setIsLoading(true);
     const playerPieceIdPrefix = playerColor === "white" ? "w" : "b";
+    const playing = playerColor === "white" ? players[0] : "CPU";
     const initialBoard = setUpInitialBoard(playerPieceIdPrefix);
 
     (async () => {
       try {
         const latestBoardStatus = await gameDataAPI.findLatest();
         if (isNullOrUndefined(latestBoardStatus)) {
-          setBoardStatus(initialBoard);
           // プレイヤーが黒の場合は、CPUが先手で動く
           setIsPlayerTurn(playerColor === "white");
           if (playerColor === "black") {
@@ -390,6 +427,7 @@ export const useChessBoard = ({ playerColor }: ChessBoardHookProps) => {
               setIsPlayerTurn(true);
             }, 1000);
           }
+          setBoardStatus({ ...initialBoard, playing });
         } else {
           setBoardStatus(latestBoardStatus.gameData);
           // プレイヤーが白で、ターンが偶数、プレイヤーが黒で、ターンが奇数の場合はプレイヤーのターン
@@ -445,22 +483,30 @@ export const useChessBoard = ({ playerColor }: ChessBoardHookProps) => {
   }, [playerColor]);
 
   return {
+    players,
     boardStatus,
     selectedPiecePosition,
     movablePositions,
+    gameStatus,
+    isLoading,
+    isPlayerTurn,
+    isSuspectModalOpen,
+    promotionInfo,
+    isRuleBookOpen,
+    isRetireModalOpen,
+    suspectingPlayer,
+    isResultModalOpen,
+    handleOpenResultModal,
+    handleClickSuspectingPlayer,
     handleClickMass,
-    handleClickRule,
-    handleCloseRuleBook,
     handleClickPromotion,
+    handleCloseRuleBook,
+    handleClickRule,
     handleClickRetireButton,
+    handleCloseRetireModal,
     handleRetire,
     handleReturnHome,
-    handleCloseRetireModal,
-    gameStatus,
-    isPlayerTurn,
-    promotionInfo,
-    isRetireModalOpen,
-    isRuleBookOpen,
-    isLoading,
+    handleClickSuspectModal,
+    handleCloseSuspectModal,
   };
 };
