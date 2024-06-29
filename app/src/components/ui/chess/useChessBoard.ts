@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
 import { useGameDataAPI } from "@/adapters/api/game/api";
 import { setUpInitialBoard } from "@/components/ui/chess/initialBoard";
@@ -24,10 +24,11 @@ type ChessBoardHookProps = {
 };
 
 export const useChessBoard = ({ playerColor }: ChessBoardHookProps) => {
+  const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
-  const playersQuery = queryParams.get("players") ?? '';
+  const playersQuery = queryParams.get("players") ?? "";
 
-  const players = playersQuery.split(',');
+  const players = playersQuery.split(",");
 
   const { showError, showAlert } = useAlert();
 
@@ -66,7 +67,7 @@ export const useChessBoard = ({ playerColor }: ChessBoardHookProps) => {
     board: Array(8).fill(Array(8).fill(undefined)),
     turn: 0,
     fiftyMoveRuleTurn: 0,
-    playing: '',
+    playing: "",
   });
 
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -295,6 +296,7 @@ export const useChessBoard = ({ playerColor }: ChessBoardHookProps) => {
 
     // cpuのターン。レスポンス早くてもびっくりするので、少し待たせる
     setIsPlayerTurn(false);
+    setBoardStatus({...newBoardStatus, playing: 'CPU'});
     setTimeout(() => {
       cpuHook.cpuMove(newBoardStatus, isEnemyChecked, enemyEscapeMoves);
       setIsPlayerTurn(true);
@@ -396,7 +398,7 @@ export const useChessBoard = ({ playerColor }: ChessBoardHookProps) => {
               setIsPlayerTurn(true);
             }, 1000);
           }
-          setBoardStatus({...initialBoard, playing });
+          setBoardStatus({ ...initialBoard, playing });
         } else {
           setBoardStatus(latestBoardStatus.gameData);
           // プレイヤーが白で、ターンが偶数、プレイヤーが黒で、ターンが奇数の場合はプレイヤーのターン
