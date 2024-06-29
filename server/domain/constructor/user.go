@@ -21,7 +21,7 @@ func NewUser(args NewUserArgs) (entity.User, error) {
 	errs := make([]error, 0, 10)
 
 	if args.UserID == "" {
-		errs = append(errs, entconst.NewValidationError("userID is required."))
+		errs = append(errs, entconst.NewValidationErrorFromMsg("userID is required."))
 	}
 
 	if err := validation.ValidateLoginID(args.LoginID); err != nil {
@@ -29,11 +29,11 @@ func NewUser(args NewUserArgs) (entity.User, error) {
 	}
 
 	if args.Name == "" {
-		errs = append(errs, entconst.NewValidationError("name is required."))
+		errs = append(errs, entconst.NewValidationErrorFromMsg("name is required."))
 	}
 
 	if args.HashedPassword == "" {
-		errs = append(errs, entconst.NewValidationError("password is not hashed."))
+		errs = append(errs, entconst.NewValidationErrorFromMsg("password is not hashed."))
 	}
 
 	if err := validation.ValidatePassword(args.Password); err != nil {

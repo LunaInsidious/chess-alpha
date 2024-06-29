@@ -13,6 +13,7 @@ import (
 
 func NewServer(
 	userUC input_port.IUserUseCase,
+	gameUC input_port.IGameUseCase,
 	healthCheckUC input_port.IHealthCheckUseCase,
 	isLogging bool,
 ) *echo.Echo {
@@ -27,10 +28,12 @@ func NewServer(
 		e.Use(middleware.Logger())
 	}
 	e.Use(middleware.Recover())
+	e.Use(apiMiddleware.NewErrorMiddleware().HandleError)
 	e.Pre(middleware.RemoveTrailingSlash())
 
 	authHandler := handler.NewAuthHandler(userUC)
 	userHandler := handler.NewUserHandler(userUC)
+	gameHandler := handler.NewGameHandler(gameUC)
 	healthCheckHandler := handler.NewHealthCheckHandler(healthCheckUC)
 
 	e.GET("/health", healthCheckHandler.CheckHealth)
@@ -46,6 +49,12 @@ func NewServer(
 	user := auth.Group("/user")
 	user.GET("/me", userHandler.FindMe)
 	user.GET("/:user-id", userHandler.FindById)
+
+	game := auth.Group("/game")
+	game.POST("/", gameHandler.Create)
+	game.PATCH("/update", gameHandler.Update)
+	game.PATCH("/end", gameHandler.End)
+	game.GET("/:id", gameHandler.FindById)
 
 	return e
 }

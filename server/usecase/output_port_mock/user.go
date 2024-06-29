@@ -65,6 +65,20 @@ func (mr *MockUserRepositoryMockRecorder) FindByLoginID(loginID interface{}) *go
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "FindByLoginID", reflect.TypeOf((*MockUserRepository)(nil).FindByLoginID), loginID)
 }
 
+// UpdateRate mocks base method.
+func (m *MockUserRepository) UpdateRate(userID string, rate int) error {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "UpdateRate", userID, rate)
+	ret0, _ := ret[0].(error)
+	return ret0
+}
+
+// UpdateRate indicates an expected call of UpdateRate.
+func (mr *MockUserRepositoryMockRecorder) UpdateRate(userID, rate interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "UpdateRate", reflect.TypeOf((*MockUserRepository)(nil).UpdateRate), userID, rate)
+}
+
 // MockUserAuth is a mock of UserAuth interface.
 type MockUserAuth struct {
 	ctrl     *gomock.Controller

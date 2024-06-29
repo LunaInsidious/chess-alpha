@@ -54,13 +54,16 @@ func main() {
 
 	ulidDriver := ulid.NewULID()
 	userRepo := database.NewUserRepository(db, ulidDriver)
+	gameRepo := database.NewGameRepository(db)
 	healthCheckRepo := database.NewHealthCheckRepository(db)
 
 	userUC := interactor.NewUserUseCase(clockDriver, ulidDriver, transaction, userAuth, userRepo)
+	gameUC := interactor.NewGameUseCase(clockDriver, ulidDriver, transaction, userRepo, gameRepo)
 	healthCheckUC := interactor.NewHealthCheckUseCase(healthCheckRepo)
 
 	s := router.NewServer(
 		userUC,
+		gameUC,
 		healthCheckUC,
 		true,
 	)

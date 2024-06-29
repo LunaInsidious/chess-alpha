@@ -7,6 +7,7 @@ import (
 	"github.com/golang/mock/gomock"
 	"github.com/google/go-cmp/cmp/cmpopts"
 
+	"chess-alpha/server/domain/entconst"
 	mock_port "chess-alpha/server/usecase/output_port_mock"
 
 	"github.com/go-resty/resty/v2"
@@ -77,7 +78,7 @@ func TestFindMe(t *testing.T) {
 				return
 			},
 			wantRes: nil,
-			wantErr: echo.NewHTTPError(http.StatusUnauthorized),
+			wantErr: echo.NewHTTPError(http.StatusUnauthorized, entconst.NewUnauthorizedErrorFromMsg("token is invalid").Error()),
 		},
 	}
 
