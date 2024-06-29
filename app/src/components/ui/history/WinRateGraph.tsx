@@ -37,7 +37,6 @@ export function WinRateGraph() {
         style={{ width: "100%", height: "220px" }}
         className="relative"
       />
-      <span className="absolute w-full h-full flex top-0 left-0">65%</span>
     </div>
   );
 }
