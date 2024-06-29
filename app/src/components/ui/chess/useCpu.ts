@@ -16,7 +16,7 @@ import { isNullOrUndefined } from "@/utils/typeGuard";
 
 type CpuHookProps = {
   setBoardStatus: Dispatch<SetStateAction<BoardStatus>>;
-  players: string;
+  players: string[];
   playerColor: "white" | "black" | undefined;
   moveCallback: (
     board: BoardStatus,
