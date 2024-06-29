@@ -61,6 +61,8 @@ export const useChessBoard = ({ playerColor }: ChessBoardHookProps) => {
 
   const [isSuspectModalOpen, setIsSuspectModalOpen] = useState<boolean>(false);
 
+  const [isResultModalOpen, setIsResultModalOpen] = useState<boolean>(false);
+
   const [gameStatus, setGameStatus] = useState<{
     player: GameStatus;
     enemy: GameStatus;
@@ -75,6 +77,8 @@ export const useChessBoard = ({ playerColor }: ChessBoardHookProps) => {
     fiftyMoveRuleTurn: 0,
     playing: "",
   });
+
+  const [gameResult, setGameResult] = useState<string>('');
 
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
@@ -375,6 +379,10 @@ export const useChessBoard = ({ playerColor }: ChessBoardHookProps) => {
     setIsSuspectModalOpen(false);
   };
 
+  const handleOpenResultModal = () => {
+    setIsResultModalOpen(true);
+  };
+
   const handleReturnHome = () => {
     try {
       gameDataAPI.delete();
@@ -489,6 +497,8 @@ export const useChessBoard = ({ playerColor }: ChessBoardHookProps) => {
     isRuleBookOpen,
     isRetireModalOpen,
     suspectingPlayer,
+    isResultModalOpen,
+    handleOpenResultModal,
     handleClickSuspectingPlayer,
     handleClickMass,
     handleClickPromotion,

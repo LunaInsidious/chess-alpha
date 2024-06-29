@@ -28,6 +28,8 @@ export function ChessBoard({ playerColor, className = "" }: ChessBoardProps) {
     isRuleBookOpen,
     isRetireModalOpen,
     suspectingPlayer,
+    isResultModalOpen,
+    handleOpenResultModal,
     handleClickSuspectingPlayer,
     handleClickMass,
     handleClickPromotion,
@@ -43,7 +45,7 @@ export function ChessBoard({ playerColor, className = "" }: ChessBoardProps) {
     playerColor,
   });
 
-  const isResultModalOpen =
+  const isFinished =
     (gameStatus.player !== "playing" && gameStatus.player !== "checked") ||
     (gameStatus.enemy !== "playing" && gameStatus.enemy !== "checked");
 
@@ -160,9 +162,20 @@ export function ChessBoard({ playerColor, className = "" }: ChessBoardProps) {
       {isRuleBookOpen && <RuleBook handleCloseRuleBook={handleCloseRuleBook} />}
       {isSuspectModalOpen && (
         <SuspectModal
+          mode="suspect"
           suspectingPlayer={suspectingPlayer}
           handleSuspect={handleClickSuspectingPlayer}
           handleCloseSuspectModal={handleCloseSuspectModal}
+          players={players}
+        />
+      )}
+      {isFinished && (
+        <SuspectModal
+          mode="poll"
+          suspectingPlayer={suspectingPlayer}
+          handleSuspect={handleClickSuspectingPlayer}
+          handleCloseSuspectModal={handleCloseSuspectModal}
+          handleOpenResultModal={handleOpenResultModal}
           players={players}
         />
       )}
