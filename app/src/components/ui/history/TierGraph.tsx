@@ -22,7 +22,7 @@ export function TierGraph() {
       <span className="font-black text-xl w-full">レート</span>
       <EChartsReact
         option={option}
-        opts={{ renderer: "svg", width: "auto", height: "260px" }}
+        opts={{ renderer: "svg", width: "auto", height: 260 }}
         style={{ width: "100%", height: "220px" }}
       />
     </div>

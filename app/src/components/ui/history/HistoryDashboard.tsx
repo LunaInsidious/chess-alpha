@@ -50,7 +50,9 @@ export function HistoryDashboard(): JSX.Element {
               }
             >
               <div className="flex flex-col w-12 justify-between">
-                <span className="text-base md:text-xl font-bold">{row.result}</span>
+                <span className="text-base md:text-xl font-bold">
+                  {row.result}
+                </span>
                 <span className="text-sm md:text-l">{`${row.duration / 1000}分`}</span>
               </div>
               <div className="flex justify-between w-full items-center">
@@ -60,7 +62,7 @@ export function HistoryDashboard(): JSX.Element {
                   </span>
                 </div>
                 <div className="flex flex-col items-end gap-2 w-full">
-                  <span>{formatTimeAgo(row.created_at)}</span>
+                  <span>{formatTimeAgo(new Date(row.created_at))}</span>
                 </div>
               </div>
             </div>

@@ -9,7 +9,9 @@ export function HistoryHeader(): JSX.Element {
         </div>
         <div className="flex flex-col justify-end">
           <div className="flex items-center">
-            <span className="text-xs md:text-sm font-bold mr-1">ランキング</span>
+            <span className="text-xs md:text-sm font-bold mr-1">
+              ランキング
+            </span>
             <span className="text-xs md:text-sm">：100位</span>
           </div>
         </div>
