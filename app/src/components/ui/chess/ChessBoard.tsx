@@ -86,7 +86,13 @@ export function ChessBoard({ playerColor, className = "" }: ChessBoardProps) {
         ))}
       </div>
       <div className="flex justify-end mb-4">
-        <div className="w-14 h-14 rounded-full bg-primary hover:bg-primary-dark flex justify-center items-center text-sm text-white">怪しい</div>
+        <Button
+          onClick={() => {}}
+          variant="primary"
+          className="w-20 h-20 rounded-full text-sm text-white"
+        >
+          怪しい
+        </Button>
       </div>
       {/* playerが黒のときリロード時に「相手のターンです」がちらつくため */}
       {isLoading ? (
@@ -95,23 +101,16 @@ export function ChessBoard({ playerColor, className = "" }: ChessBoardProps) {
         <Card>
           <div className="flex flex-col gap-y-4">
             <div className="flex justify-between items-start">
-              <div className="flex flex-col">
+              <div>
                 <span>{boardStatus.turn + 1}手目</span>
-                <span>ターン：{boardStatus.playing}</span>
               </div>
               <div
                 className={`mr-4 md:text-xl ${isPlayerTurn ? "text-blue-400" : "text-red-400"}`}
               >
-                {isPlayerTurn ? (
-                  <div>
-                    あなた ({playerColor === "white" ? "白" : "黒"})
-                    のターンです
-                  </div>
-                ) : (
-                  <div>
-                    相手 ({playerColor === "white" ? "黒" : "白"}) のターンです
-                  </div>
-                )}
+                <div>
+                  {boardStatus.playing}
+                  のターンです
+                </div>
               </div>
             </div>
             <div className="flex justify-end gap-x-8">
