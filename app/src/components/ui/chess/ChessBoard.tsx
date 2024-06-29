@@ -96,7 +96,10 @@ export function ChessBoard({ playerColor, className = "" }: ChessBoardProps) {
         <Card>
           <div className="flex flex-col gap-y-4">
             <div className="flex justify-between items-start">
-              <div>{boardStatus.turn + 1}手目</div>
+              <div className="flex flex-col">
+                <span>{boardStatus.turn + 1}手目</span>
+                <span>ターン：{boardStatus.playing}</span>
+              </div>
               <div
                 className={`mr-4 md:text-xl ${isPlayerTurn ? "text-blue-400" : "text-red-400"}`}
               >

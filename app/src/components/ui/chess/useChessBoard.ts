@@ -24,11 +24,10 @@ type ChessBoardHookProps = {
 };
 
 export const useChessBoard = ({ playerColor }: ChessBoardHookProps) => {
-  const [boardStatus, setBoardStatus] = useState<BoardStatus>({
-    board: Array(8).fill(Array(8).fill(undefined)),
-    turn: 0,
-    fiftyMoveRuleTurn: 0,
-  });
+  const queryParams = new URLSearchParams(location.search);
+  const playersQuery = queryParams.get("players") ?? '';
+
+  const players = playersQuery.split(',');
 
   const { showError, showAlert } = useAlert();
 
@@ -61,6 +60,13 @@ export const useChessBoard = ({ playerColor }: ChessBoardHookProps) => {
   }>({
     player: "playing",
     enemy: "playing",
+  });
+
+  const [boardStatus, setBoardStatus] = useState<BoardStatus>({
+    board: Array(8).fill(Array(8).fill(undefined)),
+    turn: 0,
+    fiftyMoveRuleTurn: 0,
+    playing: '',
   });
 
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -375,13 +381,13 @@ export const useChessBoard = ({ playerColor }: ChessBoardHookProps) => {
 
     setIsLoading(true);
     const playerPieceIdPrefix = playerColor === "white" ? "w" : "b";
+    const playing = playerColor === "white" ? players[0] : "CPU";
     const initialBoard = setUpInitialBoard(playerPieceIdPrefix);
 
     (async () => {
       try {
         const latestBoardStatus = await gameDataAPI.findLatest();
         if (isNullOrUndefined(latestBoardStatus)) {
-          setBoardStatus(initialBoard);
           // プレイヤーが黒の場合は、CPUが先手で動く
           setIsPlayerTurn(playerColor === "white");
           if (playerColor === "black") {
@@ -390,6 +396,7 @@ export const useChessBoard = ({ playerColor }: ChessBoardHookProps) => {
               setIsPlayerTurn(true);
             }, 1000);
           }
+          setBoardStatus({...initialBoard, playing });
         } else {
           setBoardStatus(latestBoardStatus.gameData);
           // プレイヤーが白で、ターンが偶数、プレイヤーが黒で、ターンが奇数の場合はプレイヤーのターン
