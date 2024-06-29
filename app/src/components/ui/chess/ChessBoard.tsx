@@ -16,6 +16,7 @@ type ChessBoardProps = {
 
 export function ChessBoard({ playerColor, className = "" }: ChessBoardProps) {
   const {
+    players,
     boardStatus,
     selectedPiecePosition,
     movablePositions,
@@ -155,7 +156,12 @@ export function ChessBoard({ playerColor, className = "" }: ChessBoardProps) {
         />
       )}
       {isRuleBookOpen && <RuleBook handleCloseRuleBook={handleCloseRuleBook} />}
-      {isSuspectModalOpen && <SuspectModal handleCloseSuspectModal={handleCloseSuspectModal} />}
+      {isSuspectModalOpen && (
+        <SuspectModal
+          handleCloseSuspectModal={handleCloseSuspectModal}
+          players={players}
+        />
+      )}
     </div>
   );
 }

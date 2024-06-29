@@ -489,5 +489,6 @@ export const useChessBoard = ({ playerColor }: ChessBoardHookProps) => {
     isRuleBookOpen,
     isSuspectModalOpen,
     isLoading,
+    players,
   };
 };
