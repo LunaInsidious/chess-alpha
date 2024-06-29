@@ -61,13 +61,15 @@ export function SuspectModal({
         </div>
       </div>
       <div className="flex flex-col md:flex-row justify-end items-center gap-4">
-        <Button
-          className="w-32 h-8 md:h-12"
-          onClick={handleCloseSuspectModal}
-          variant="secondary"
-        >
-          キャンセル
-        </Button>
+        {mode === "suspect" && (
+          <Button
+            className="w-32 h-8 md:h-12"
+            onClick={handleCloseSuspectModal}
+            variant="secondary"
+          >
+            キャンセル
+          </Button>
+        )}
       </div>
     </Modal>
   );
