@@ -5,6 +5,7 @@ import { PromotionModal } from "@/components/ui/chess/modal/Promotion";
 import { ResultModal } from "@/components/ui/chess/modal/Result";
 import { RetireModal } from "@/components/ui/chess/modal/Retire";
 import { RuleBook } from "@/components/ui/chess/modal/RuleBook";
+import { SuspectModal } from "@/components/ui/chess/modal/Suspect";
 import { useChessBoard } from "@/components/ui/chess/useChessBoard";
 import { isNullOrUndefined } from "@/utils/typeGuard";
 
@@ -21,6 +22,7 @@ export function ChessBoard({ playerColor, className = "" }: ChessBoardProps) {
     gameStatus,
     isLoading,
     isPlayerTurn,
+    isSuspectModalOpen,
     promotionInfo,
     isRuleBookOpen,
     isRetireModalOpen,
@@ -32,6 +34,8 @@ export function ChessBoard({ playerColor, className = "" }: ChessBoardProps) {
     handleCloseRetireModal,
     handleRetire,
     handleReturnHome,
+    handleClickSuspectModal,
+    handleCloseSuspectModal,
   } = useChessBoard({
     playerColor,
   });
@@ -87,7 +91,7 @@ export function ChessBoard({ playerColor, className = "" }: ChessBoardProps) {
       </div>
       <div className="flex justify-end mb-4">
         <Button
-          onClick={() => {}}
+          onClick={handleClickSuspectModal}
           variant="primary"
           className="w-20 h-20 rounded-full text-sm text-white"
         >
@@ -151,6 +155,7 @@ export function ChessBoard({ playerColor, className = "" }: ChessBoardProps) {
         />
       )}
       {isRuleBookOpen && <RuleBook handleCloseRuleBook={handleCloseRuleBook} />}
+      {isSuspectModalOpen && <SuspectModal handleCloseSuspectModal={handleCloseSuspectModal} />}
     </div>
   );
 }

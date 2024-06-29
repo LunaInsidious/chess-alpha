@@ -55,6 +55,8 @@ export const useChessBoard = ({ playerColor }: ChessBoardHookProps) => {
 
   const [isRetireModalOpen, setIsRetireModalOpen] = useState<boolean>(false);
 
+  const [isSuspectModalOpen, setIsSuspectModalOpen] = useState<boolean>(false);
+
   const [gameStatus, setGameStatus] = useState<{
     player: GameStatus;
     enemy: GameStatus;
@@ -357,6 +359,14 @@ export const useChessBoard = ({ playerColor }: ChessBoardHookProps) => {
     setIsRetireModalOpen(false);
   };
 
+  const handleClickSuspectModal = () => {
+    setIsSuspectModalOpen(true);
+  };
+
+  const handleCloseSuspectModal = () => {
+    setIsSuspectModalOpen(false);
+  };
+
   const handleReturnHome = () => {
     try {
       gameDataAPI.delete();
@@ -470,11 +480,14 @@ export const useChessBoard = ({ playerColor }: ChessBoardHookProps) => {
     handleRetire,
     handleReturnHome,
     handleCloseRetireModal,
+    handleClickSuspectModal,
+    handleCloseSuspectModal,
     gameStatus,
     isPlayerTurn,
     promotionInfo,
     isRetireModalOpen,
     isRuleBookOpen,
+    isSuspectModalOpen,
     isLoading,
   };
 };
