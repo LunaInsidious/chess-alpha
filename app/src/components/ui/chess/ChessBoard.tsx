@@ -85,9 +85,8 @@ export function ChessBoard({ playerColor, className = "" }: ChessBoardProps) {
           </div>
         ))}
       </div>
-      <div className="flex">
-        <div>怪しい</div>
-        <div>投票</div>
+      <div className="flex justify-end mb-4">
+        <div className="w-14 h-14 rounded-full bg-primary hover:bg-primary-dark flex justify-center items-center text-sm text-white">怪しい</div>
       </div>
       {/* playerが黒のときリロード時に「相手のターンです」がちらつくため */}
       {isLoading ? (
