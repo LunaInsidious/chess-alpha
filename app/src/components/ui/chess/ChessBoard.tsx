@@ -42,9 +42,6 @@ export function ChessBoard({ playerColor, className = "" }: ChessBoardProps) {
 
   return (
     <div className="flex flex-col">
-      <div>
-        {isPlayerTurn ? 'マイターン' : '相手ターン'}
-      </div>
       <div className="flex">
         <div className="flex flex-col-reverse">
           {["1", "2", "3", "4", "5", "6", "7", "8"].map((col) => (
