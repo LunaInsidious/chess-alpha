@@ -26,6 +26,7 @@ export const newGame = (): Game => ({
     board: Array(8).fill(Array(8).fill(undefined)),
     turn: 0,
     fiftyMoveRuleTurn: 0,
+    playing: "",
   },
   winner: undefined,
 });

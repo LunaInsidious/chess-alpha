@@ -95,5 +95,6 @@ export const setUpInitialBoard = (
     ],
     turn: 0,
     fiftyMoveRuleTurn: 0,
+    playing: "",
   };
 };

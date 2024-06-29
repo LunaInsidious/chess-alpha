@@ -1,6 +1,7 @@
+import { useState, useEffect } from "react";
+
 import { Modal } from "@/components/ui/Modal";
 import { Button } from "@/components/ui/button/Button";
-import { useState, useEffect } from "react";
 
 type SuspectModalProps = {
   mode: "suspect" | "poll";
@@ -22,18 +23,21 @@ export function SuspectModal({
   const [timeLeft, setTimeLeft] = useState(30);
 
   useEffect(() => {
-    if (!handleOpenResultModal) return;
-    if (mode === "poll" && timeLeft > 0) {
+    if (handleOpenResultModal === undefined || mode !== "poll") return;
+    if (timeLeft > 0) {
       const timer = setTimeout(() => setTimeLeft(timeLeft - 1), 1000);
-      return () => clearTimeout(timer);
-    } else if (mode === "poll" && timeLeft === 0) {
+      clearTimeout(timer);
+    } else {
       handleCloseSuspectModal();
       handleOpenResultModal();
     }
   }, [timeLeft]);
 
   return (
-    <Modal header="怪しいプレイヤー選択" handleCloseModal={handleCloseSuspectModal}>
+    <Modal
+      header="怪しいプレイヤー選択"
+      handleCloseModal={handleCloseSuspectModal}
+    >
       {mode === "poll" && (
         <div>
           <p className="mb-4 text-center font-bold text-xl">

@@ -78,8 +78,6 @@ export const useChessBoard = ({ playerColor }: ChessBoardHookProps) => {
     playing: "",
   });
 
-  const [gameResult, setGameResult] = useState<string>('');
-
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const gameDataAPI = useGameDataAPI();
