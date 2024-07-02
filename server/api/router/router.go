@@ -14,6 +14,7 @@ import (
 func NewServer(
 	userUC input_port.IUserUseCase,
 	healthCheckUC input_port.IHealthCheckUseCase,
+	roomUC input_port.IRoomUseCase,
 	isLogging bool,
 ) *echo.Echo {
 	e := echo.New()
@@ -32,6 +33,7 @@ func NewServer(
 	authHandler := handler.NewAuthHandler(userUC)
 	userHandler := handler.NewUserHandler(userUC)
 	healthCheckHandler := handler.NewHealthCheckHandler(healthCheckUC)
+	roomHandler := handler.NewRoomHandler(roomUC)
 
 	e.GET("/health", healthCheckHandler.CheckHealth)
 
@@ -46,6 +48,12 @@ func NewServer(
 	user := auth.Group("/user")
 	user.GET("/me", userHandler.FindMe)
 	user.GET("/:user-id", userHandler.FindById)
+
+	// room
+	room := e.Group("/room")
+	room.POST("/create", roomHandler.CreateRoom)
+	room.POST("/:room-id/join", roomHandler.JoinRoom)
+	room.POST("/:room-id/leave", roomHandler.LeaveRoom)
 
 	return e
 }

@@ -3,7 +3,6 @@ module chess-alpha/server
 go 1.21
 
 require (
-	github.com/aws/aws-sdk-go v1.45.24
 	github.com/go-resty/resty/v2 v2.9.1
 	github.com/golang-jwt/jwt/v5 v5.0.0
 	github.com/golang/mock v1.6.0
@@ -24,7 +23,6 @@ require (
 	github.com/golang-jwt/jwt v3.2.2+incompatible // indirect
 	github.com/jinzhu/inflection v1.0.0 // indirect
 	github.com/jinzhu/now v1.1.5 // indirect
-	github.com/jmespath/go-jmespath v0.4.0 // indirect
 	github.com/labstack/gommon v0.4.0 // indirect
 	github.com/mattn/go-colorable v0.1.13 // indirect
 	github.com/mattn/go-isatty v0.0.19 // indirect
@@ -36,6 +34,5 @@ require (
 	golang.org/x/sys v0.13.0 // indirect
 	golang.org/x/text v0.13.0 // indirect
 	golang.org/x/time v0.3.0 // indirect
-	gopkg.in/yaml.v2 v2.4.0 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 )

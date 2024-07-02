@@ -84,6 +84,7 @@ func NewTestServer(t *testing.T, tx *gorm.DB, f mockFunc) (s *httptest.Server, r
 	transaction := database.NewGormTransaction(tx)
 	userRepo := database.NewUserRepository(tx, mocks.Ulid)
 	healthCheckRepo := database.NewHealthCheckRepository(tx)
+	roomRepo := database.NewRoomRepository(tx, mocks.Ulid)
 
 	userUC := interactor.NewUserUseCase(
 		clockDriver,
@@ -93,10 +94,12 @@ func NewTestServer(t *testing.T, tx *gorm.DB, f mockFunc) (s *httptest.Server, r
 		userRepo,
 	)
 	healthCheckUC := interactor.NewHealthCheckUseCase(healthCheckRepo)
+	roomUC := interactor.NewRoomUseCase(ulidDriver, roomRepo)
 
 	e := router.NewServer(
 		userUC,
 		healthCheckUC,
+		roomUC,
 		false,
 	)
 

@@ -66,7 +66,7 @@ func NewMySQLDB(logger *zap.Logger, isLogging bool) (*gorm.DB, error) {
 }
 
 func Migrate(db *gorm.DB) error {
-	if err := db.Set("gorm:table_options", "ENGINE=InnoDB").AutoMigrate(&model.User{}); err != nil {
+	if err := db.Set("gorm:table_options", "ENGINE=InnoDB").AutoMigrate(&model.User{}, &model.Room{}); err != nil {
 		return err
 	}
 	return nil

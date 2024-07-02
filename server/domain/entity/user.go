@@ -5,5 +5,6 @@ type User struct {
 	LoginID        string
 	Name           string
 	Rate           int
+	Color          string
 	HashedPassword string // useCase内でHashedPasswordを生成し、設定する
 }
