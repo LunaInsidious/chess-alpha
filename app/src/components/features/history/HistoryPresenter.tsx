@@ -8,8 +8,7 @@ type Props = {
   handleClick: () => void;
 };
 
-export function HistoryPresenter({handleClick}: Props): JSX.Element {
-  
+export function HistoryPresenter({ handleClick }: Props): JSX.Element {
   return (
     <div className="flex flex-col p-8 gap-6 w-full">
       <HistoryHeader />
@@ -17,7 +16,7 @@ export function HistoryPresenter({handleClick}: Props): JSX.Element {
       <RoleSummary />
       <HistoryDashboard />
       <div className="w-full flex justify-end">
-        <Button 
+        <Button
           onClick={handleClick}
           variant="primary"
           className="w-20 h-10 md:w-20 md:h-12 md:text-l lg:text-xl"
