@@ -16,7 +16,7 @@ export function GameContainer() {
 
   useEffect(() => {
     // クエリパラメータからプレイヤーの色を取得
-    const playerColorParam = searchParams.get("player");
+    const playerColorParam = searchParams.get("color");
     if (playerColorParam === "white" || playerColorParam === "black") {
       setPlayerColor(playerColorParam);
     } else {
