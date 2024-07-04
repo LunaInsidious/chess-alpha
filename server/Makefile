@@ -43,7 +43,7 @@ else ifeq ($(ENV),test)
 else ifeq ($(ENV),devcontainer)
 	docker exec -it $(APP_NAME)_devcontainer-api-1 sh -c 'go run cmd/initdb/initdb.go'
 else
-	docker exec api-api-1 go run cmd/initdb/initdb.go
+	docker exec server-api-1 go run cmd/initdb/initdb.go
 endif
 
 # Tools
