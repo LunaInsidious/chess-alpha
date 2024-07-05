@@ -18,6 +18,7 @@ export type BoardStatus = {
   board: Board;
   turn: number;
   fiftyMoveRuleTurn: number;
+  // TODO: Since this can be calculated from turn and player's color, it should be removed.
   currentPlayer: string;
 };
 

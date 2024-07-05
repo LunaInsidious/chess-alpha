@@ -429,13 +429,19 @@ export const useChessBoard = ({ playerColor }: ChessBoardHookProps) => {
           }
           setBoardStatus({ ...initialBoard, currentPlayer });
         } else {
-          setBoardStatus(latestBoardStatus.gameData);
           // プレイヤーが白で、ターンが偶数、プレイヤーが黒で、ターンが奇数の場合はプレイヤーのターン
           const isPlayerTurnInLatest =
             (playerColor === "white" &&
               latestBoardStatus.gameData.turn % 2 === 0) ||
             (playerColor === "black" &&
               latestBoardStatus.gameData.turn % 2 === 1);
+          // If it's player team's turn, I'll set the current player to the player's name.
+          const currentPlayer = isPlayerTurnInLatest
+            ? players[
+                Math.floor(latestBoardStatus.gameData.turn / 2) % players.length
+              ]
+            : "CPU";
+          setBoardStatus({ ...latestBoardStatus.gameData, currentPlayer });
           setIsPlayerTurn(isPlayerTurnInLatest);
 
           // プレイヤーのターンでない場合はCPUの処理を行う
