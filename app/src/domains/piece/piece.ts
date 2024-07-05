@@ -18,7 +18,7 @@ export type BoardStatus = {
   board: Board;
   turn: number;
   fiftyMoveRuleTurn: number;
-  playing: string;
+  currentPlayer: string;
 };
 
 export type PieceType = "P" | "R" | "N" | "B" | "Q" | "K";

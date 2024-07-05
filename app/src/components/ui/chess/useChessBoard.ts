@@ -75,7 +75,7 @@ export const useChessBoard = ({ playerColor }: ChessBoardHookProps) => {
     board: Array(8).fill(Array(8).fill(undefined)),
     turn: 0,
     fiftyMoveRuleTurn: 0,
-    playing: "",
+    currentPlayer: "",
   });
 
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -309,7 +309,7 @@ export const useChessBoard = ({ playerColor }: ChessBoardHookProps) => {
 
     // cpuのターン。レスポンス早くてもびっくりするので、少し待たせる
     setIsPlayerTurn(false);
-    setBoardStatus({ ...newBoardStatus, playing: "CPU" });
+    setBoardStatus({ ...newBoardStatus, currentPlayer: "CPU" });
     setTimeout(() => {
       cpuHook.cpuMove(newBoardStatus, isEnemyChecked, enemyEscapeMoves);
       setIsPlayerTurn(true);
@@ -412,7 +412,7 @@ export const useChessBoard = ({ playerColor }: ChessBoardHookProps) => {
 
     setIsLoading(true);
     const playerPieceIdPrefix = playerColor === "white" ? "w" : "b";
-    const playing = playerColor === "white" ? players[0] : "CPU";
+    const currentPlayer = playerColor === "white" ? players[0] : "CPU";
     const initialBoard = setUpInitialBoard(playerPieceIdPrefix);
 
     (async () => {
@@ -427,7 +427,7 @@ export const useChessBoard = ({ playerColor }: ChessBoardHookProps) => {
               setIsPlayerTurn(true);
             }, 1000);
           }
-          setBoardStatus({ ...initialBoard, playing });
+          setBoardStatus({ ...initialBoard, currentPlayer });
         } else {
           setBoardStatus(latestBoardStatus.gameData);
           // プレイヤーが白で、ターンが偶数、プレイヤーが黒で、ターンが奇数の場合はプレイヤーのターン

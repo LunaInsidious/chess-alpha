@@ -50,7 +50,7 @@ export const useGameDataAPI = (): GameAPI => ({
         board: boardFormatted,
         turn: latestGame.turn,
         fiftyMoveRuleTurn: latestGame.fiftyMoveRuleTurn,
-        playing: "",
+        currentPlayer: "",
       },
       playerColor: latestGame.playerColor,
     };

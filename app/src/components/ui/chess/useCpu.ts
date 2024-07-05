@@ -102,8 +102,8 @@ export const useCpu = ({
       playerColor === "white"
         ? Math.floor((newBoardStatusInCpuTurn.turn + 1) / 2)
         : Math.floor(newBoardStatusInCpuTurn.turn / 2);
-    const playing = players[index % players.length];
-    setBoardStatus({ ...newBoardStatusInCpuTurn, playing });
+    const currentPlayer = players[index % players.length];
+    setBoardStatus({ ...newBoardStatusInCpuTurn, currentPlayer });
 
     const kingPosition = getMyPieces(
       newBoardStatusInCpuTurn.board,

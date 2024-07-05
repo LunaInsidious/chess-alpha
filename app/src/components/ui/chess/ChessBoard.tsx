@@ -117,7 +117,7 @@ export function ChessBoard({ playerColor, className = "" }: ChessBoardProps) {
                 className={`mr-4 md:text-xl ${isPlayerTurn ? "text-blue-400" : "text-red-400"}`}
               >
                 <div>
-                  {boardStatus.playing}
+                  {boardStatus.currentPlayer}
                   のターンです
                 </div>
               </div>
