@@ -167,6 +167,7 @@ export function ChessBoard({ playerColor, className = "" }: ChessBoardProps) {
           handleSuspect={handleClickSuspectingPlayer}
           handleCloseSuspectModal={handleCloseSuspectModal}
           players={players}
+          currentPlayer={boardStatus.currentPlayer}
         />
       )}
       {isFinished && (
@@ -177,6 +178,7 @@ export function ChessBoard({ playerColor, className = "" }: ChessBoardProps) {
           handleCloseSuspectModal={handleCloseSuspectModal}
           handleOpenResultModal={handleOpenResultModal}
           players={players}
+          currentPlayer={boardStatus.currentPlayer}
         />
       )}
     </div>

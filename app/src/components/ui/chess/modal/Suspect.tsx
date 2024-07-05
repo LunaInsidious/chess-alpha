@@ -10,6 +10,7 @@ type SuspectModalProps = {
   handleSuspect: (name: string) => void;
   handleCloseSuspectModal: () => void;
   handleOpenResultModal?: () => void;
+  currentPlayer: string;
 };
 
 export function SuspectModal({
@@ -19,6 +20,7 @@ export function SuspectModal({
   handleCloseSuspectModal,
   handleSuspect,
   handleOpenResultModal,
+  currentPlayer,
 }: SuspectModalProps) {
   const [timeLeft, setTimeLeft] = useState(30);
 
@@ -47,17 +49,19 @@ export function SuspectModal({
       )}
       <div className="w-full flex justify-center">
         <div className="flex gap-2 mb-4 flex-wrap">
-          {players.map((player) => (
-            <Button
-              onClick={() => handleSuspect(player)}
-              variant="secondary"
-              key={player}
-              disabled={player === suspectingPlayer}
-              className="h-8 md:h-16 px-3 md:px-6 border border-primary border-solid rounded flex justify-center items-center"
-            >
-              {player}
-            </Button>
-          ))}
+          {players
+            .filter((player) => player !== currentPlayer)
+            .map((player) => (
+              <Button
+                onClick={() => handleSuspect(player)}
+                variant="secondary"
+                key={player}
+                disabled={player === suspectingPlayer}
+                className="h-8 md:h-16 px-3 md:px-6 border border-primary border-solid rounded flex justify-center items-center"
+              >
+                {player}
+              </Button>
+            ))}
         </div>
       </div>
       <div className="flex flex-col md:flex-row justify-end items-center gap-4">
