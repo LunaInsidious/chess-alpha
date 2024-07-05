@@ -77,7 +77,7 @@ export function Modal({
         <div className="flex items-center justify-between">
           <Heading2 className="hidden md:block">{header}</Heading2>
           <Heading4 className="md:hidden">{header}</Heading4>
-          {!isNullOrUndefined(handleCloseModal) && (
+          {isNullOrUndefined(handleCloseModal) || (
             <button
               className="hover:bg-black hover:bg-opacity-10 p-0.5 rounded"
               aria-label="モーダルを閉じる"
