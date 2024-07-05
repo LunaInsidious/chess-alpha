@@ -53,7 +53,7 @@ func NewServer(
 	user.GET("/:user-id", userHandler.FindById)
 
 	// ws
-	auth.GET("/ws", wsHandler.Handle)
+	e.GET("/ws", wsHandler.Handle)
 
 	return e
 }
