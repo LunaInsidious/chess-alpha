@@ -98,10 +98,8 @@ export const useCpu = ({
       false,
     );
 
-    const index =
-      playerColor === "white"
-        ? Math.floor((newBoardStatusInCpuTurn.turn + 1) / 2)
-        : Math.floor(newBoardStatusInCpuTurn.turn / 2);
+    // TODO: Move this logic to useChessBoard ?
+    const index = Math.floor(newBoardStatusInCpuTurn.turn / 2);
     const currentPlayer = players[index % players.length];
     setBoardStatus({ ...newBoardStatusInCpuTurn, currentPlayer });
 
