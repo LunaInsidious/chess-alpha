@@ -22,31 +22,11 @@ export function SuspectModal({
   handleOpenResultModal,
   currentPlayer,
 }: SuspectModalProps) {
-  const [timeLeft, setTimeLeft] = useState(30);
-
-  useEffect(() => {
-    if (handleOpenResultModal === undefined || mode !== "poll") return;
-    if (timeLeft > 0) {
-      const timer = setTimeout(() => setTimeLeft(timeLeft - 1), 1000);
-      clearTimeout(timer);
-    } else {
-      handleCloseSuspectModal();
-      handleOpenResultModal();
-    }
-  }, [timeLeft]);
-
   return (
     <Modal
       header="怪しいプレイヤー選択"
       handleCloseModal={handleCloseSuspectModal}
     >
-      {mode === "poll" && (
-        <div>
-          <p className="mb-4 text-center font-bold text-xl">
-            残り時間: {timeLeft}秒
-          </p>
-        </div>
-      )}
       <div className="w-full flex justify-center">
         <div className="flex gap-2 mb-4 flex-wrap">
           {players
