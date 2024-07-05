@@ -8,6 +8,7 @@ import (
 
 	"chess-alpha/server/api/handler"
 	apiMiddleware "chess-alpha/server/api/middleware"
+	"chess-alpha/server/domain/ws"
 	"chess-alpha/server/usecase/input_port"
 )
 
@@ -33,6 +34,10 @@ func NewServer(
 	userHandler := handler.NewUserHandler(userUC)
 	healthCheckHandler := handler.NewHealthCheckHandler(healthCheckUC)
 
+	hub := ws.NewHub()
+	go hub.RunLoop()
+	wsHandler := handler.NewWebsocketHandler(hub)
+
 	e.GET("/health", healthCheckHandler.CheckHealth)
 
 	api := e.Group("/api")
@@ -46,6 +51,9 @@ func NewServer(
 	user := auth.Group("/user")
 	user.GET("/me", userHandler.FindMe)
 	user.GET("/:user-id", userHandler.FindById)
+
+	// ws
+	auth.GET("/ws", wsHandler.Handle)
 
 	return e
 }
