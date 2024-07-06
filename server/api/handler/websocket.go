@@ -2,6 +2,8 @@ package handler
 
 import (
 	"chess-alpha/server/domain/ws"
+	"fmt"
+	"net/http"
 
 	"github.com/gorilla/websocket"
 	"github.com/labstack/echo/v4"
@@ -17,12 +19,17 @@ func NewWebsocketHandler(hub *ws.Hub) *WebsocketHandler {
 	}
 }
 
-var upgrader = websocket.Upgrader{}
+var upgrader = &websocket.Upgrader{
+	CheckOrigin: func(r *http.Request) bool {
+		return true
+	},
+}
 
 func (h *WebsocketHandler) Handle(c echo.Context) error {
 
 	websocket, err := upgrader.Upgrade(c.Response(), c.Request(), nil)
 	if err != nil {
+		fmt.Println(err, "aaaaaaaa")
 		return err
 	}
 
